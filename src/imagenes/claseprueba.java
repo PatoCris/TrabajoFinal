@@ -11,5 +11,5 @@ package imagenes;
  * @author Asus
  */
 public class claseprueba {
-    
+    private String creeUnaVariable;
 }
