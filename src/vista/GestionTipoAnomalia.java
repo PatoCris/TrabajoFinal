@@ -118,7 +118,7 @@ public class GestionTipoAnomalia extends javax.swing.JInternalFrame {
         });
 
         jLabel1.setFont(new java.awt.Font("Politica", 1, 24)); // NOI18N
-        jLabel1.setText("GESTIÓN DE MARCAS");
+        jLabel1.setText("GESTIÓN DE TIPOS DE ANOMALÍAS");
 
         btnEditar.setFont(new java.awt.Font("Politica", 0, 16)); // NOI18N
         btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/pencil_edit.png"))); // NOI18N

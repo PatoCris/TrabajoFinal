@@ -130,7 +130,7 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Politica" size="24" style="1"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="GESTI&#xd3;N DE MARCAS"/>
+        <Property name="text" type="java.lang.String" value="GESTI&#xd3;N DE TIPOS DE ANOMAL&#xcd;AS"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="btnEditar">

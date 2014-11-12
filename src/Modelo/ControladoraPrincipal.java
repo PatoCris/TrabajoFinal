@@ -7,6 +7,7 @@
 package Modelo;
 
 import Persistencia.ControladoraPersistencia;
+import java.util.Date;
 import java.util.List;
 import vista.frmMenu;
 
@@ -15,7 +16,6 @@ import vista.frmMenu;
  * @author cristian
  */
 public class ControladoraPrincipal {
-    private ControladorComun cc = new ControladorComun();
     private Accesorio unAccesorio = new Accesorio();
     private Marca unaMarca = new Marca();
     private TipoReparacion unTipoReparacion = new TipoReparacion();
@@ -27,6 +27,7 @@ public class ControladoraPrincipal {
     private Estado unEstado = new Estado();
     private Especialidad unaEspecialidad = new Especialidad();
     private Empleado unEmpleado = new Empleado();
+    private Vehiculo unVehiculo = new Vehiculo();
  
     ///////////// CONTROLADORA PERSISTENCIA ////////////////
     private ControladoraPersistencia cp = new ControladoraPersistencia();
@@ -36,6 +37,7 @@ public class ControladoraPrincipal {
         unAccesorio = new Accesorio(nombre, descripcion, true);
         cp.crearAccesorio(unAccesorio);
     }
+
     public void editarAccesorio(int codigo, String nombre, String descripcion) throws Exception{
         unAccesorio = cp.traerAccesorio(codigo);
         unAccesorio.setNombre(nombre);
@@ -289,6 +291,36 @@ public class ControladoraPrincipal {
         unEstado.setActivo(false);
         cp.editarEstado(unEstado);
     }
+    
+    ///////////// MÉTODOS DE VEHICULO ///////////////////
+    public void nuevoVehiculo(String dominio, String nroChasis, String nroMotor, int anio, long kmRecorrido, Date fechaCompra, boolean activo, Modelo unModelo) throws Exception{
+        unVehiculo = new Vehiculo(dominio, nroChasis, nroMotor, anio, kmRecorrido, fechaCompra, true, unModelo);
+        cp.crearVehiculo(unVehiculo);
+    }
+    public void editarVehiculo(String dominio, String nroChasis, String nroMotor, int anio, long kmRecorrido, Date fechaCompra, boolean activo, Modelo unModelo) throws Exception{
+        unVehiculo = cp.traerVehiculo(anio);
+        unVehiculo.setDominio(dominio);
+        unVehiculo.setNroChasis(nroChasis);
+        unVehiculo.setNroMotor(nroMotor);
+        unVehiculo.setAnio(anio);
+        unVehiculo.setKmRecorrido(kmRecorrido);
+        unVehiculo.setFechaCompra(fechaCompra);
+        unVehiculo.setUnModelo(unModelo);
+        cp.editarVehiculo(unVehiculo);
+    }
+    public List<Vehiculo> traerVehiculos(boolean activo) throws Exception{
+        return cp.traerVehiculos(activo);
+    }
+    public void eliminarVehiculo(int codigo) throws Exception{
+        unVehiculo = cp.traerVehiculo(codigo);
+        unVehiculo.setActivo(false);
+        cp.editarVehiculo(unVehiculo);
+    }
+    public List<Vehiculo> traerVehiculoDominio(boolean activo, String dominio) throws Exception{
+        return cp.traerVehiculoDominio(activo, dominio);
+    }
+    
+    
     /////////////////// METODO MAIN ///////////////////////////
         public static void main(String[] args) {
             frmMenu miMenuPrincipal = new frmMenu();

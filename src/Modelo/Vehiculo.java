@@ -40,7 +40,7 @@ public class Vehiculo implements Serializable {
     private int anio;
     @Column(name = "km_recorrido")
     private long kmRecorrido;
-    @Column(name = "fecha_comra")
+    @Column(name = "fecha_compra")
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date fechaCompra;
     @Column(name = "activo")
@@ -51,7 +51,7 @@ public class Vehiculo implements Serializable {
     private Modelo unModelo;
     @OneToMany
     private List<Accesorio> misAccesorios = new LinkedList<>();
-    @OneToMany(mappedBy = "miCurso")
+    @OneToMany(mappedBy = "misEstados")
     private List<EstadoVehiculo> misEstados = new LinkedList<>();
     
     //METODOS
@@ -59,16 +59,14 @@ public class Vehiculo implements Serializable {
     public Vehiculo() {
     }
 
-    public Vehiculo(int codigo, String dominio, String nroChasis, String nroMotor, int anio, long kmRecorrido, Date fechaCompra, boolean activo, Garantia unaGarantia, Modelo unModelo) {
-        this.codigo = codigo;
+    public Vehiculo(String dominio, String nroChasis, String nroMotor, int anio, long kmRecorrido, Date fechaCompra, boolean activo, Modelo unModelo) {
         this.dominio = dominio;
         this.nroChasis = nroChasis;
         this.nroMotor = nroMotor;
         this.anio = anio;
         this.kmRecorrido = kmRecorrido;
         this.fechaCompra = fechaCompra;
-        this.activo = activo;
-        this.unaGarantia = unaGarantia;
+        this.activo = true;
         this.unModelo = unModelo;
     }
 

@@ -17,6 +17,7 @@ import Modelo.Modelo;
 import Modelo.Segmento;
 import Modelo.TipoAnomalia;
 import Modelo.TipoReparacion;
+import Modelo.Vehiculo;
 import Persistencia.exceptions.NonexistentEntityException;
 import Persistencia.exceptions.PreexistingEntityException;
 import java.util.List;
@@ -37,6 +38,7 @@ public class ControladoraPersistencia {
     private EmpleadoJpaController empleadoJpa = new EmpleadoJpaController();
     private EspecialidadJpaController especialidadJpa = new EspecialidadJpaController();
     private EstadoJpaController estadoJpa = new EstadoJpaController();
+    private VehiculoJpaController vehiculoJpa = new VehiculoJpaController();
     
     ///////////////// METODOS DE ACCESORIO //////////////////////
     public void crearAccesorio(Accesorio accesorio) throws PreexistingEntityException, Exception{
@@ -262,4 +264,25 @@ public class ControladoraPersistencia {
     public void eliminarEstado(int codigo) throws NonexistentEntityException, Exception{
         estadoJpa.destroy(codigo);
     }
+    
+    ///////////////////////// METODOS VEHICULO /////////////////////////////////
+    public void crearVehiculo(Vehiculo unVehiculo) throws PreexistingEntityException, Exception{
+        vehiculoJpa.create(unVehiculo);
+    }
+    public void editarVehiculo(Vehiculo unVehiculo) throws PreexistingEntityException, Exception{
+        vehiculoJpa.edit(unVehiculo);
+    }
+    public List<Vehiculo> traerVehiculos(boolean activo) throws PreexistingEntityException, Exception{
+        return vehiculoJpa.traerVehiculos(activo);
+    }
+    public void eliminarVehiculo(int codigo) throws NonexistentEntityException, Exception{
+            vehiculoJpa.destroy(codigo);
+    }
+    public List<Vehiculo> traerVehiculoDominio(boolean activo, String dominio) throws PreexistingEntityException, Exception{
+        return vehiculoJpa.traerVehiculoDominio(activo, dominio);
+    }   
+    public Vehiculo traerVehiculo(int codigo) throws PreexistingEntityException, Exception{
+        return vehiculoJpa.findVehiculo(codigo);
+    }
+
 }

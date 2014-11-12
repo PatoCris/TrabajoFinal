@@ -33,10 +33,9 @@ public class Localidad implements Serializable {
     public Localidad() {
     }
 
-    public Localidad(int codigo, String nombre, boolean activo) {
-        this.codigo = codigo;
+    public Localidad(String nombre, boolean activo) {
         this.nombre = nombre;
-        this.activo = activo;
+        this.activo = true;
     }
 
     public int getCodigo() {

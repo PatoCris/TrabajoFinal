@@ -18,6 +18,8 @@ import Modelo.Modelo;
 import Modelo.Segmento;
 import Modelo.TipoAnomalia;
 import Modelo.TipoReparacion;
+import Modelo.Vehiculo;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -212,5 +214,22 @@ class ControladoraVista {
     }
     public void eliminarEstado (int codigo) throws Exception{
         cp.eliminarEstado(codigo);
+    }
+    
+    ///////////////// METODOS DE VEHICULO ////////////////////////
+    public void nuevoVehiculo(String dominio, String nroChasis, String nroMotor, int anio, long kmRecorrido, Date fechaCompra, boolean activo, Modelo unModelo) throws Exception{
+        cp.editarVehiculo(dominio, nroChasis, nroMotor, anio, kmRecorrido, fechaCompra, activo, unModelo);
+    }
+    public void editarVehiculo(String dominio, String nroChasis, String nroMotor, int anio, long kmRecorrido, Date fechaCompra, boolean activo, Modelo unModelo) throws Exception{
+        cp.editarVehiculo(dominio, nroChasis, nroMotor, anio, kmRecorrido, fechaCompra, activo, unModelo);
+    }
+    public List<Vehiculo> traerVehiculos(boolean activo) throws Exception{
+        return cp.traerVehiculos(activo);
+    }
+    public void elminarVehiculo(int codigo) throws Exception{
+        cp.eliminarVehiculo(codigo);
+    }
+    public List<Vehiculo> traerVehiculoDominio(boolean activo, String dominio) throws Exception{
+        return cp.traerVehiculoDominio(activo, dominio);
     }
 }

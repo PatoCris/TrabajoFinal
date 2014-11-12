@@ -14,6 +14,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
@@ -22,10 +23,15 @@ import javax.persistence.criteria.Root;
  * @author cristian
  */
 public class VehiculoJpaController implements Serializable {
-
+    
+    public VehiculoJpaController(){
+        emf= Persistence.createEntityManagerFactory("TallerMecanicoPU");
+    }
+    
     public VehiculoJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
+    
     private EntityManagerFactory emf = null;
 
     public EntityManager getEntityManager() {
@@ -134,6 +140,18 @@ public class VehiculoJpaController implements Serializable {
         } finally {
             em.close();
         }
+    }
+    
+    public List<Vehiculo> traerVehiculos(boolean activo){
+        String sql="SELECT object (v) FROM vehiculos v WHERE v.activo = "+activo;
+        Query query = getEntityManager().createQuery(sql);
+        return (List<Vehiculo>)query.getResultList();
+    }
+    
+    public List<Vehiculo> traerVehiculoDominio(boolean activo, String dominio){
+        String sql="SELECT object (v) FROM vehiculos v WHERE v.activo = "+activo+" AND v.domino LIKE '%"+dominio+"%'";
+        Query query = getEntityManager().createQuery(sql);
+        return (List<Vehiculo>)query.getResultList();
     }
     
 }
