@@ -28,6 +28,7 @@ public class ControladoraPrincipal {
     private Especialidad unaEspecialidad = new Especialidad();
     private Empleado unEmpleado = new Empleado();
     private Vehiculo unVehiculo = new Vehiculo();
+    private Cliente unCliente = new Cliente();
  
     ///////////// CONTROLADORA PERSISTENCIA ////////////////
     private ControladoraPersistencia cp = new ControladoraPersistencia();
@@ -292,7 +293,7 @@ public class ControladoraPrincipal {
         cp.editarEstado(unEstado);
     }
     
-    ///////////// MÉTODOS DE VEHICULO ///////////////////
+    ////////////////////////// MÉTODOS DE VEHICULO ///////////////////////////////////
     public void nuevoVehiculo(String dominio, String nroChasis, String nroMotor, int anio, long kmRecorrido, Date fechaCompra, boolean activo, Modelo unModelo) throws Exception{
         unVehiculo = new Vehiculo(dominio, nroChasis, nroMotor, anio, kmRecorrido, fechaCompra, true, unModelo);
         cp.crearVehiculo(unVehiculo);
@@ -319,7 +320,11 @@ public class ControladoraPrincipal {
     public List<Vehiculo> traerVehiculoDominio(boolean activo, String dominio) throws Exception{
         return cp.traerVehiculoDominio(activo, dominio);
     }
-    
+    //////////////////////// MÉTODOS DE CLIENTE /////////////////////////////
+    public void nuevoCliente(int dni, String nombre, String apellido, String direccion, String telefono, String usuario, String clave, long cuil, boolean activo) throws Exception{
+        unCliente = new Cliente(dni, nombre, apellido, direccion, telefono, usuario, clave, cuil, activo);
+        cp.nuevoCliente(unCliente);
+    }
     
     /////////////////// METODO MAIN ///////////////////////////
         public static void main(String[] args) {

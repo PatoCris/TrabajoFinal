@@ -12,9 +12,9 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
@@ -23,11 +23,10 @@ import javax.persistence.criteria.Root;
  * @author cristian
  */
 public class EmpleadoJpaController implements Serializable {
-
+    
     public EmpleadoJpaController() {
         emf=Persistence.createEntityManagerFactory("TallerMecanicoPU");
     }
-
     public EmpleadoJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
@@ -140,7 +139,6 @@ public class EmpleadoJpaController implements Serializable {
             em.close();
         }
     }
-    
     public List<Empleado> traerEmpleados(boolean activo){
         String sql ="SELECT object(e) FROM Empleado e WHERE e.activo = "+activo;
         Query query = getEntityManager().createQuery(sql);
@@ -156,5 +154,4 @@ public class EmpleadoJpaController implements Serializable {
         Query query = getEntityManager().createQuery(sql);
         return (List<Empleado>)query.getResultList();
     }
-    
 }

@@ -58,22 +58,23 @@ public void limpiar(){
     }
     public void cargarTabla(JTable laTabla, List<Empleado> lista) throws Exception {
         miTabla = new DefaultTableModel();
-        String cabecera[] = {"DNI", "Nombre", "Apellido", "Telefono", "Dirección", "CUIL"};
+        String cabecera[] = {"Código", "DNI", "Nombre", "Apellido", "Telefono", "Dirección", "CUIL"};
         miTabla.setColumnIdentifiers(cabecera);
         Object fila[] = new Object[miTabla.getColumnCount()];
         int cantidad = lista.size();
         if (cantidad > 0) {
             for (Empleado empleado : lista) {
-                fila[0] = empleado.getDni();
-                fila[1] = empleado.getNombre();
-                fila[2] = empleado.getApellido();
-                fila[3] = empleado.getTelefono();
-                fila[4] = empleado.getDireccion();
+                fila[0] = empleado.getCodigo();
+                fila[1] = empleado.getDni();
+                fila[2] = empleado.getNombre();
+                fila[3] = empleado.getApellido();
+                fila[4] = empleado.getTelefono();
+                fila[5] = empleado.getDireccion();
                 fila[6] = empleado.getCuil();
                 miTabla.addRow(fila);
             }
-            laTabla.setModel(miTabla);
         }
+        laTabla.setModel(miTabla);
     }
 
     /**
