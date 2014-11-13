@@ -8,6 +8,7 @@ package Persistencia;
 
 import Modelo.Accesorio;
 import Modelo.Anomalia;
+import Modelo.Cliente;
 import Modelo.Empleado;
 import Modelo.Equipamiento;
 import Modelo.Especialidad;
@@ -39,6 +40,7 @@ public class ControladoraPersistencia {
     private EspecialidadJpaController especialidadJpa = new EspecialidadJpaController();
     private EstadoJpaController estadoJpa = new EstadoJpaController();
     private VehiculoJpaController vehiculoJpa = new VehiculoJpaController();
+    private ClienteJpaController clienteJpa = new ClienteJpaController();
     
     ///////////////// METODOS DE ACCESORIO //////////////////////
     public void crearAccesorio(Accesorio accesorio) throws PreexistingEntityException, Exception{
@@ -284,5 +286,9 @@ public class ControladoraPersistencia {
     public Vehiculo traerVehiculo(int codigo) throws PreexistingEntityException, Exception{
         return vehiculoJpa.findVehiculo(codigo);
     }
-
+    
+    ///////////////////////// METODOS CLIENTE /////////////////////////////////
+    public void nuevoCliente(Cliente unCliente) throws PreexistingEntityException, Exception{
+        clienteJpa.create(unCliente);
+    }
 }
