@@ -43,7 +43,7 @@ public class frmMenu extends javax.swing.JFrame {
         jdpPanelPrincipal = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem5 = new javax.swing.JMenuItem();
+        mnuAcercaDe = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
@@ -94,8 +94,13 @@ public class frmMenu extends javax.swing.JFrame {
 
         jMenu1.setText("Archivo");
 
-        jMenuItem5.setText("Acerca de");
-        jMenu1.add(jMenuItem5);
+        mnuAcercaDe.setText("Acerca de");
+        mnuAcercaDe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuAcercaDeActionPerformed(evt);
+            }
+        });
+        jMenu1.add(mnuAcercaDe);
 
         jMenuItem6.setText("Salir");
         jMenu1.add(jMenuItem6);
@@ -182,6 +187,11 @@ public class frmMenu extends javax.swing.JFrame {
         jMenu6.setText("Empleados");
 
         mnuEspecialidades.setText("Gestión de Especialidades");
+        mnuEspecialidades.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuEspecialidadesActionPerformed(evt);
+            }
+        });
         jMenu6.add(mnuEspecialidades);
 
         mnuEmpleados.setText("Gestión Empleados");
@@ -370,6 +380,24 @@ public class frmMenu extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_mnuEmpleadosActionPerformed
 
+    private void mnuEspecialidadesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuEspecialidadesActionPerformed
+        GestionEspecialidad gestionEspecialidad;
+        try{
+            gestionEspecialidad = new GestionEspecialidad(cv);
+            gestionEspecialidad.setVisible(true);
+            jdpPanelPrincipal.add(gestionEspecialidad);
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }//GEN-LAST:event_mnuEspecialidadesActionPerformed
+
+    private void mnuAcercaDeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuAcercaDeActionPerformed
+        AcercaDe acerca;
+        acerca = new AcercaDe();
+        acerca.setVisible(true);
+        jdpPanelPrincipal.add(acerca);
+    }//GEN-LAST:event_mnuAcercaDeActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -421,12 +449,12 @@ public class frmMenu extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JDesktopPane jdpPanelPrincipal;
+    private javax.swing.JMenuItem mnuAcercaDe;
     private javax.swing.JMenuItem mnuAnomalias;
     private javax.swing.JMenu mnuDeposito;
     private javax.swing.JMenuItem mnuDiagnosticos;

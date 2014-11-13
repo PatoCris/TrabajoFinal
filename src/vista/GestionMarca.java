@@ -37,7 +37,8 @@ public void limpiar(){
         txtNombre.setText("");
         tarDescripcion.setText("");
     }
-    public void estadoInicio(){
+
+public void estadoInicio(){
         bandera = "";
         btnCancelar.setEnabled(false);
         btnGuardar.setEnabled(false);
