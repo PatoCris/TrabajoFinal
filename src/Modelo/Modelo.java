@@ -98,4 +98,11 @@ public class Modelo implements Serializable {
     public void setUnSegmento(Segmento unSegmento) {
         this.unSegmento = unSegmento;
     }
+
+    @Override
+    public String toString() {
+        return nombre;
+    }
+    
+    
 }

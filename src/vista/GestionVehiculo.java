@@ -32,8 +32,23 @@ public class GestionVehiculo extends javax.swing.JInternalFrame {
         cv = controladoraVista;
         util = new UtilVista();
         cargarTabla(tblVehiculos, cv.traerVehiculos(true));
-        util.cargarCombo(cv.traerModelo(true));
+        cmbModelo.setModel(util.cargarCombo((List)cv.traerModelo(true)));
         estadoInicio();
+        try{
+            this.cmbModelo.setModel(util.cargarCombo(cv.traerModelo(true)));
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+        /////momentaneamente deshabilitado////
+        lstAccesorios.setEnabled(false);
+        lstEstados.setEnabled(false);
+        btnEstados.setEnabled(false);
+        btnAccesorio.setEnabled(false);
+        txtGarantia.setEnabled(false);
+    }
+    
+    public void cargarCombo() throws Exception{
+        
     }
 
     public void limpiar() {
@@ -253,7 +268,7 @@ public class GestionVehiculo extends javax.swing.JInternalFrame {
                         .addComponent(btnAccesorio))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -403,7 +418,7 @@ public class GestionVehiculo extends javax.swing.JInternalFrame {
                 .addComponent(btnBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(386, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -457,8 +472,9 @@ public class GestionVehiculo extends javax.swing.JInternalFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 668, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane3)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -479,16 +495,15 @@ public class GestionVehiculo extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 541, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(15, 15, 15)
                                 .addComponent(btnGuardar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnCancelar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -509,13 +524,13 @@ public class GestionVehiculo extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnGuardar)
                             .addComponent(btnCancelar)
                             .addComponent(btnNuevo)))
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSalir)
                     .addComponent(btnEliminar)
@@ -535,7 +550,7 @@ public class GestionVehiculo extends javax.swing.JInternalFrame {
             bandera = "editar";
             //Habilitar cajas
             txtAnio.setEnabled(true);
-            txtGarantia.setEnabled(true);
+            txtGarantia.setEnabled(false);
             txtDominio.setEnabled(true);
             txtKms.setEnabled(true);
             txtNroChasis.setEnabled(true);
@@ -573,7 +588,7 @@ public class GestionVehiculo extends javax.swing.JInternalFrame {
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         bandera = "nuevo";
         txtAnio.setEnabled(true);
-        txtGarantia.setEnabled(true);
+        txtGarantia.setEnabled(false);
         txtDominio.setEnabled(true);
         txtKms.setEnabled(true);
         txtNroChasis.setEnabled(true);
@@ -590,11 +605,16 @@ public class GestionVehiculo extends javax.swing.JInternalFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         try {
+            Date fecha = null;
             String nroChasis = txtNroChasis.getText();
             String nroMotor = txtNroMotor.getText();
             int anio = Integer.valueOf(txtAnio.getText());
             long km = new Long(txtKms.getText());
-            Date fecha = Date.valueOf(txtFecha.getText());
+            try {
+                fecha = Date.valueOf(txtFecha.getText());
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "error en la fecha");
+            }
             String garantia = txtGarantia.getText();
             //verificar combo modelo
             Modelo unModelo = (Modelo)cmbModelo.getSelectedItem();

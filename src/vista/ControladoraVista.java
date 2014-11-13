@@ -218,9 +218,10 @@ class ControladoraVista {
     
     ///////////////// METODOS DE VEHICULO ////////////////////////
     public void nuevoVehiculo(String dominio, String nroChasis, String nroMotor, int anio, long kmRecorrido, Date fechaCompra, boolean activo, Modelo unModelo) throws Exception{
-        cp.editarVehiculo(dominio, nroChasis, nroMotor, anio, kmRecorrido, fechaCompra, activo, unModelo);
+        cp.nuevoVehiculo(dominio, nroChasis, nroMotor, anio, kmRecorrido, fechaCompra, activo, unModelo);
     }
     public void editarVehiculo(String dominio, String nroChasis, String nroMotor, int anio, long kmRecorrido, Date fechaCompra, boolean activo, Modelo unModelo) throws Exception{
+        //recibir codigo en todos los metodos sgtes.
         cp.editarVehiculo(dominio, nroChasis, nroMotor, anio, kmRecorrido, fechaCompra, activo, unModelo);
     }
     public List<Vehiculo> traerVehiculos(boolean activo) throws Exception{

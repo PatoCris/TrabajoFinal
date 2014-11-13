@@ -57,7 +57,6 @@ public class EstadoVehiculo implements Serializable {
     private boolean amortiguacion;
     @Column(name = "activo")
     private boolean activo;
-    @JoinColumn(name="un_vehiculo")
     @OneToOne
     @ManyToOne
     private Vehiculo unVehiculo;

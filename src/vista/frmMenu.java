@@ -6,6 +6,7 @@
 
 package vista;
 
+import Modelo.Vehiculo;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.util.logging.Level;
@@ -47,7 +48,7 @@ public class frmMenu extends javax.swing.JFrame {
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        mnuVehiculo = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem10 = new javax.swing.JMenuItem();
@@ -112,8 +113,13 @@ public class frmMenu extends javax.swing.JFrame {
 
         jMenu3.setText("Vehículo");
 
-        jMenuItem2.setText("Gestión Vehículo");
-        jMenu3.add(jMenuItem2);
+        mnuVehiculo.setText("Gestión Vehículo");
+        mnuVehiculo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuVehiculoActionPerformed(evt);
+            }
+        });
+        jMenu3.add(mnuVehiculo);
 
         jMenuItem3.setText("Gestión Estado");
         jMenu3.add(jMenuItem3);
@@ -398,6 +404,17 @@ public class frmMenu extends javax.swing.JFrame {
         jdpPanelPrincipal.add(acerca);
     }//GEN-LAST:event_mnuAcercaDeActionPerformed
 
+    private void mnuVehiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuVehiculoActionPerformed
+        GestionVehiculo miVehiculo;
+        try {
+            miVehiculo = new GestionVehiculo(cv);
+            miVehiculo.setVisible(true);
+            jdpPanelPrincipal.add(miVehiculo);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }//GEN-LAST:event_mnuVehiculoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -446,7 +463,6 @@ public class frmMenu extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem13;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem6;
@@ -470,5 +486,6 @@ public class frmMenu extends javax.swing.JFrame {
     private javax.swing.JMenu mnuServicio;
     private javax.swing.JMenuItem mnuTipoAnomalia;
     private javax.swing.JMenuItem mnuTipoReparacion;
+    private javax.swing.JMenuItem mnuVehiculo;
     // End of variables declaration//GEN-END:variables
 }

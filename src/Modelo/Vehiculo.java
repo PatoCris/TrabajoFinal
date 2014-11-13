@@ -8,8 +8,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 
@@ -47,11 +49,12 @@ public class Vehiculo implements Serializable {
     private boolean activo;
     @Column(name = "una_garantia")
     private Garantia unaGarantia;
-    @Column(name = "un_modelo")
+    @JoinColumn(name = "un_modelo")
+    @OneToOne
     private Modelo unModelo;
     @OneToMany
     private List<Accesorio> misAccesorios = new LinkedList<>();
-    @OneToMany(mappedBy = "misEstados")
+    @OneToMany(mappedBy = "unVehiculo")
     private List<EstadoVehiculo> misEstados = new LinkedList<>();
     
     //METODOS
