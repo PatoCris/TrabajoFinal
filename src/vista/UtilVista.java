@@ -8,6 +8,7 @@ package vista;
 
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
 /**
@@ -28,6 +29,17 @@ public class UtilVista {
             }
         }
         return miCombo;
+    }
+    
+    public DefaultListModel cargarLista (List<?> miLista){
+    DefaultListModel miList = new DefaultListModel();
+    if(miLista != null){
+        int cantidad = miLista.size();
+        for (int i=0; i<cantidad; i++) {
+            miList.addElement(miLista.get(i));
+        }
+    }
+    return miList;
     }
     public void verificarNombre(String nombre) throws Exception{
         if(nombre.length() < 2){

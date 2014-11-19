@@ -233,9 +233,15 @@ class ControladoraVista {
     public List<Vehiculo> traerVehiculoDominio(boolean activo, String dominio) throws Exception{
         return cp.traerVehiculoDominio(activo, dominio);
     }
+    void vincularAccesVehiculo(Accesorio miAcc) {
+        
+    }
+    
     
     ////////////////////// METODOS DE ESTADOS /////////////////////////////
     public void nuevoCliente (int dni, String nombre, String apellido, String direccion, String telefono, String usuario, String clave, long cuil, boolean activo) throws Exception{
         cp.nuevoCliente(dni, nombre, apellido, direccion, telefono, usuario, clave, cuil, activo);
     }
+
+    
 }

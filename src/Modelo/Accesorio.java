@@ -73,4 +73,10 @@ public class Accesorio implements Serializable {
         this.activo = activo;
     }
 
+    @Override
+    public String toString() {
+        return nombre;
+    }
+
+    
 }
