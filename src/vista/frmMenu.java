@@ -47,6 +47,7 @@ public class frmMenu extends javax.swing.JFrame {
         mnuAcercaDe = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        mnuGestionCliente = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         mnuVehiculo = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
@@ -69,6 +70,7 @@ public class frmMenu extends javax.swing.JFrame {
         mnuEmpleados = new javax.swing.JMenuItem();
         mnuDeposito = new javax.swing.JMenu();
         mnuGestionAccesorios = new javax.swing.JMenuItem();
+        mnuPiezaRecambio = new javax.swing.JMenuItem();
         mnuServicio = new javax.swing.JMenu();
         mnuTipoReparacion = new javax.swing.JMenuItem();
         mnuAnomalias = new javax.swing.JMenuItem();
@@ -109,6 +111,15 @@ public class frmMenu extends javax.swing.JFrame {
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Clientes");
+
+        mnuGestionCliente.setText("Gestión Cliente");
+        mnuGestionCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuGestionClienteActionPerformed(evt);
+            }
+        });
+        jMenu2.add(mnuGestionCliente);
+
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("Vehículo");
@@ -219,6 +230,14 @@ public class frmMenu extends javax.swing.JFrame {
             }
         });
         mnuDeposito.add(mnuGestionAccesorios);
+
+        mnuPiezaRecambio.setText("Gestión Pieza Recambio");
+        mnuPiezaRecambio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuPiezaRecambioActionPerformed(evt);
+            }
+        });
+        mnuDeposito.add(mnuPiezaRecambio);
 
         jMenuBar1.add(mnuDeposito);
 
@@ -415,6 +434,28 @@ public class frmMenu extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_mnuVehiculoActionPerformed
 
+    private void mnuGestionClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuGestionClienteActionPerformed
+        GestionCliente miCliente;
+        try {
+            miCliente = new GestionCliente(cv);
+            miCliente.setVisible(true);
+            jdpPanelPrincipal.add(miCliente);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }//GEN-LAST:event_mnuGestionClienteActionPerformed
+
+    private void mnuPiezaRecambioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuPiezaRecambioActionPerformed
+        GestionPiezaRecambio miPiezaRecambio;
+        try {
+            miPiezaRecambio = new GestionPiezaRecambio(cv);
+            miPiezaRecambio.setVisible(true);
+            jdpPanelPrincipal.add(miPiezaRecambio);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }//GEN-LAST:event_mnuPiezaRecambioActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -477,10 +518,12 @@ public class frmMenu extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnuEmpleados;
     private javax.swing.JMenuItem mnuEspecialidades;
     private javax.swing.JMenuItem mnuGestionAccesorios;
+    private javax.swing.JMenuItem mnuGestionCliente;
     private javax.swing.JMenuItem mnuGestionEquipamiento;
     private javax.swing.JMenuItem mnuGestionSegmento;
     private javax.swing.JMenuItem mnuMarca;
     private javax.swing.JMenuItem mnuModelo;
+    private javax.swing.JMenuItem mnuPiezaRecambio;
     private javax.swing.JMenu mnuProveedores;
     private javax.swing.JMenuItem mnuReparaciones;
     private javax.swing.JMenu mnuServicio;

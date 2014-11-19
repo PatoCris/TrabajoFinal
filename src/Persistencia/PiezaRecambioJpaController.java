@@ -7,13 +7,15 @@
 package Persistencia;
 
 import Modelo.PiezaRecambio;
+import Modelo.TipoReparacion;
 import Persistencia.exceptions.NonexistentEntityException;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
@@ -22,6 +24,10 @@ import javax.persistence.criteria.Root;
  * @author cristian
  */
 public class PiezaRecambioJpaController implements Serializable {
+
+    public PiezaRecambioJpaController() {
+        emf=Persistence.createEntityManagerFactory("TallerMecanicoPU");
+    }
 
     public PiezaRecambioJpaController(EntityManagerFactory emf) {
         this.emf = emf;
@@ -134,6 +140,23 @@ public class PiezaRecambioJpaController implements Serializable {
         } finally {
             em.close();
         }
+    }
+    public List<PiezaRecambio> traerPiezaRecambios(boolean activo){
+        String sql ="SELECT object(pr) FROM PiezaRecambio pr WHERE pr.activo = "+activo;
+        Query query = getEntityManager().createQuery(sql);
+        return (List<PiezaRecambio>)query.getResultList();
+    }
+    
+    public List<PiezaRecambio> traerPiezaRecambiosBusqueda(boolean activo, String nombre, TipoReparacion tipo){
+        String sql ="SELECT object(pr) FROM PiezaRecambio pr WHERE pr.activo = "+activo;
+        if(!nombre.equals("")){
+            sql = sql + " AND pr.nombre LIKE '%"+nombre+"%'";
+        }
+        if(tipo != null){
+            sql = sql + " AND pr.grupoParte.codigo = "+tipo.getCodigo();
+        }
+        Query query = getEntityManager().createQuery(sql);
+        return (List<PiezaRecambio>)query.getResultList();
     }
     
 }

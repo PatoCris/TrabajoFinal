@@ -8,7 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -50,8 +49,7 @@ public class Cliente implements Serializable {
     
     @OneToMany
     private List<Vehiculo> misVehiculos = new LinkedList<>();
-    @OneToMany(mappedBy = "un_cliente")
-    private List<Pedido> misPedidos = new LinkedList<>();
+    
     
     //Operaciones
     //Solicitar alta vehiculo
@@ -156,17 +154,8 @@ public class Cliente implements Serializable {
         return misVehiculos;
     }
 
-    public List<Pedido> getMisPedidos() {
-        return misPedidos;
-    }
-
     public void setMisVehiculos(List<Vehiculo> misVehiculos) {
         this.misVehiculos = misVehiculos;
     }
-
-    public void setMisPedidos(List<Pedido> misPedidos) {
-        this.misPedidos = misPedidos;
-    }
-   
-    
+ 
 }

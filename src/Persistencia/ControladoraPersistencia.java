@@ -15,6 +15,7 @@ import Modelo.Especialidad;
 import Modelo.Estado;
 import Modelo.Marca;
 import Modelo.Modelo;
+import Modelo.PiezaRecambio;
 import Modelo.Segmento;
 import Modelo.TipoAnomalia;
 import Modelo.TipoReparacion;
@@ -41,6 +42,7 @@ public class ControladoraPersistencia {
     private EstadoJpaController estadoJpa = new EstadoJpaController();
     private VehiculoJpaController vehiculoJpa = new VehiculoJpaController();
     private ClienteJpaController clienteJpa = new ClienteJpaController();
+    private PiezaRecambioJpaController piezaRecambioJpa = new PiezaRecambioJpaController();
     
     ///////////////// METODOS DE ACCESORIO //////////////////////
     public void crearAccesorio(Accesorio accesorio) throws PreexistingEntityException, Exception{
@@ -62,7 +64,7 @@ public class ControladoraPersistencia {
         return accesorioJpa.findAccesorio(codigo);
     }
     
-///////////////// METODOS DE MARCA //////////////////////
+    ///////////////// METODOS DE MARCA //////////////////////
     public void nuevaMarca(Marca marca) throws PreexistingEntityException, Exception{
         marcaJpa.create(marca);
     }
@@ -222,6 +224,13 @@ public class ControladoraPersistencia {
     public List<Empleado> traerEmpleadosBusqueda(boolean activo, String apellido, int dni) throws PreexistingEntityException, Exception{
         return empleadoJpa.traerEmpleadosBusqueda(activo, apellido, dni);
     }
+    public boolean existeEmpleado(int dni) throws NonexistentEntityException, Exception{
+        return empleadoJpa.exiteEmpleado(dni);
+    }
+    public boolean existeEmpleado(int dni, int codigo) throws NonexistentEntityException, Exception{
+        return empleadoJpa.exiteEmpleado(dni, codigo);
+    }
+    
     ///////////////////////// METODOS ESPECIALIDAD ////////////////////////////////
     public void nuevaEspecialidad(Especialidad unaEspecialidad) throws PreexistingEntityException, Exception{
         especialidadJpa.create(unaEspecialidad);
@@ -244,6 +253,7 @@ public class ControladoraPersistencia {
     public void eliminarEspecialidad(int codigo) throws NonexistentEntityException, Exception{
         especialidadJpa.destroy(codigo);
     }
+
     
         ///////////////////////// METODOS ESTADOS ////////////////////////////////
     public void nuevoEstado(Estado unEstado) throws PreexistingEntityException, Exception{
@@ -290,5 +300,41 @@ public class ControladoraPersistencia {
     ///////////////////////// METODOS CLIENTE /////////////////////////////////
     public void nuevoCliente(Cliente unCliente) throws PreexistingEntityException, Exception{
         clienteJpa.create(unCliente);
+    }
+    public void editarCliente(Cliente cliente) throws PreexistingEntityException, Exception{
+        clienteJpa.edit(cliente);
+    }
+    public Cliente traerCliente(int codigo) throws PreexistingEntityException, Exception{
+        return clienteJpa.findCliente(codigo);
+    }
+    public List<Cliente> traerClientes(boolean activo) throws PreexistingEntityException, Exception{
+        return clienteJpa.traerClientes(activo);
+    }
+    public void eliminarCliente(int codigo) throws NonexistentEntityException, Exception{
+            clienteJpa.destroy(codigo);
+    }
+    public List<Cliente> traerClientesBusqueda(boolean activo, String apellido, int dni) throws PreexistingEntityException, Exception{
+        return clienteJpa.traerClientesBusqueda(activo, apellido, dni);
+    }   
+
+    
+    ///////////////////////// METODOS DE PIEZA RECAMBIO ///////////////////////////////
+    public void nuevaPiezaRecambio(PiezaRecambio piezaRecambio) throws PreexistingEntityException, Exception{
+        piezaRecambioJpa.create(piezaRecambio);
+    }
+    public void editarPiezaRecambio(PiezaRecambio piezaRecambio) throws PreexistingEntityException, Exception{
+        piezaRecambioJpa.edit(piezaRecambio);
+    }
+    public PiezaRecambio traerPiezaRecambio(int codigo) throws PreexistingEntityException, Exception{
+        return piezaRecambioJpa.findPiezaRecambio(codigo);
+    }
+    public List<PiezaRecambio> traerPiezaRecambios(boolean activo) throws PreexistingEntityException, Exception{
+        return piezaRecambioJpa.traerPiezaRecambios(activo);
+    }
+    public void eliminarPiezaRecambio(int codigo) throws NonexistentEntityException, Exception{
+        marcaJpa.destroy(codigo);
+    }
+    public List<PiezaRecambio> traerPiezaRecambiosBusqueda(boolean activo, String nombre, TipoReparacion tipo) throws PreexistingEntityException, Exception{
+        return piezaRecambioJpa.traerPiezaRecambiosBusqueda(activo, nombre, tipo);
     }
 }

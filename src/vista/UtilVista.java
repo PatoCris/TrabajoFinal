@@ -81,6 +81,15 @@ public class UtilVista {
             throw new Exception("Error: Debe seleccionar un/una "+nombre+".");
         }
     }
+    public String password(char[] password){
+        String pass = new String(password);
+        return pass;
+    }
+    public void verificarString(String string, String nombre) throws Exception{
+        if(string.equals("")){
+            throw new Exception ("Error: El campo "+nombre+" está vacio.");
+        }
+    }
 }
     
 

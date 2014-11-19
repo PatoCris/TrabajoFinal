@@ -41,11 +41,13 @@ public class PiezaRecambio implements Serializable {
     private boolean garantia;
     @Column(name = "caracteristica")
     private String caracteristica;
+    @Column(name = "meses_garantia")
+    private int mesesGarantia;
     @Column(name = "activo")
     private boolean activo;
-    @JoinColumn(name="un_tipo_pieza_recambio")
+    @JoinColumn(name="grupo_parte")
     @OneToOne
-    private TipoPiezaRecambio unTipoPiezaRecambio;
+    private TipoReparacion grupoParte;
     @OneToMany
     private List<Modelo> vehiculosCompatibles = new LinkedList<>();
     
@@ -54,15 +56,15 @@ public class PiezaRecambio implements Serializable {
     public PiezaRecambio() {
     }
 
-    public PiezaRecambio(int codigo, String nombre, double precio, double impuesto, boolean garantia, String caracteristica, boolean activo, TipoPiezaRecambio unTipoPiezaRecambio) {
-        this.codigo = codigo;
+    public PiezaRecambio(String nombre, double precio, double impuesto, boolean garantia, String caracteristica, int mesesGarantia, boolean activo, TipoReparacion grupoParte) {
         this.nombre = nombre;
         this.precio = precio;
         this.impuesto = impuesto;
         this.garantia = garantia;
         this.caracteristica = caracteristica;
+        this.mesesGarantia = mesesGarantia;
         this.activo = activo;
-        this.unTipoPiezaRecambio = unTipoPiezaRecambio;
+        this.grupoParte = grupoParte;
     }
 
     public int getCodigo() {
@@ -113,6 +115,14 @@ public class PiezaRecambio implements Serializable {
         this.caracteristica = caracteristica;
     }
 
+    public int getMesesGarantia() {
+        return mesesGarantia;
+    }
+
+    public void setMesesGarantia(int mesesGarantia) {
+        this.mesesGarantia = mesesGarantia;
+    }
+
     public boolean isActivo() {
         return activo;
     }
@@ -121,17 +131,12 @@ public class PiezaRecambio implements Serializable {
         this.activo = activo;
     }
 
-    public TipoPiezaRecambio getUnTipoPiezaRecambio() {
-        return unTipoPiezaRecambio;
+    public TipoReparacion getGrupoParte() {
+        return grupoParte;
     }
 
-    public void setUnTipoPiezaRecambio(TipoPiezaRecambio unTipoPiezaRecambio) {
-        this.unTipoPiezaRecambio = unTipoPiezaRecambio;
+    public void setGrupoParte(TipoReparacion grupoParte) {
+        this.grupoParte = grupoParte;
     }
-
-    public List<Modelo> getVehiculosCompatibles() {
-        return vehiculosCompatibles;
-    }
-    
     
 }

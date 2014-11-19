@@ -12,9 +12,9 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
@@ -140,5 +140,41 @@ public class ClienteJpaController implements Serializable {
             em.close();
         }
     }
+    public List<Cliente> traerClientes(boolean activo){
+        String sql ="SELECT object(c) FROM Cliente c WHERE c.activo = "+activo;
+        Query query = getEntityManager().createQuery(sql);
+        return (List<Cliente>)query.getResultList();
+    }
     
+    public List<Cliente> traerClientesBusqueda(boolean activo, String apellido, int dni){
+        String sql ="SELECT object(c) FROM Cliente c WHERE c.activo = "+activo;
+        if(!apellido.equals(""))
+            sql = sql + " AND c.apellido = '"+apellido+"'";
+        if(dni != 0)
+            sql = sql + " AND c.dni = '"+dni+"'";
+        Query query = getEntityManager().createQuery(sql);
+        return (List<Cliente>)query.getResultList();
+    }
+    public boolean exiteCliente(int dni){
+        boolean retorno = true;
+        try{
+            String sql = "SELECT object(c) FORM Cliente c WHERE c.dni = "+dni;
+            Query query = getEntityManager().createQuery(sql);
+            query.getSingleResult();
+        }catch(Exception ex){
+            retorno = false;
+        }
+        return retorno;
+    }
+    public boolean exiteCliente(int dni, int codigo) {
+        boolean existe = true;
+        try {
+            String consulta = "SELECT object(c) FROM Cliente c WHERE c.dni = " + dni + " and c.codigo <> " + codigo;
+            Query query = this.getEntityManager().createQuery(consulta);
+            query.getSingleResult();//si lanza excepcion el Cliente no existe
+        } catch (Exception e) {
+            existe = false;
+        }
+        return existe;
+    }
 }
