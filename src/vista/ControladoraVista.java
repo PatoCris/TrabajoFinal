@@ -8,6 +8,7 @@ package vista;
 
 import Modelo.Accesorio;
 import Modelo.Anomalia;
+import Modelo.Cliente;
 import Modelo.ControladoraPrincipal;
 import Modelo.Empleado;
 import Modelo.Equipamiento;
@@ -15,6 +16,7 @@ import Modelo.Especialidad;
 import Modelo.Estado;
 import Modelo.Marca;
 import Modelo.Modelo;
+import Modelo.PiezaRecambio;
 import Modelo.Segmento;
 import Modelo.TipoAnomalia;
 import Modelo.TipoReparacion;
@@ -56,7 +58,7 @@ class ControladoraVista {
     public List<Marca> traerMarcas(boolean activo) throws Exception{
         return cp.traerMarcas(activo);
     }
-    public void elminarMarca(int codigo) throws Exception{
+    public void eliminarMarca(int codigo) throws Exception{
         cp.eliminarMarca(codigo);
     }
     public List<Marca> traerMarcasNombre(boolean activo, String nombre) throws Exception{
@@ -233,15 +235,42 @@ class ControladoraVista {
     public List<Vehiculo> traerVehiculoDominio(boolean activo, String dominio) throws Exception{
         return cp.traerVehiculoDominio(activo, dominio);
     }
-    void vincularAccesVehiculo(Accesorio miAcc) {
-        
-    }
     
-    
-    ////////////////////// METODOS DE ESTADOS /////////////////////////////
+    ////////////////////// METODOS DE CLIENTE /////////////////////////////
     public void nuevoCliente (int dni, String nombre, String apellido, String direccion, String telefono, String usuario, String clave, long cuil, boolean activo) throws Exception{
         cp.nuevoCliente(dni, nombre, apellido, direccion, telefono, usuario, clave, cuil, activo);
     }
-
+    public void editarCliente(int codigo, int dni, String nombre, String apellido, String direccion, String telefono, String usuario, String clave, long cuil, boolean activo) throws Exception{
+        cp.editarCliente(codigo, dni, nombre, apellido, direccion, telefono, usuario, clave, cuil, activo);
+    }
+    public List<Cliente> traerClientes(boolean activo) throws Exception{
+        return cp.traerClientes(activo);
+    }
+    public List<Cliente> traerClientesBusqueda(boolean activo, String apellido, int dni) throws Exception{
+        return cp.traerClientesBusqueda(activo, apellido, dni);
+    }
+    public void eliminarCliente (int codigo) throws Exception{
+        cp.eliminarCliente(codigo);
+    }
     
+    ////////////////////// METODOS DE PIEZA RECAMBIO /////////////////////////////
+    public void nuevaPiezaRecambio (String nombre, double precio, double impuesto, boolean garantia, String caracteristica, int mesesGarantia, boolean activo, TipoReparacion grupoParte) throws Exception{
+        cp.nuevaPiezaRecambio(nombre, precio, impuesto, garantia, caracteristica, mesesGarantia, activo, grupoParte);
+    }
+    public void editarPiezaRecambio(int codigo, String nombre, double precio, double impuesto, boolean garantia, String caracteristica, int mesesGarantia, boolean activo, TipoReparacion grupoParte) throws Exception{
+        cp.editarPiezaRecambio(codigo, nombre, precio, impuesto, garantia, caracteristica, mesesGarantia, activo, grupoParte);
+    }
+    public List<PiezaRecambio> traerPiezaRecambios(boolean activo) throws Exception{
+        return cp.traerPiezaRecambios(activo);
+    }
+    public List<PiezaRecambio> traerPiezaRecambiosBusqueda(boolean activo, String nombre, TipoReparacion tipo) throws Exception{
+        return cp.traerPiezaRecambiosBusqueda(activo, nombre, tipo);
+    }
+    public void eliminarPiezaRecambio(int codigo) throws Exception{
+        cp.eliminarPiezaRecambio(codigo);
+    }
+    public PiezaRecambio traerPiezaRecambio(int codigo) throws Exception{
+        return cp.traerPiezaRecambio(codigo);
+    }
+    //Para subir la ultima version 
 }
