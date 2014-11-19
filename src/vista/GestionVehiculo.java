@@ -703,7 +703,7 @@ public class GestionVehiculo extends javax.swing.JInternalFrame {
              JOptionPane.showMessageDialog(null, "Debe seleccionar un Accesorio");
          }else{
              try {
-                 this.cv.vincularAccesVehiculo(miAcc);
+                // this.cv.vincularAccesVehiculo(miAcc);
              } catch (Exception e) {
                  JOptionPane.showMessageDialog(null, e.getMessage());
              }
