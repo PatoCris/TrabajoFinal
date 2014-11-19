@@ -390,7 +390,7 @@ public void estadoInicio(){
             btnNuevo.setEnabled(false);
             btnEliminar.setEnabled(false);
         }else{
-            JOptionPane.showMessageDialog(null, "Seleccione un Marca para editar.");
+            JOptionPane.showMessageDialog(null, "Seleccione una Marca para editar.");
         }
     }//GEN-LAST:event_btnEditarActionPerformed
 
@@ -460,7 +460,7 @@ public void estadoInicio(){
                 int seleccion = JOptionPane.showConfirmDialog(null, "¿Está seguro desea eliminar la Marca?", "Input", JOptionPane.YES_NO_OPTION);
                 if (seleccion == JOptionPane.YES_OPTION) {
                     int codigo = Integer.valueOf(tblMarcas.getValueAt(tblMarcas.getSelectedRow(), 0).toString());
-                    cv.elminarMarca(codigo);
+                    cv.eliminarMarca(codigo);
                     cargarTabla(tblMarcas, cv.traerMarcas(true));
                 }
             }else{

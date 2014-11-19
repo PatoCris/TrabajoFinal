@@ -148,10 +148,33 @@ public class EmpleadoJpaController implements Serializable {
     public List<Empleado> traerEmpleadosBusqueda(boolean activo, String apellido, int dni){
         String sql ="SELECT object(e) FROM Empleado e WHERE e.activo = "+activo;
         if(!apellido.equals(""))
-            sql = sql + " AND e.apellido = '"+apellido+"'";
+            sql = sql + " AND e.apellido LIKE '%"+apellido+"%'";
         if(dni != 0)
-            sql = sql + " AND e.dni = '"+dni+"'";
+            sql = sql + " AND e.dni LIKE '%"+dni+"%'";
         Query query = getEntityManager().createQuery(sql);
         return (List<Empleado>)query.getResultList();
+    }
+    
+    public boolean exiteEmpleado(int dni){
+        boolean retorno = true;
+        try{
+            String sql = "SELECT object(e) FORM Empleado c WHERE e.dni = "+dni;
+            Query query = getEntityManager().createQuery(sql);
+            query.getSingleResult();
+        }catch(Exception ex){
+            retorno = false;
+        }
+        return retorno;
+    }
+    public boolean exiteEmpleado(int dni, int codigo) {
+        boolean existe = true;
+        try {
+            String consulta = "SELECT object(e) FROM Empleado e WHERE e.dni = " + dni + " and e.codigo <> " + codigo;
+            Query query = this.getEntityManager().createQuery(consulta);
+            query.getSingleResult();//si lanza excepcion el Cliente no existe
+        } catch (Exception e) {
+            existe = false;
+        }
+        return existe;
     }
 }

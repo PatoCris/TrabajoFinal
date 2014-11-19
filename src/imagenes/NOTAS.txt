@@ -1,0 +1,6 @@
+1: Hay que arreglar las tabulaciones en la vista;
+2: Hay que bloquear las busquedas y la tabla cuando se está editando, o creando uno nuevo;
+3: Hay que verificar título y ortografía;
+4: Ver las Verificaciones de DNI en nuevo y Editar de Empleado;
+5: Agregar las verificaciones de DNI en nuevo y Editar de Cliente;
+6: Bloquedar todas las tablas para que no puedan ser editadas con doble click

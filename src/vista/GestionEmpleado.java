@@ -274,6 +274,11 @@ public void limpiar(){
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblEmpleados.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblEmpleadosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblEmpleados);
 
         jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -393,6 +398,11 @@ public void limpiar(){
         btnSalir.setFont(new java.awt.Font("Politica", 0, 16)); // NOI18N
         btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/close_16.png"))); // NOI18N
         btnSalir.setText("Salir");
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -532,13 +542,10 @@ public void limpiar(){
             util.verificarApellido(apellido);
             util.verificarDni(dni);
             util.verificarCuil(cuil);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage());
-        }
+
+            dniInt = Integer.valueOf(dni);
+            cuilInt =  new Long(Long.parseLong(cuil)); 
         
-        dniInt = Integer.valueOf(dni);
-        cuilInt =  new Long(Long.parseLong(cuil)); 
-        try {
             if(bandera.equals("nuevo")){
                 this.cv.nuevoEmpleado(dniInt, nombre, apellido, telefono, direccion, cuilInt, true);
                 bandera = "";
@@ -587,6 +594,22 @@ public void limpiar(){
         char c = evt.getKeyChar();
         if(c<'0' || c>'9' || txtBusquedaDni.getText().length() > 7) evt.consume();
     }//GEN-LAST:event_txtBusquedaDniKeyTyped
+
+    private void tblEmpleadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblEmpleadosMouseClicked
+        if(tblEmpleados.getSelectedRow() != -1){
+            txtCodigo.setText(tblEmpleados.getValueAt(tblEmpleados.getSelectedRow(), 0).toString());
+            txtDni.setText(tblEmpleados.getValueAt(tblEmpleados.getSelectedRow(), 1).toString());
+            txtNombre.setText(tblEmpleados.getValueAt(tblEmpleados.getSelectedRow(), 2).toString());
+            txtApellido.setText(tblEmpleados.getValueAt(tblEmpleados.getSelectedRow(), 3).toString());
+            txtTelefono.setText(tblEmpleados.getValueAt(tblEmpleados.getSelectedRow(), 4).toString());
+            txtDireccion.setText(tblEmpleados.getValueAt(tblEmpleados.getSelectedRow(), 5).toString());
+            txtCuil.setText(tblEmpleados.getValueAt(tblEmpleados.getSelectedRow(), 6).toString());
+        }
+    }//GEN-LAST:event_tblEmpleadosMouseClicked
+
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnSalirActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -38,7 +38,7 @@ public class GestionAnomalia extends javax.swing.JInternalFrame {
         try {
             cmbTipoAnomaliaBusqueda.setModel(utilVista.cargarCombo((List)cv.traerTipoAnomalia(true)));
         } catch (Exception ex) {
-            Logger.getLogger(GestionAnomalia.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }
     public void limpiar(){
@@ -494,7 +494,7 @@ public class GestionAnomalia extends javax.swing.JInternalFrame {
         try {
             cmbTipoAnomalia.setModel(utilVista.cargarCombo((List)cv.traerTipoAnomalia(true)));
         } catch (Exception ex) {
-            Logger.getLogger(GestionAnomalia.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }//GEN-LAST:event_btnNuevoActionPerformed
 
@@ -579,7 +579,7 @@ public class GestionAnomalia extends javax.swing.JInternalFrame {
         try {
             cargarTabla(tblAnomalias, cv.traerAnomalias(true));
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }//GEN-LAST:event_btnRestaurarActionPerformed
 
