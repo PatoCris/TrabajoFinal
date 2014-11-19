@@ -272,5 +272,5 @@ class ControladoraVista {
     public PiezaRecambio traerPiezaRecambio(int codigo) throws Exception{
         return cp.traerPiezaRecambio(codigo);
     }
-    
+    //Para subir la ultima version
 }
