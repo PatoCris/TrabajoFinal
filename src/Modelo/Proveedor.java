@@ -19,7 +19,7 @@ import javax.persistence.Table;
  * @author Asus
  */
 @Entity
-@Table(name="precesos")
+@Table(name="proveedores")
 public class Proveedor implements Serializable {
     @Id
     @Column(name = "codigo")
@@ -104,6 +104,11 @@ public class Proveedor implements Serializable {
 
     public void setActivo(boolean activo) {
         this.activo = activo;
+    }
+
+    @Override
+    public String toString() {
+        return nombre;
     }
     
     

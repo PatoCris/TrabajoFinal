@@ -90,6 +90,7 @@ public class UtilVista {
             throw new Exception ("Error: El campo "+nombre+" está vacio.");
         }
     }
+    
 }
     
 

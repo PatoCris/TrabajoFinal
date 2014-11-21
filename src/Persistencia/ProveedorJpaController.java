@@ -14,6 +14,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
@@ -23,6 +24,10 @@ import javax.persistence.criteria.Root;
  */
 public class ProveedorJpaController implements Serializable {
 
+    
+    public ProveedorJpaController(){
+        emf = Persistence.createEntityManagerFactory("TallerMecanicoPU");
+    }
     public ProveedorJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
@@ -136,4 +141,15 @@ public class ProveedorJpaController implements Serializable {
         }
     }
     
+     public List<Proveedor> traerProveedores(boolean activo){
+        String sql ="SELECT object(p) FROM Proveedor p WHERE p.activo = "+activo;
+        Query query = getEntityManager().createQuery(sql);
+        return (List<Proveedor>)query.getResultList();
+    }
+    
+    public List<Proveedor> traerProveedorNombre(boolean activo, String nombre){
+        String sql ="SELECT object(p) FROM Proveedor p WHERE p.activo = "+activo+" AND p.nombre LIKE '%"+nombre+"%'";
+        Query query = getEntityManager().createQuery(sql);
+        return (List<Proveedor>)query.getResultList();
+    }
 }
