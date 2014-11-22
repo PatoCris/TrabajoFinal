@@ -6,9 +6,13 @@
 
 package vista;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 
 /**
@@ -90,6 +94,7 @@ public class UtilVista {
             throw new Exception ("Error: El campo "+nombre+" está vacio.");
         }
     }
+
 }
     
 

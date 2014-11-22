@@ -3,8 +3,10 @@ package Modelo;
 
 import java.io.Serializable;
 import java.util.*;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -48,7 +50,7 @@ public class PiezaRecambio implements Serializable {
     @JoinColumn(name="grupo_parte")
     @OneToOne
     private TipoReparacion grupoParte;
-    @OneToMany
+    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
     private List<Modelo> vehiculosCompatibles = new LinkedList<>();
     
     //Metodos
@@ -137,6 +139,14 @@ public class PiezaRecambio implements Serializable {
 
     public void setGrupoParte(TipoReparacion grupoParte) {
         this.grupoParte = grupoParte;
+    }
+
+    public List<Modelo> getVehiculosCompatibles() {
+        return vehiculosCompatibles;
+    }
+
+    public void setVehiculosCompatibles(List<Modelo> vehiculosCompatibles) {
+        this.vehiculosCompatibles = vehiculosCompatibles;
     }
     
 }

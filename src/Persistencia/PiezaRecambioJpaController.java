@@ -6,6 +6,7 @@
 
 package Persistencia;
 
+import Modelo.Modelo;
 import Modelo.PiezaRecambio;
 import Modelo.TipoReparacion;
 import Persistencia.exceptions.NonexistentEntityException;
@@ -24,11 +25,11 @@ import javax.persistence.criteria.Root;
  * @author cristian
  */
 public class PiezaRecambioJpaController implements Serializable {
-
+    
     public PiezaRecambioJpaController() {
         emf=Persistence.createEntityManagerFactory("TallerMecanicoPU");
     }
-
+    
     public PiezaRecambioJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
@@ -158,5 +159,7 @@ public class PiezaRecambioJpaController implements Serializable {
         Query query = getEntityManager().createQuery(sql);
         return (List<PiezaRecambio>)query.getResultList();
     }
+
+        
     
 }

@@ -7,14 +7,15 @@
 package Persistencia;
 
 import Modelo.Modelo;
+import Modelo.PiezaRecambio;
 import Persistencia.exceptions.NonexistentEntityException;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
@@ -27,7 +28,7 @@ public class ModeloJpaController implements Serializable {
     public ModeloJpaController() {
         emf=Persistence.createEntityManagerFactory("TallerMecanicoPU");
     }
-
+    
     public ModeloJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
@@ -150,6 +151,17 @@ public class ModeloJpaController implements Serializable {
         String sql ="SELECT object(m) FROM Modelo m WHERE m.activo = "+activo+" AND m.nombre LIKE '%"+nombre+"%'";
         Query query = getEntityManager().createQuery(sql);
         return (List<Modelo>)query.getResultList();
+    }  	
+    
+    public List<Modelo> traerModelosSinVinculo(PiezaRecambio pieza){
+        String sql ="SELECT Object(m) from Modelo m where m.codigo NOT IN (SELECT mo.codigo FROM  PiezaRecambio p INNER JOIN p.vehiculosCompatibles mo WHERE p.codigo ="+pieza.getCodigo()+")";
+        Query query = getEntityManager().createQuery(sql);
+        return (List<Modelo>)query.getResultList();
     }
     
+    public List<Modelo> traerModelosConVinculo(PiezaRecambio pieza){
+        String sql ="SELECT Object(m) from Modelo m where m.codigo IN (SELECT mo.codigo FROM  PiezaRecambio p INNER JOIN p.vehiculosCompatibles mo WHERE p.codigo ="+pieza.getCodigo()+")";
+        Query query = getEntityManager().createQuery(sql);
+        return (List<Modelo>)query.getResultList();
+    }
 }
