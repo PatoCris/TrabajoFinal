@@ -68,6 +68,7 @@ public class frmMenu extends javax.swing.JFrame {
         jMenu6 = new javax.swing.JMenu();
         mnuEspecialidades = new javax.swing.JMenuItem();
         mnuEmpleados = new javax.swing.JMenuItem();
+        mnuMecanico = new javax.swing.JMenuItem();
         mnuDeposito = new javax.swing.JMenu();
         mnuGestionAccesorios = new javax.swing.JMenuItem();
         mnuPiezaRecambio = new javax.swing.JMenuItem();
@@ -220,6 +221,14 @@ public class frmMenu extends javax.swing.JFrame {
             }
         });
         jMenu6.add(mnuEmpleados);
+
+        mnuMecanico.setText("Gestión Mecánico");
+        mnuMecanico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuMecanicoActionPerformed(evt);
+            }
+        });
+        jMenu6.add(mnuMecanico);
 
         jMenuBar1.add(jMenu6);
 
@@ -497,6 +506,17 @@ public class frmMenu extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_mnuEjemplaresActionPerformed
 
+    private void mnuMecanicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuMecanicoActionPerformed
+        GestionMecanico miGMecanico;
+        try {
+            miGMecanico = new GestionMecanico(cv);
+            miGMecanico.setVisible(true);
+            jdpPanelPrincipal.add(miGMecanico);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }//GEN-LAST:event_mnuMecanicoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -565,6 +585,7 @@ public class frmMenu extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnuGestionProveedores;
     private javax.swing.JMenuItem mnuGestionSegmento;
     private javax.swing.JMenuItem mnuMarca;
+    private javax.swing.JMenuItem mnuMecanico;
     private javax.swing.JMenuItem mnuModelo;
     private javax.swing.JMenuItem mnuPiezaRecambio;
     private javax.swing.JMenu mnuProveedores;

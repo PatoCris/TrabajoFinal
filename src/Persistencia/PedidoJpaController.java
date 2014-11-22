@@ -6,6 +6,7 @@
 
 package Persistencia;
 
+import Modelo.Mecanico;
 import Modelo.Pedido;
 import Persistencia.exceptions.NonexistentEntityException;
 import java.io.Serializable;
@@ -14,6 +15,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
@@ -23,6 +25,9 @@ import javax.persistence.criteria.Root;
  */
 public class PedidoJpaController implements Serializable {
 
+    public PedidoJpaController (){
+        emf= Persistence.createEntityManagerFactory("TallerMecanicoPU");
+    }
     public PedidoJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
@@ -136,4 +141,27 @@ public class PedidoJpaController implements Serializable {
         }
     }
     
+    public List<Pedido> traerPedidos(boolean activo) {
+        String sql = "SELECT Object(p) FROM Pedido p WHERE p.activo =" + activo;
+        Query query = getEntityManager().createQuery(sql);
+        return (List<Pedido>) query.getResultList();
+    }
+
+    public List<Pedido> traerPedidosCodigo(boolean activo, int codigo) {
+        String sql = "SELECT Object(p) FROM Pedido p WHERE e.activo =" + activo + " AND p.codigo="+codigo;
+        Query query = getEntityManager().createQuery(sql);
+        return (List<Pedido>) query.getResultList();
+    }
+
+    public List<Pedido> traerPedidosSinVinculo(Mecanico unMecanico){
+        String sql ="SELECT Object(p) from Pedido p where p.codigo NOT IN (SELECT po.codigo FROM  Mecanico m INNER JOIN m.misPedidos po WHERE m.codigo ="+unMecanico.getCodigo()+")";
+        Query query = getEntityManager().createQuery(sql);
+        return (List<Pedido>)query.getResultList();
+    }
+    
+    public List<Pedido> traerPedidosConVinculo(Mecanico unMecanico){
+        String sql ="SELECT Object(p) from Pedido p where p.codigo IN (SELECT po.codigo FROM  Mecanico m INNER JOIN m.misEspecialidades po WHERE m.codigo ="+unMecanico.getCodigo()+")";
+        Query query = getEntityManager().createQuery(sql);
+        return (List<Pedido>)query.getResultList();
+    }
 }

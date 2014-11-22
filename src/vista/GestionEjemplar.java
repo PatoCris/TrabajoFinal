@@ -84,7 +84,9 @@ public class GestionEjemplar extends javax.swing.JInternalFrame {
         if (cantidad > 0) {
             for (Ejemplar unEjemplar : lista) {
                 fila[0] = unEjemplar.getCodigo();
-                fila[1] = unEjemplar.getFechaIngreso();
+                SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+                String fechaString = formato.format(unEjemplar.getFechaIngreso());
+                fila[1] = fechaString;
                 fila[2] = unEjemplar.getUnaPiezaRecambio();
                 fila[3] = unEjemplar.getUnProveedor();
                 miTabla.addRow(fila);
@@ -414,28 +416,30 @@ public class GestionEjemplar extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        try {
+        try {   
+            java.util.Date fechaDate = null;
             String fecha = txtFecha.getText();
-            if(!fecha.isEmpty()){
-                util.verificarCombos(cmbPieza.getSelectedItem().toString(), "Pieza de Recambio");
-                util.verificarCombos(cmbProveedor.getSelectedItem().toString(), "Proveedor");
+            util.verificarString(fecha, "Fecha");
+            fechaDate = util.ParseFecha(fecha, "Error: La fecha ingresada en el campo Fecha es inválida.");
+            util.verificarCombos(cmbPieza.getSelectedItem().toString(), "Pieza de Recambio");
+            util.verificarCombos(cmbProveedor.getSelectedItem().toString(), "Proveedor");
 
-                PiezaRecambio unaPieza = (PiezaRecambio) cmbPieza.getSelectedItem();
-                Proveedor unProveedor = (Proveedor) cmbProveedor.getSelectedItem();
+            PiezaRecambio unaPieza = (PiezaRecambio) cmbPieza.getSelectedItem();
+            Proveedor unProveedor = (Proveedor) cmbProveedor.getSelectedItem();
 
             if (bandera.equals("nuevo")) {
-                this.cv.nuevoEjemplar(fecha, unaPieza, unProveedor);
+                this.cv.nuevoEjemplar(fechaDate, unaPieza, unProveedor);
                 bandera = "";
                 estadoInicio();
                 limpiar();
             } else {
                 if (bandera.equals("editar")) {
                     int codigo = Integer.valueOf(txtCodigo.getText());
-                    this.cv.editarEjemplar(codigo, fecha, unaPieza, unProveedor);
+                    this.cv.editarEjemplar(codigo, fechaDate, unaPieza, unProveedor);
                     estadoInicio();
                     limpiar();
                 }
-            }
+
             }
             cargarTabla(tblEjemplares, cv.traerEjemplares(true));
         } catch (Exception ex) {
@@ -493,7 +497,14 @@ public class GestionEjemplar extends javax.swing.JInternalFrame {
         try {
             if (tblEjemplares.getSelectedRow() != -1) {
                 txtCodigo.setText(tblEjemplares.getValueAt(tblEjemplares.getSelectedRow(), 0).toString());
-                txtFecha.setText(tblEjemplares.getValueAt(tblEjemplares.getSelectedRow(), 1).toString());
+                
+                SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+                String fechaNueva = tblEjemplares.getValueAt(tblEjemplares.getSelectedRow(), 1).toString();
+                java.util.Date fechaNuevaDate = util.ParseFecha(fechaNueva, "Error en la Fecha");
+                
+                String fechaString = formato.format(fechaNuevaDate);
+                
+                txtFecha.setText(fechaString);
                 PiezaRecambio unaPieza = (PiezaRecambio) tblEjemplares.getValueAt(tblEjemplares.getSelectedRow(), 2);
                 Proveedor unProveedor = (Proveedor) tblEjemplares.getValueAt(tblEjemplares.getSelectedRow(), 3);
                 cmbPieza.getModel().setSelectedItem(unaPieza);

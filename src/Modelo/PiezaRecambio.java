@@ -139,6 +139,15 @@ public class PiezaRecambio implements Serializable {
         this.grupoParte = grupoParte;
     }
 
+    public List<Modelo> getVehiculosCompatibles() {
+        return vehiculosCompatibles;
+    }
+
+    public void setVehiculosCompatibles(List<Modelo> vehiculosCompatibles) {
+        this.vehiculosCompatibles = vehiculosCompatibles;
+    }
+
+    
     @Override
     public String toString() {
         return nombre;

@@ -20,7 +20,7 @@ import javax.persistence.criteria.Root;
 
 /**
  *
- * @author cristian
+ * @author Asus
  */
 public class EjemplarJpaController implements Serializable {
 

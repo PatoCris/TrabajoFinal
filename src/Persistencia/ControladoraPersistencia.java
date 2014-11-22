@@ -15,7 +15,9 @@ import Modelo.Equipamiento;
 import Modelo.Especialidad;
 import Modelo.Estado;
 import Modelo.Marca;
+import Modelo.Mecanico;
 import Modelo.Modelo;
+import Modelo.Pedido;
 import Modelo.PiezaRecambio;
 import Modelo.Proveedor;
 import Modelo.Segmento;
@@ -47,6 +49,8 @@ public class ControladoraPersistencia {
     private PiezaRecambioJpaController piezaRecambioJpa = new PiezaRecambioJpaController();
     private ProveedorJpaController proveedorJpa = new ProveedorJpaController();
     private EjemplarJpaController ejemplarJpa = new EjemplarJpaController();
+    private MecanicoJpaController mecanicoJpa = new MecanicoJpaController();
+    private PedidoJpaController pedidoJpa = new PedidoJpaController();
     
     ///////////////// METODOS DE ACCESORIO //////////////////////
     public void crearAccesorio(Accesorio accesorio) throws PreexistingEntityException, Exception{
@@ -264,6 +268,12 @@ public class ControladoraPersistencia {
         especialidadJpa.destroy(codigo);
     }
 
+    public List<Especialidad> traerEspecialidadesSinVinculo(Mecanico unMecanico) throws PreexistingEntityException, Exception{
+        return especialidadJpa.traerEspecialidadesSinVinculo(unMecanico);
+    }
+    public List<Especialidad> traerEspecialidadesConVinculo(Mecanico unMecanico) throws PreexistingEntityException, Exception{
+        return especialidadJpa.traerEspecialidadesConVinculo(unMecanico);
+    }
     
         ///////////////////////// METODOS ESTADOS ////////////////////////////////
     public void nuevoEstado(Estado unEstado) throws PreexistingEntityException, Exception{
@@ -388,4 +398,61 @@ public class ControladoraPersistencia {
         return ejemplarJpa.findEjemplar(codigo);
     }
 
+    
+    ///////////////// METODOS DE MECANICO//////////////////////
+    public void nuevoMecanico(Mecanico unMecanico)throws PreexistingEntityException, Exception{
+        mecanicoJpa.create(unMecanico);
+    }
+    public void editarMecanico(Mecanico unMecanico) throws PreexistingEntityException, Exception{
+        mecanicoJpa.edit(unMecanico);
+    }
+    public Mecanico traerMecanico(int codigo) throws PreexistingEntityException, Exception{
+        return mecanicoJpa.findMecanico(codigo);
+    }
+    public List<Mecanico> traerMecanicos(boolean activo) throws PreexistingEntityException, Exception{
+        return mecanicoJpa.traerMecanicos(activo);
+    }
+    public void eliminarMecanico(int codigo) throws NonexistentEntityException, Exception{
+        mecanicoJpa.destroy(codigo);
+    }
+    public List<Mecanico> traerMecanicosBusqueda(boolean activo, String apellido, int dni) throws PreexistingEntityException, Exception{
+        return mecanicoJpa.traerMecanicosBusqueda(activo, apellido, dni);
+    }
+    public boolean existeMecanico(int dni) throws NonexistentEntityException, Exception{
+        return mecanicoJpa.exiteMecanico(dni);
+    }
+    public boolean existeMecanico(int dni, int codigo) throws NonexistentEntityException, Exception{
+        return mecanicoJpa.exiteMecanico(dni, codigo);
+    }
+    
+        ///////////////////////// METODOS PEDIDOS ////////////////////////////////
+    public void nuevoPedido(Pedido unPedido) throws PreexistingEntityException, Exception{
+        pedidoJpa.create(unPedido);
+    }
+
+    public void editarPedido(Pedido unPedido) throws PreexistingEntityException, Exception{
+        pedidoJpa.edit(unPedido);
+    }
+    public Pedido traerPedido(int codigo) throws PreexistingEntityException, Exception{
+        return pedidoJpa.findPedido(codigo);
+    }
+    public List<Pedido> traerPedidos(boolean activo) throws PreexistingEntityException, Exception{
+        return pedidoJpa.traerPedidos(activo);
+    }
+    
+    public List<Pedido> traerPedidosCodigo(boolean activo, int codigo) throws PreexistingEntityException, Exception{
+        return pedidoJpa.traerPedidosCodigo(activo, codigo);
+    }
+    
+    public void eliminarPedido(int codigo) throws NonexistentEntityException, Exception{
+        pedidoJpa.destroy(codigo);
+    }
+
+    public List<Pedido> traerPedidosSinVinculo(Mecanico unMecanico) throws PreexistingEntityException, Exception{
+        return pedidoJpa.traerPedidosSinVinculo(unMecanico);
+    }
+    public List<Pedido> traerPedidosConVinculo(Mecanico unMecanico) throws PreexistingEntityException, Exception{
+        return pedidoJpa.traerPedidosConVinculo(unMecanico);
+    }
+    
 }

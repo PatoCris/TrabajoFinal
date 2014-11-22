@@ -14,6 +14,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
@@ -23,6 +24,10 @@ import javax.persistence.criteria.Root;
  */
 public class MecanicoJpaController implements Serializable {
 
+    public MecanicoJpaController(){
+        emf=Persistence.createEntityManagerFactory("TallerMecanicoPU");
+    }
+    
     public MecanicoJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
@@ -136,4 +141,42 @@ public class MecanicoJpaController implements Serializable {
         }
     }
     
+    public List<Mecanico> traerMecanicos(boolean activo){
+        String sql ="SELECT object(m) FROM Mecanico m WHERE m.activo = "+activo;
+        Query query = getEntityManager().createQuery(sql);
+        return (List<Mecanico>)query.getResultList();
+    }
+    
+    public List<Mecanico> traerMecanicosBusqueda(boolean activo, String apellido, int dni){
+        String sql ="SELECT object(m) FROM Mecanico m WHERE m.activo = "+activo;
+        if(!apellido.equals(""))
+            sql = sql + " AND m.apellido LIKE '%"+apellido+"%'";
+        if(dni != 0)
+            sql = sql + " AND m.dni ="+dni;
+        Query query = getEntityManager().createQuery(sql);
+        return (List<Mecanico>)query.getResultList();
+    }
+    
+    public boolean exiteMecanico(int dni){
+        boolean retorno = true;
+        try{
+            String sql = "SELECT object(m) FORM Mecanico m WHERE m.dni = "+dni;
+            Query query = getEntityManager().createQuery(sql);
+            query.getSingleResult();
+        }catch(Exception ex){
+            retorno = false;
+        }
+        return retorno;
+    }
+    public boolean exiteMecanico(int dni, int codigo) {
+        boolean existe = true;
+        try {
+            String consulta = "SELECT object(m) FROM Mecanico m WHERE m.dni = " + dni + " and m.codigo <> " + codigo;
+            Query query = this.getEntityManager().createQuery(consulta);
+            query.getSingleResult();
+        } catch (Exception e) {
+            existe = false;
+        }
+        return existe;
+    }
 }

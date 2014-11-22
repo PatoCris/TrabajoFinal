@@ -32,7 +32,8 @@ public class Ejemplar implements Serializable {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int codigo;
     @Column(name = "fecha_ingreso")
-    private String fechaIngreso;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private java.util.Date fechaIngreso;
     @Column(name = "activo")
     private boolean activo;
     @JoinColumn(name="una_pieza_recambio")
@@ -45,7 +46,7 @@ public class Ejemplar implements Serializable {
     public Ejemplar() {
     }
 
-    public Ejemplar(String fechaIngreso, PiezaRecambio unaPiezaRecambio, Proveedor unProveedor, boolean activo) {
+    public Ejemplar(java.util.Date fechaIngreso, PiezaRecambio unaPiezaRecambio, Proveedor unProveedor, boolean activo) {
         this.fechaIngreso = fechaIngreso;
         this.unaPiezaRecambio = unaPiezaRecambio;
         this.unProveedor = unProveedor;
@@ -60,11 +61,11 @@ public class Ejemplar implements Serializable {
         this.codigo = codigo;
     }
 
-    public String getFechaIngreso() {
+    public java.util.Date getFechaIngreso() {
         return fechaIngreso;
     }
 
-    public void setFechaIngreso(String fechaIngreso) {
+    public void setFechaIngreso(java.util.Date fechaIngreso) {
         this.fechaIngreso = fechaIngreso;
     }
 

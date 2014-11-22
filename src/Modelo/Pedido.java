@@ -60,11 +60,14 @@ public class Pedido implements Serializable {
     @OneToOne
     @ManyToOne
     private Cliente unCliente;
+    @JoinColumn(name="un_vehiculo")
+    @OneToOne
+    private Vehiculo unVehiculo;
 
     public Pedido() {
     }
 
-    public Pedido(int codigo, Date fecha, Date hora, String descripcion, int cantidad, boolean autorizado, boolean paraRecambio, boolean activo, Perito unPerito, JefeDeposito unJefeDeposito, JefeTaller unJefeTaller, Cliente unCliente) {
+    public Pedido(Date fecha, Date hora, String descripcion, int cantidad, boolean autorizado, boolean paraRecambio, boolean activo, Perito unPerito, JefeDeposito unJefeDeposito, JefeTaller unJefeTaller, Cliente unCliente) {
         this.codigo = codigo;
         this.fecha = fecha;
         this.hora = hora;

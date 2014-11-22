@@ -6,6 +6,7 @@
 package Persistencia;
 
 import Modelo.Especialidad;
+import Modelo.Mecanico;
 import Persistencia.exceptions.NonexistentEntityException;
 import java.io.Serializable;
 import java.util.List;
@@ -151,4 +152,17 @@ public class EspecialidadJpaController implements Serializable {
         Query query = getEntityManager().createQuery(sql);
         return (List<Especialidad>) query.getResultList();
     }
+
+    public List<Especialidad> traerEspecialidadesSinVinculo(Mecanico unMecanico){
+        String sql ="SELECT Object(e) from Especialidad e where e.codigo NOT IN (SELECT eo.codigo FROM  Mecanico m INNER JOIN m.misEspecialidades eo WHERE m.codigo ="+unMecanico.getCodigo()+")";
+        Query query = getEntityManager().createQuery(sql);
+        return (List<Especialidad>)query.getResultList();
+    }
+    
+    public List<Especialidad> traerEspecialidadesConVinculo(Mecanico unMecanico){
+        String sql ="SELECT Object(e) from Especialidad e where e.codigo IN (SELECT eo.codigo FROM  Mecanico m INNER JOIN m.misEspecialidades eo WHERE m.codigo ="+unMecanico.getCodigo()+")";
+        Query query = getEntityManager().createQuery(sql);
+        return (List<Especialidad>)query.getResultList();
+    }
+
 }

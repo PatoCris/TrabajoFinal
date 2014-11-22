@@ -14,8 +14,13 @@ import Modelo.Empleado;
 import Modelo.Equipamiento;
 import Modelo.Especialidad;
 import Modelo.Estado;
+import Modelo.JefeDeposito;
+import Modelo.JefeTaller;
 import Modelo.Marca;
+import Modelo.Mecanico;
 import Modelo.Modelo;
+import Modelo.Pedido;
+import Modelo.Perito;
 import Modelo.PiezaRecambio;
 import Modelo.Proveedor;
 import Modelo.Segmento;
@@ -249,6 +254,13 @@ class ControladoraVista {
     public void eliminarEspecialidad(int codigo) throws Exception {
         cp.eliminarEspecialidad(codigo);
     }
+    
+    public List<Especialidad> traerEspecialidadesSinVinculo(Mecanico unMecanico) throws Exception{
+        return cp.traerEspecialidadesSinVinculo(unMecanico);
+    }
+    public List<Especialidad> traerEspecialidadesConVinculo(Mecanico unMecanico) throws Exception{
+        return cp.traerEspecialidadesConVinculo(unMecanico);
+    }
 
     ///////////////// METODOS DE ESTADOS ////////////////////////
     public void nuevoEstado(String nombre, String descripcion) throws Exception {
@@ -370,11 +382,11 @@ class ControladoraVista {
     }
     
     ///////////////// METODOS DE EJEMPLAR //////////////////////////
-    public void nuevoEjemplar(String fecha, PiezaRecambio unaPRecambio, Proveedor unProveedor) throws Exception {
+    public void nuevoEjemplar(java.util.Date fecha, PiezaRecambio unaPRecambio, Proveedor unProveedor) throws Exception {
         cp.nuevoEjemplar(fecha, unaPRecambio, unProveedor);
     }
 
-    public void editarEjemplar(int codigo, String fecha, PiezaRecambio unaPRecambio, Proveedor unProveedor) throws Exception {
+    public void editarEjemplar(int codigo, java.util.Date fecha, PiezaRecambio unaPRecambio, Proveedor unProveedor) throws Exception {
         cp.editarEjemplar(codigo, fecha, unaPRecambio, unProveedor);
     }
 
@@ -390,26 +402,71 @@ class ControladoraVista {
         return cp.traerEjemplarCodigo(activo, codigo);
     }
 
-    void evaluarTipoEmpleado(String tipoEmpleado) {
-        if(!tipoEmpleado.isEmpty()){
-            switch ( tipoEmpleado ) {
-      case "Jefe de Depósito":
-           //cp.nuevoJefeDeposito();
-           break;
-      case "Jefe de Taller":
-           
-           break;
-      case "Mecánico":
-           
-           break;
-      case "Perito":
-           
-           break;
-      default:
-           System.out.println("error" );
-           break;
-      }
-        }
+///////////////////// METODOS DE MECANICO ////////////////////////
+    public void nuevoMecanico(int dni, String nombre, String apellido, String telefono, String direccion, long cuil, boolean activo) throws Exception {
+        cp.nuevoMecanico(dni, nombre, apellido, telefono, direccion, cuil, activo);
+    }
+
+    public void editarMecanico(int codigo, int dni, String nombre, String apellido, String telefono, String direccion, long cuil, boolean activo) throws Exception {
+        cp.editarMecanico(codigo, dni, nombre, apellido, telefono, direccion, cuil, activo);
+    }
+
+    public List<Mecanico> traerMecanicos(boolean activo) throws Exception {
+        return cp.traerMecanicos(activo);
+    }
+
+    public void elminarMecanico(int codigo) throws Exception {
+        cp.eliminarEmpleado(codigo);
+    }
+
+    public List<Mecanico> traerMecanicosBusqueda(boolean activo, String apellido, int dni) throws Exception {
+        return cp.traerMecanicosBusqueda(activo, apellido, dni);
+    }
+    
+    public Mecanico traerMecanico(int codigo) throws Exception {
+        return cp.traerMecanico(codigo);
+    }
+
+    public void agregarEspecialidad(Especialidad unaEspecialidad, int codigo) throws Exception{
+        cp.agregarEspecialidad(unaEspecialidad, codigo);
+    }
+    public void quitarEspecialidad(int especialidad, int codigo) throws Exception{
+        cp.quitarEspecialidad(especialidad, codigo);
+    }
+
+    public void agregarPedido(Pedido unPedido, int codigo) throws Exception{
+        cp.agregarPedido(unPedido, codigo);
+    }
+    public void quitarPedido(int pedido, int codigo) throws Exception{
+        cp.quitarPedido(pedido, codigo);
+    }
+    
+    ///////////////// METODOS DE PEDIDOS ////////////////////////
+    public void nuevaPedido(Date fecha, Date hora, String descripcion, int cantidad, boolean autorizado, boolean paraRecambio, boolean activo, Perito unPerito, JefeDeposito unJefeDeposito, JefeTaller unJefeTaller, Cliente unCliente) throws Exception {
+        cp.nuevoPedido(fecha, hora, descripcion, cantidad, autorizado, paraRecambio,true, unPerito, unJefeDeposito, unJefeTaller, unCliente);
+    }
+
+    public void editarEspecialidad(int codigo, Date fecha, Date hora, String descripcion, int cantidad, boolean autorizado, boolean paraRecambio, boolean activo, Perito unPerito, JefeDeposito unJefeDeposito, JefeTaller unJefeTaller, Cliente unCliente) throws Exception {
+        cp.editarPedido(codigo, fecha, hora, descripcion, cantidad, autorizado, paraRecambio,true, unPerito, unJefeDeposito, unJefeTaller, unCliente);
+    }
+
+    public List<Pedido> trerPedidos(boolean activo) throws Exception {
+        return cp.traerPedidos(activo);
+    }
+
+    public List<Pedido> traerPedidosCodigo(boolean activo, int codigo) throws Exception {
+        return cp.traerPedidosCodigo(activo, codigo);
+    }
+
+    public void eliminarPedido(int codigo) throws Exception {
+        cp.eliminarPedido(codigo);
+    }
+    
+    public List<Pedido> traerPedidosSinVinculo(Mecanico unMecanico) throws Exception{
+        return cp.traerPedidosSinVinculo(unMecanico);
+    }
+    public List<Pedido> traerPedidosConVinculo(Mecanico unMecanico) throws Exception{
+        return cp.traerPedidosConVinculo(unMecanico);
     }
     
 }
