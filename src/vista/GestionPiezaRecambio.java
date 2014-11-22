@@ -761,6 +761,7 @@ public class GestionPiezaRecambio extends javax.swing.JInternalFrame {
             txtMesesGarantia.setEnabled(true);
         }else{
             txtMesesGarantia.setEnabled(false);
+            txtMesesGarantia.setText("");
         }
     }//GEN-LAST:event_chkGarantiaStateChanged
 

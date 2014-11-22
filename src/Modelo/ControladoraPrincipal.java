@@ -30,6 +30,8 @@ public class ControladoraPrincipal {
     private Vehiculo unVehiculo = new Vehiculo();
     private Cliente unCliente = new Cliente();
     private PiezaRecambio unaPiezaRecambio = new PiezaRecambio();
+    private Proveedor unProveedor = new Proveedor();
+    private Ejemplar unEjemplar = new Ejemplar();
  
     ///////////// CONTROLADORA PERSISTENCIA ////////////////
     private ControladoraPersistencia cp = new ControladoraPersistencia();
@@ -395,6 +397,7 @@ public class ControladoraPrincipal {
     public PiezaRecambio traerPiezaRecambio(int codigo) throws Exception{
         return cp.traerPiezaRecambio(codigo);
     }
+
     public void agregarVehiculoCompatible(Modelo modelo, int codigo) throws Exception{
         PiezaRecambio pieza = cp.traerPiezaRecambio(codigo);
         pieza.getVehiculosCompatibles().add(modelo);
@@ -404,6 +407,57 @@ public class ControladoraPrincipal {
         PiezaRecambio pieza = cp.traerPiezaRecambio(codigo);
         pieza.getVehiculosCompatibles().remove(modelo);
         cp.editarPiezaRecambio(pieza);
+    }
+    
+         ///////////////// METODOS DE PROVEEDOR ///////////////////
+    public void nuevoProveedor(String nombre, String rs, String direccion,  String telefono, long cuit) throws Exception{
+        unProveedor = new Proveedor(nombre, rs, direccion, telefono, cuit, true);
+        cp.nuevoProveedor(unProveedor);
+    }
+    public void editarProveedor(int codigo, String nombre, String rs, String direccion,  String telefono, long cuit) throws Exception{
+        unProveedor = cp.traerProveedor(codigo);
+        unProveedor.setNombre(nombre);
+        unProveedor.setRazonSocial(rs);
+        unProveedor.setDireccion(direccion);
+        unProveedor.setTelefono(telefono);
+        unProveedor.setCuit(cuit);
+        cp.editarProveedor(unProveedor);
+    }
+    public List<Proveedor> traerProveedor(boolean activo) throws Exception{
+        return cp.traerProveedores(activo);
+    }
+    public List<Proveedor> traerProveedorNombre(boolean activo, String nombre)throws Exception{
+        return cp.traerProveedorNombre(activo, nombre);
+    }
+    public void eliminarProveedor(int codigo) throws Exception{
+        unProveedor = cp.traerProveedor(codigo);
+        unProveedor.setActivo(false);
+        cp.editarProveedor(unProveedor);
+    }
+    
+        ///////////// MÉTODOS DE EJEMPLAR ///////////////////
+    public void nuevoEjemplar(Date fechaIng, PiezaRecambio unaPRecambio, Proveedor unProveedor) throws Exception{
+        unEjemplar = new Ejemplar(fechaIng, unaPRecambio, unProveedor, true);
+        cp.nuevoEjemplar(unEjemplar);
+    }
+
+    public void editarEjemplar(int codigo, Date fechaIng, PiezaRecambio unaPRecambio, Proveedor unProveedor) throws Exception{
+        unEjemplar = cp.traerEjemplar(codigo);
+        unEjemplar.setFechaIngreso(fechaIng);
+        unEjemplar.setUnaPiezaRecambio(unaPiezaRecambio);
+        unEjemplar.setUnProveedor(unProveedor);
+        cp.editarEjemplar(unEjemplar);
+    }
+    public List<Ejemplar> traerEjemplares(boolean activo) throws Exception{
+        return cp.traerEjemplares(activo);
+    }
+    public void eliminarEjemplar(int codigo) throws Exception{
+        unEjemplar = cp.traerEjemplar(codigo);
+        unEjemplar.setActivo(false);
+        cp.editarEjemplar(unEjemplar);
+    }
+    public List<Ejemplar> traerEjemplarCodigo(boolean activo, int codigo) throws Exception{
+        return cp.traerEjemplarCodigo(activo, codigo);
     }
     
     /////////////////// METODO MAIN ///////////////////////////

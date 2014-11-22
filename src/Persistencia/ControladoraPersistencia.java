@@ -9,6 +9,7 @@ package Persistencia;
 import Modelo.Accesorio;
 import Modelo.Anomalia;
 import Modelo.Cliente;
+import Modelo.Ejemplar;
 import Modelo.Empleado;
 import Modelo.Equipamiento;
 import Modelo.Especialidad;
@@ -16,6 +17,7 @@ import Modelo.Estado;
 import Modelo.Marca;
 import Modelo.Modelo;
 import Modelo.PiezaRecambio;
+import Modelo.Proveedor;
 import Modelo.Segmento;
 import Modelo.TipoAnomalia;
 import Modelo.TipoReparacion;
@@ -43,6 +45,8 @@ public class ControladoraPersistencia {
     private VehiculoJpaController vehiculoJpa = new VehiculoJpaController();
     private ClienteJpaController clienteJpa = new ClienteJpaController();
     private PiezaRecambioJpaController piezaRecambioJpa = new PiezaRecambioJpaController();
+    private ProveedorJpaController proveedorJpa = new ProveedorJpaController();
+    private EjemplarJpaController ejemplarJpa = new EjemplarJpaController();
     
     ///////////////// METODOS DE ACCESORIO //////////////////////
     public void crearAccesorio(Accesorio accesorio) throws PreexistingEntityException, Exception{
@@ -343,5 +347,45 @@ public class ControladoraPersistencia {
     public List<PiezaRecambio> traerPiezaRecambiosBusqueda(boolean activo, String nombre, TipoReparacion tipo) throws PreexistingEntityException, Exception{
         return piezaRecambioJpa.traerPiezaRecambiosBusqueda(activo, nombre, tipo);
     }
-   
+
+        ///////////////// METODOS DE PROVEEDOR //////////////////////
+    public void nuevoProveedor(Proveedor unProveedor) throws PreexistingEntityException, Exception{
+        proveedorJpa.create(unProveedor);
+    }
+    public void editarProveedor(Proveedor unProveedor) throws PreexistingEntityException, Exception{
+        proveedorJpa.edit(unProveedor);
+    }
+    public List<Proveedor> traerProveedores(boolean activo) throws PreexistingEntityException, Exception{
+        return proveedorJpa.traerProveedores(activo);
+    }
+    public void eliminarProveedor(int codigo) throws NonexistentEntityException, Exception{
+            proveedorJpa.destroy(codigo);
+    }
+    public List<Proveedor> traerProveedorNombre(boolean activo, String nombre) throws PreexistingEntityException, Exception{
+        return proveedorJpa.traerProveedorNombre(activo, nombre);
+    }   
+    public Proveedor traerProveedor(int codigo) throws PreexistingEntityException, Exception{
+        return proveedorJpa.findProveedor(codigo);
+    }
+    
+    ///////////////// METODOS DE EJEMPLAR //////////////////////
+    public void nuevoEjemplar(Ejemplar unEjemplar) throws PreexistingEntityException, Exception{
+        ejemplarJpa.create(unEjemplar);
+    }
+    public void editarEjemplar(Ejemplar unEjemplar) throws PreexistingEntityException, Exception{
+        ejemplarJpa.edit(unEjemplar);
+    }
+    public List<Ejemplar> traerEjemplares(boolean activo) throws PreexistingEntityException, Exception{
+        return ejemplarJpa.traerEjemplares(activo);
+    }
+    public void eliminarEjemplar(int codigo) throws NonexistentEntityException, Exception{
+            ejemplarJpa.destroy(codigo);
+    }
+    public List<Ejemplar> traerEjemplarCodigo(boolean activo, int codigo) throws PreexistingEntityException, Exception{
+        return ejemplarJpa.traerEjemplarCodigo(activo, codigo);
+    }   
+    public Ejemplar traerEjemplar(int codigo) throws PreexistingEntityException, Exception{
+        return ejemplarJpa.findEjemplar(codigo);
+    }
+
 }

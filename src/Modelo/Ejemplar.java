@@ -46,12 +46,11 @@ public class Ejemplar implements Serializable {
     public Ejemplar() {
     }
 
-    public Ejemplar(int codigo, Date fechaIngreso, boolean activo, PiezaRecambio unaPiezaRecambio, Proveedor unProveedor) {
-        this.codigo = codigo;
+    public Ejemplar(Date fechaIngreso, PiezaRecambio unaPiezaRecambio, Proveedor unProveedor, boolean activo) {
         this.fechaIngreso = fechaIngreso;
-        this.activo = activo;
         this.unaPiezaRecambio = unaPiezaRecambio;
         this.unProveedor = unProveedor;
+        this.activo = activo;
     }
 
     public int getCodigo() {

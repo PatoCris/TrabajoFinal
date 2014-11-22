@@ -476,7 +476,7 @@ public class GestionAnomalia extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void cmbTipoAnomaliaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbTipoAnomaliaActionPerformed
-        // TODO add your handling code here:
+       
     }//GEN-LAST:event_cmbTipoAnomaliaActionPerformed
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed

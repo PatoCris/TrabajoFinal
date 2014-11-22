@@ -14,6 +14,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
@@ -23,6 +24,9 @@ import javax.persistence.criteria.Root;
  */
 public class EjemplarJpaController implements Serializable {
 
+    public EjemplarJpaController(){
+        emf = Persistence.createEntityManagerFactory("TallerMecanicoPU");
+    }
     public EjemplarJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
@@ -136,4 +140,15 @@ public class EjemplarJpaController implements Serializable {
         }
     }
     
+    public List<Ejemplar> traerEjemplares(boolean activo){
+        String sql ="SELECT object(e) FROM Ejemplar e WHERE e.activo = "+activo;
+        Query query = getEntityManager().createQuery(sql);
+        return (List<Ejemplar>)query.getResultList();
+    }
+    
+    public List<Ejemplar> traerEjemplarCodigo(boolean activo, int codigo){
+        String sql ="SELECT object(e) FROM Ejemplar e WHERE e.activo = "+activo+" AND e.codigo ="+codigo;
+        Query query = getEntityManager().createQuery(sql);
+        return (List<Ejemplar>)query.getResultList();
+    }
 }
