@@ -104,6 +104,24 @@ public class UtilVista {
     }
     return fechaDate;
 }
+
+    void verificarTelefono(String telefono) throws Exception {
+    if(telefono.isEmpty()){
+            throw new Exception ("Error: Por favor ingrese un Teléfono válido.");
+        }
+    }
+    
+    public Date ParseFecha(String fecha){
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        Date fechaDate = null;
+        try {
+            fechaDate = formato.parse(fecha);
+        }catch (ParseException ex){
+            System.out.println(ex);
+        }
+        return fechaDate;
+    }
+
 }
     
 

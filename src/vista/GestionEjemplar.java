@@ -14,6 +14,8 @@ import javax.swing.ButtonGroup;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import java.text.SimpleDateFormat;
+import java.text.ParseException;
 
 /**
  *
@@ -26,9 +28,6 @@ public class GestionEjemplar extends javax.swing.JInternalFrame {
     private DefaultTableModel miTabla;
     private UtilVista util;
 
-    /**
-     * Creates new form GestionEjemplar
-     */
     public GestionEjemplar(ControladoraVista controladoraVista) throws Exception {
         initComponents();
         cv = controladoraVista;
@@ -41,6 +40,17 @@ public class GestionEjemplar extends javax.swing.JInternalFrame {
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
+    }
+
+    public static Date ParseFecha(String fecha, String cadena) {
+        SimpleDateFormat formato = new SimpleDateFormat(cadena);
+        Date fechaDate = null;
+        try {
+            fechaDate = (Date) formato.parse(fecha);
+        } catch (ParseException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+        return fechaDate;
     }
 
     public void limpiar() {
@@ -92,11 +102,11 @@ public class GestionEjemplar extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         txtCodigo = new javax.swing.JTextField();
-        txtFecha = new javax.swing.JFormattedTextField();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         cmbPieza = new javax.swing.JComboBox();
         cmbProveedor = new javax.swing.JComboBox();
+        txtFecha = new javax.swing.JFormattedTextField();
         btnGuardar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         btnNuevo = new javax.swing.JButton();
@@ -126,17 +136,17 @@ public class GestionEjemplar extends javax.swing.JInternalFrame {
         jLabel4.setFont(new java.awt.Font("Politica", 0, 16)); // NOI18N
         jLabel4.setText("Fecha:");
 
-        try {
-            txtFecha.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##-##-####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-
         jLabel5.setFont(new java.awt.Font("Politica", 0, 16)); // NOI18N
         jLabel5.setText("Proveedor:");
 
         jLabel6.setFont(new java.awt.Font("Politica", 0, 16)); // NOI18N
         jLabel6.setText("Pieza recambio:");
+
+        try {
+            txtFecha.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -152,13 +162,13 @@ public class GestionEjemplar extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(cmbPieza, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cmbProveedor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cmbProveedor, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 110, Short.MAX_VALUE)))
-                .addContainerGap(29, Short.MAX_VALUE))
+                            .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 118, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -168,7 +178,7 @@ public class GestionEjemplar extends javax.swing.JInternalFrame {
                     .addComponent(jLabel2)
                     .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
                     .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
@@ -176,7 +186,7 @@ public class GestionEjemplar extends javax.swing.JInternalFrame {
                     .addComponent(jLabel6)
                     .addComponent(cmbPieza, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(cmbProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(43, Short.MAX_VALUE))
@@ -373,7 +383,7 @@ public class GestionEjemplar extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(11, Short.MAX_VALUE))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -405,12 +415,13 @@ public class GestionEjemplar extends javax.swing.JInternalFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         try {
-            Date fecha = Date.valueOf(txtFecha.getText());    
-            util.verificarCombos(cmbPieza.getSelectedItem().toString(), "Pieza de Recambio");
-            util.verificarCombos(cmbProveedor.getSelectedItem().toString(), "Proveedor");
+            String fecha = txtFecha.getText();
+            if(!fecha.isEmpty()){
+                util.verificarCombos(cmbPieza.getSelectedItem().toString(), "Pieza de Recambio");
+                util.verificarCombos(cmbProveedor.getSelectedItem().toString(), "Proveedor");
 
-            PiezaRecambio unaPieza = (PiezaRecambio) cmbPieza.getSelectedItem();
-            Proveedor unProveedor = (Proveedor) cmbProveedor.getSelectedItem();
+                PiezaRecambio unaPieza = (PiezaRecambio) cmbPieza.getSelectedItem();
+                Proveedor unProveedor = (Proveedor) cmbProveedor.getSelectedItem();
 
             if (bandera.equals("nuevo")) {
                 this.cv.nuevoEjemplar(fecha, unaPieza, unProveedor);
@@ -424,6 +435,7 @@ public class GestionEjemplar extends javax.swing.JInternalFrame {
                     estadoInicio();
                     limpiar();
                 }
+            }
             }
             cargarTabla(tblEjemplares, cv.traerEjemplares(true));
         } catch (Exception ex) {
@@ -456,20 +468,19 @@ public class GestionEjemplar extends javax.swing.JInternalFrame {
 
     private void btnBusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBusquedaActionPerformed
         if (!txtBusqueda.getText().isEmpty()) {
-        int busqueda = Integer.valueOf(txtBusqueda.getText()).intValue();
+            int busqueda = Integer.valueOf(txtBusqueda.getText()).intValue();
             try {
                 cargarTabla(tblEjemplares, cv.traerEjemplarCodigo(true, busqueda));
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, ex.getMessage());
             }
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "El campo de busqueda está vacio.");
         }
-            
+
     }//GEN-LAST:event_btnBusquedaActionPerformed
-    
-    
-    
+
+
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         try {
             cargarTabla(tblEjemplares, cv.traerEjemplares(true));
@@ -479,10 +490,10 @@ public class GestionEjemplar extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void tblEjemplaresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblEjemplaresMouseClicked
-    try{
-        if(tblEjemplares.getSelectedRow() != -1){
+        try {
+            if (tblEjemplares.getSelectedRow() != -1) {
                 txtCodigo.setText(tblEjemplares.getValueAt(tblEjemplares.getSelectedRow(), 0).toString());
-                txtFecha.setText(tblEjemplares.getValueAt(tblEjemplares.getSelectedRow(),1).toString());
+                txtFecha.setText(tblEjemplares.getValueAt(tblEjemplares.getSelectedRow(), 1).toString());
                 PiezaRecambio unaPieza = (PiezaRecambio) tblEjemplares.getValueAt(tblEjemplares.getSelectedRow(), 2);
                 Proveedor unProveedor = (Proveedor) tblEjemplares.getValueAt(tblEjemplares.getSelectedRow(), 3);
                 cmbPieza.getModel().setSelectedItem(unaPieza);

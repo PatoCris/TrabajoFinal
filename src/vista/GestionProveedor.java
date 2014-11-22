@@ -435,6 +435,8 @@ public class GestionProveedor extends javax.swing.JInternalFrame {
             String cuit = (txtCuit.getText());
             util.verificarNombre(nombre);
             util.verificarCuit(cuit);
+            util.verificarCombos(cmbRazonSocial.getSelectedItem().toString(), "Razón Social");
+            util.verificarTelefono(telefono);
             long cuitn = Long.valueOf(txtCuit.getText());
             if (bandera.equals("nuevo")) {
                 this.cv.nuevoProveedor(nombre, rs, direccion, telefono, cuitn);

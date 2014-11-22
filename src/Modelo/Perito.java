@@ -35,5 +35,8 @@ public class Perito extends Empleado{
         return misInformesPPedido;
     }
     
-    
+        @Override
+    public String toString() {
+        return "Perito";
+    }
 }

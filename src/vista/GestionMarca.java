@@ -21,9 +21,8 @@ public class GestionMarca extends javax.swing.JInternalFrame {
     private String bandera;
     private UtilVista util;
     private DefaultTableModel miTabla;
-    /**
-     * Creates new form GestionMarca
-     */
+
+    
     public GestionMarca(ControladoraVista controladoraVista) throws Exception {
         initComponents();
         cv = controladoraVista;
