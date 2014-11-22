@@ -27,7 +27,7 @@ public class GestionPiezaRecambio extends javax.swing.JInternalFrame {
     private String bandera;
     private DefaultTableModel miTabla;
     private UtilVista utilVista;
-    DefaultListModel miLista;
+    private DefaultListModel miLista;
     /**
      * Creates new form GestionPiezaRecambio
      */
@@ -631,7 +631,7 @@ public class GestionPiezaRecambio extends javax.swing.JInternalFrame {
                 PiezaRecambio unaPieza = cv.traerPiezaRecambio(codigo);
                 txtMesesGarantia.setText(tblPiezaRecambio.getValueAt(tblPiezaRecambio.getSelectedRow(), 6).toString());
                 tarCaracteristica.setText(unaPieza.getCaracteristica());
-                lstCompatibles.setModel(utilVista.cargarLista(unaPieza.getVehiculosCompatibles()));
+                lstCompatibles.setModel(utilVista.cargarLista(cv.traerModelosConVinculo(unaPieza)));
                 lstModelos.setModel(utilVista.cargarLista(cv.traerModelosSinVinculo(unaPieza)));
             }
         } catch (Exception ex) {
