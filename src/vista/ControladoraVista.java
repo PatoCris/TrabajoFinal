@@ -201,6 +201,13 @@ class ControladoraVista {
         return cp.traerModelosNombre(activo, nombre);
     }
 
+    public List<Modelo> traerModelosSinVinculo(PiezaRecambio pieza) throws Exception{
+        return cp.traerModelosSinVinculo(pieza);
+    }
+    public List<Modelo> traerModelosConVinculo(PiezaRecambio pieza) throws Exception{
+        return cp.traerModelosConVinculo(pieza);
+    }
+
     ///////////////////// METODOS DE EMPLEADO ////////////////////////
     public void nuevoEmpleado(int dni, String nombre, String apellido, String telefono, String direccion, long cuil, boolean activo) throws Exception {
         cp.nuevoEmpleado(dni, nombre, apellido, telefono, direccion, cuil, activo);
@@ -331,6 +338,15 @@ class ControladoraVista {
     public PiezaRecambio traerPiezaRecambio(int codigo) throws Exception {
         return cp.traerPiezaRecambio(codigo);
     }
+
+    public void agregarVehiculoCompatible(Modelo modelo, int codigo) throws Exception{
+        cp.agregarVehiculoCompatible(modelo, codigo);
+    }
+    public void quitarVehiculoCompatible(int modelo, int codigo) throws Exception{
+        cp.quitarVehiculoCompatible(modelo, codigo);
+    }
+    //Para subir la ultima version 
+
     
     ///////////////// METODOS DE PROVEEDOR ////////////////////////
     public void nuevoProveedor(String nombre, String rs, String domicilio, String telefono, long cuit) throws Exception {

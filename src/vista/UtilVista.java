@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 
 /**
@@ -94,6 +95,7 @@ public class UtilVista {
         }
     }
 
+
     void verificarTelefono(String telefono) throws Exception {
     if(telefono.isEmpty()){
             throw new Exception ("Error: Por favor ingrese un Teléfono válido.");
@@ -110,6 +112,7 @@ public class UtilVista {
         }
         return fechaDate;
     }
+
 }
     
 

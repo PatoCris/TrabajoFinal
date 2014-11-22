@@ -208,6 +208,12 @@ public class ControladoraPersistencia {
     public List<Modelo> traerModelosNombre(boolean activo, String nombre) throws PreexistingEntityException, Exception{
         return modeloJpa.traerModelosNombre(activo, nombre);
     }
+    public List<Modelo> traerModelosSinVinculo(PiezaRecambio pieza) throws PreexistingEntityException, Exception{
+        return modeloJpa.traerModelosSinVinculo(pieza);
+    }
+    public List<Modelo> traerModelosConVinculo(PiezaRecambio pieza) throws PreexistingEntityException, Exception{
+        return modeloJpa.traerModelosConVinculo(pieza);
+    }
     
     ///////////////// METODOS DE EMPLEADO //////////////////////
     public void nuevoEmpleado(Empleado empleado) throws PreexistingEntityException, Exception{
@@ -341,7 +347,7 @@ public class ControladoraPersistencia {
     public List<PiezaRecambio> traerPiezaRecambiosBusqueda(boolean activo, String nombre, TipoReparacion tipo) throws PreexistingEntityException, Exception{
         return piezaRecambioJpa.traerPiezaRecambiosBusqueda(activo, nombre, tipo);
     }
-    
+
         ///////////////// METODOS DE PROVEEDOR //////////////////////
     public void nuevoProveedor(Proveedor unProveedor) throws PreexistingEntityException, Exception{
         proveedorJpa.create(unProveedor);
@@ -381,5 +387,5 @@ public class ControladoraPersistencia {
     public Ejemplar traerEjemplar(int codigo) throws PreexistingEntityException, Exception{
         return ejemplarJpa.findEjemplar(codigo);
     }
-    
+
 }

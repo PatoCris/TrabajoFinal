@@ -222,6 +222,12 @@ public class ControladoraPrincipal {
     public List<Modelo> traerModelosNombre(boolean activo, String nombre) throws Exception{
         return cp.traerModelosNombre(activo, nombre);
     }
+    public List<Modelo> traerModelosSinVinculo(PiezaRecambio pieza) throws Exception{
+        return cp.traerModelosSinVinculo(pieza);
+    }
+    public List<Modelo> traerModelosConVinculo(PiezaRecambio pieza) throws Exception{
+        return cp.traerModelosConVinculo(pieza);
+    }
     
     ////////////////// MÉTODOS DE EMPLEADO ////////////////////////
     public void nuevoEmpleado (int dni, String nombre, String apellido, String telefono, String direccion, long cuil, boolean activo) throws Exception{
@@ -391,6 +397,17 @@ public class ControladoraPrincipal {
     public PiezaRecambio traerPiezaRecambio(int codigo) throws Exception{
         return cp.traerPiezaRecambio(codigo);
     }
+
+    public void agregarVehiculoCompatible(Modelo modelo, int codigo) throws Exception{
+        PiezaRecambio pieza = cp.traerPiezaRecambio(codigo);
+        pieza.getVehiculosCompatibles().add(modelo);
+        cp.editarPiezaRecambio(pieza);
+    }
+    public void quitarVehiculoCompatible(int modelo, int codigo) throws Exception{
+        PiezaRecambio pieza = cp.traerPiezaRecambio(codigo);
+        pieza.getVehiculosCompatibles().remove(modelo);
+        cp.editarPiezaRecambio(pieza);
+    }
     
          ///////////////// METODOS DE PROVEEDOR ///////////////////
     public void nuevoProveedor(String nombre, String rs, String direccion,  String telefono, long cuit) throws Exception{
@@ -442,7 +459,6 @@ public class ControladoraPrincipal {
     public List<Ejemplar> traerEjemplarCodigo(boolean activo, int codigo) throws Exception{
         return cp.traerEjemplarCodigo(activo, codigo);
     }
-    
     
     /////////////////// METODO MAIN ///////////////////////////
         public static void main(String[] args) {

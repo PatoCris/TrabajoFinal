@@ -570,7 +570,7 @@ public void limpiar(){
         String telefono = txtTelefono.getText();
         String direccion = txtDireccion.getText();
         String cuil = txtCuil.getText();
-        Object tipoEmpleado = cv.evaluarTipoEmpleado(cmbTipoEmpleado.getSelectedItem().toString());
+        //Object tipoEmpleado = cv.evaluarTipoEmpleado(cmbTipoEmpleado.getSelectedItem().toString());
         try {
             util.verificarNombre(nombre);
             util.verificarApellido(apellido);
