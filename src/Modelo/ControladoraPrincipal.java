@@ -61,6 +61,12 @@ public class ControladoraPrincipal {
     public List<Accesorio> traerAccesoriosNombre(boolean activo, String nombre) throws Exception{
         return cp.traerAccesoriosNombre(activo, nombre);
     }
+    public List<Accesorio> traerAccesoriosSinVehiculo(Vehiculo vehiculo) throws Exception{
+        return cp.traerAccesoriosSinVehiculo(vehiculo);
+    }
+    public List<Accesorio> traerAccesoriosConVehiculo(Vehiculo vehiculo) throws Exception{
+        return cp.traerAccesoriosConVehiculo(vehiculo);
+    }
     
     ////////////////////// MÉTODOS DE MARCA /////////////////////////////
     public void nuevaMarca(String nombre, String descripcion) throws Exception{
@@ -175,6 +181,12 @@ public class ControladoraPrincipal {
     }
     public List<Equipamiento> traerEquipamientosNombre(boolean activo, String nombre) throws Exception{
         return cp.traerEquipamientosNombre(activo, nombre);
+    }
+    public List<Equipamiento> traerEquipamientosSinVehiculo(Vehiculo vehiculo) throws Exception{
+        return cp.traerEquipamientosSinVehiculo(vehiculo);
+    }
+    public List<Equipamiento> traerEquipamientosConVehiculo(Vehiculo vehiculo) throws Exception{
+        return cp.traerEquipamientosConVehiculo(vehiculo);
     }
     
         ////////////////// MÉTODOS DE SEGMENTO ////////////////////////
@@ -319,18 +331,20 @@ public class ControladoraPrincipal {
     }
     
     ////////////////////////// MÉTODOS DE VEHICULO ///////////////////////////////////
-    public void nuevoVehiculo(String dominio, String nroChasis, String nroMotor, int anio, long kmRecorrido, Date fechaCompra, boolean activo, Modelo unModelo) throws Exception{
-        unVehiculo = new Vehiculo(dominio, nroChasis, nroMotor, anio, kmRecorrido, fechaCompra, true, unModelo);
+    public void nuevoVehiculo(String dominio, String nroChasis, String nroMotor, int anio, long kmRecorrido, java.util.Date fechaCompra, java.util.Date fechaFinGarantia, long kmCubierto, boolean activo, Modelo unModelo) throws Exception{
+        unVehiculo = new Vehiculo(dominio, nroChasis, nroMotor, anio, kmRecorrido, fechaCompra, fechaFinGarantia, kmCubierto, activo, unModelo);
         cp.crearVehiculo(unVehiculo);
     }
-    public void editarVehiculo(String dominio, String nroChasis, String nroMotor, int anio, long kmRecorrido, Date fechaCompra, boolean activo, Modelo unModelo) throws Exception{
-        unVehiculo = cp.traerVehiculo(anio);//-> tenes que recibir codigo desde la controladora vista.
+    public void editarVehiculo(int codigo, String dominio, String nroChasis, String nroMotor, int anio, long kmRecorrido, java.util.Date fechaCompra, java.util.Date fechaFinGarantia, long kmCubierto, boolean activo, Modelo unModelo) throws Exception{
+        unVehiculo = cp.traerVehiculo(codigo);//-> tenes que recibir codigo desde la controladora vista.
         unVehiculo.setDominio(dominio);
         unVehiculo.setNroChasis(nroChasis);
         unVehiculo.setNroMotor(nroMotor);
         unVehiculo.setAnio(anio);
         unVehiculo.setKmRecorrido(kmRecorrido);
         unVehiculo.setFechaCompra(fechaCompra);
+        unVehiculo.setFechaFinGarantia(fechaFinGarantia);
+        unVehiculo.setKmRecorrido(kmRecorrido);
         unVehiculo.setUnModelo(unModelo);
         cp.editarVehiculo(unVehiculo);
     }
@@ -345,6 +359,30 @@ public class ControladoraPrincipal {
     public List<Vehiculo> traerVehiculoDominio(boolean activo, String dominio) throws Exception{
         return cp.traerVehiculoDominio(activo, dominio);
     }
+    public Vehiculo traerVehiculo(int codigo) throws Exception{
+        return cp.traerVehiculo(codigo);
+    }
+    public void agregarAccesorioVehiculo(Accesorio accesorio, int codigo) throws Exception{
+        Vehiculo vehiculo = cp.traerVehiculo(codigo);
+        vehiculo.getMisAccesorios().add(accesorio);
+        cp.editarVehiculo(vehiculo);
+    }
+    public void quitarAccesorioVehiculo(int accesorio, int codigo) throws Exception{
+        Vehiculo vehiculo = cp.traerVehiculo(codigo);
+        vehiculo.getMisAccesorios().remove(accesorio);
+        cp.editarVehiculo(vehiculo);
+    }
+    public void agregarEquipamientoVehiculo(Equipamiento equipamiento, int codigo) throws Exception{
+        Vehiculo vehiculo = cp.traerVehiculo(codigo);
+        vehiculo.getMisEquipamientos().add(equipamiento);
+        cp.editarVehiculo(vehiculo);
+    }
+    public void quitarEquipamientoVehiculo(int equipamiento, int codigo) throws Exception{
+        Vehiculo vehiculo = cp.traerVehiculo(codigo);
+        vehiculo.getMisEquipamientos().remove(equipamiento);
+        cp.editarVehiculo(vehiculo);
+    }
+    
     //////////////////////// MÉTODOS DE CLIENTE /////////////////////////////
     public void nuevoCliente(int dni, String nombre, String apellido, String direccion, String telefono, String usuario, String clave, long cuil, boolean activo) throws Exception{
         unCliente = new Cliente(dni, nombre, apellido, direccion, telefono, usuario, clave, cuil, activo);

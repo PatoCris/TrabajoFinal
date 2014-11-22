@@ -58,6 +58,12 @@ class ControladoraVista {
     public List<Accesorio> traerAccesoriosNombre(boolean activo, String nombre) throws Exception {
         return cp.traerAccesoriosNombre(activo, nombre);
     }
+    public List<Accesorio> traerAccesoriosSinVehiculo(Vehiculo vehiculo) throws Exception{
+        return cp.traerAccesoriosSinVehiculo(vehiculo);
+    }
+    public List<Accesorio> traerAccesoriosConVehiculo(Vehiculo vehiculo) throws Exception{
+        return cp.traerAccesoriosConVehiculo(vehiculo);
+    }
 
     ///////////////// METODOS DE MARCA ////////////////////////
     public void nuevaMarca(String nombre, String descrpcion) throws Exception {
@@ -162,6 +168,12 @@ class ControladoraVista {
 
     public List<Equipamiento> traerEquipamientosNombre(boolean activo, String nombre) throws Exception {
         return cp.traerEquipamientosNombre(activo, nombre);
+    }
+    public List<Equipamiento> traerEquipamientosSinVehiculo(Vehiculo vehiculo) throws Exception{
+        return cp.traerEquipamientosSinVehiculo(vehiculo);
+    }
+    public List<Equipamiento> traerEquipamientosConnVehiculo(Vehiculo vehiculo) throws Exception{
+        return cp.traerEquipamientosConVehiculo(vehiculo);
     }
 
     ///////////////////// METODOS DE SEGMENTO ////////////////////////
@@ -284,13 +296,13 @@ class ControladoraVista {
     }
 
     /////////////////////////// METODOS DE VEHICULO ////////////////////////////
-    public void nuevoVehiculo(String dominio, String nroChasis, String nroMotor, int anio, long kmRecorrido, Date fechaCompra, boolean activo, Modelo unModelo) throws Exception {
-        cp.nuevoVehiculo(dominio, nroChasis, nroMotor, anio, kmRecorrido, fechaCompra, activo, unModelo);
+    public void nuevoVehiculo(String dominio, String nroChasis, String nroMotor, int anio, long kmRecorrido, java.util.Date fechaCompra, java.util.Date fechaFinGarantia, long kmCubierto, boolean activo, Modelo unModelo) throws Exception {
+        cp.nuevoVehiculo(dominio, nroChasis, nroMotor, anio, kmRecorrido, fechaCompra, fechaFinGarantia, kmCubierto, activo, unModelo);
     }
 
-    public void editarVehiculo(String dominio, String nroChasis, String nroMotor, int anio, long kmRecorrido, Date fechaCompra, boolean activo, Modelo unModelo) throws Exception {
+    public void editarVehiculo(int codigo, String dominio, String nroChasis, String nroMotor, int anio, long kmRecorrido, java.util.Date fechaCompra, java.util.Date fechaFinGarantia, long kmCubierto, boolean activo, Modelo unModelo) throws Exception {
         //recibir codigo en todos los metodos sgtes.
-        cp.editarVehiculo(dominio, nroChasis, nroMotor, anio, kmRecorrido, fechaCompra, activo, unModelo);
+        cp.editarVehiculo(codigo, dominio, nroChasis, nroMotor, anio, kmRecorrido, fechaCompra, fechaFinGarantia, kmCubierto, activo, unModelo);
     }
 
     public List<Vehiculo> traerVehiculos(boolean activo) throws Exception {
@@ -303,6 +315,23 @@ class ControladoraVista {
 
     public List<Vehiculo> traerVehiculoDominio(boolean activo, String dominio) throws Exception {
         return cp.traerVehiculoDominio(activo, dominio);
+    }
+    
+    public Vehiculo traerVehiculo(int codigo) throws Exception{
+        return cp.traerVehiculo(codigo);
+    }
+    
+    public void agregarAccesorioVehiculo(Accesorio accesorio, int codigo) throws Exception{
+        cp.agregarAccesorioVehiculo(accesorio, codigo);
+    }
+    public void quitarAccesorioVehiculo(int accesorio, int codigo) throws Exception{
+        cp.quitarAccesorioVehiculo(accesorio, codigo);
+    }
+    public void agregarEquipamientoVehiculo(Equipamiento equipamiento, int codigo) throws Exception{
+        cp.agregarEquipamientoVehiculo(equipamiento, codigo);
+    }
+    public void quitarEquipamientoVehiculo(int equipamiento, int codigo) throws Exception{
+        cp.quitarEquipamientoVehiculo(equipamiento, codigo);
     }
 
     ////////////////////// METODOS DE CLIENTE /////////////////////////////
