@@ -7,14 +7,15 @@
 package Persistencia;
 
 import Modelo.Equipamiento;
+import Modelo.Vehiculo;
 import Persistencia.exceptions.NonexistentEntityException;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
@@ -148,6 +149,17 @@ public class EquipamientoJpaController implements Serializable {
     
     public List<Equipamiento> traerEquipamientosNombre(boolean activo, String nombre){
         String sql ="SELECT object(e) FROM Equipamiento e WHERE e.activo = "+activo+" AND e.nombre LIKE '%"+nombre+"%'";
+        Query query = getEntityManager().createQuery(sql);
+        return (List<Equipamiento>)query.getResultList();
+    }
+    public List<Equipamiento> traerEquipamientosSinVehiculo(Vehiculo vehiculo){
+        String sql ="SELECT Object(e) from Equipamiento e where e.codigo NOT IN (SELECT me.codigo FROM  Vehiculo v INNER JOIN v.misEquipamientos me WHERE v.codigo ="+vehiculo.getCodigo()+")";
+        Query query = getEntityManager().createQuery(sql);
+        return (List<Equipamiento>)query.getResultList();
+    }
+    
+    public List<Equipamiento> traerEquipamientosConVehiculo(Vehiculo vehiculo){
+        String sql ="SELECT Object(e) from Equipamiento e where e.codigo IN (SELECT me.codigo FROM  Vehiculo v INNER JOIN v.misEquipamientos me WHERE v.codigo ="+vehiculo.getCodigo()+")";
         Query query = getEntityManager().createQuery(sql);
         return (List<Equipamiento>)query.getResultList();
     }

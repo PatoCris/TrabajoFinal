@@ -67,6 +67,12 @@ public class ControladoraPersistencia {
     public Accesorio traerAccesorio(int codigo) throws PreexistingEntityException, Exception{
         return accesorioJpa.findAccesorio(codigo);
     }
+    public List<Accesorio> traerAccesoriosSinVehiculo(Vehiculo vehiculo) throws PreexistingEntityException, Exception{
+        return accesorioJpa.traerAccesoriosSinVehiculo(vehiculo);
+    }
+    public List<Accesorio> traerAccesoriosConVehiculo(Vehiculo vehiculo) throws PreexistingEntityException, Exception{
+        return accesorioJpa.traerAccesoriosConVehiculo(vehiculo);
+    }
     
     ///////////////// METODOS DE MARCA //////////////////////
     public void nuevaMarca(Marca marca) throws PreexistingEntityException, Exception{
@@ -166,6 +172,12 @@ public class ControladoraPersistencia {
     }
     public List<Equipamiento> traerEquipamientosNombre(boolean activo, String nombre) throws PreexistingEntityException, Exception{
         return equipamientoJpa.traerEquipamientosNombre(activo, nombre);
+    }
+    public List<Equipamiento> traerEquipamientosSinVehiculo(Vehiculo vehiculo) throws PreexistingEntityException, Exception{
+        return equipamientoJpa.traerEquipamientosSinVehiculo(vehiculo);
+    }
+    public List<Equipamiento> traerEquipamientosConVehiculo(Vehiculo vehiculo) throws PreexistingEntityException, Exception{
+        return equipamientoJpa.traerEquipamientosConVehiculo(vehiculo);
     }
     
     ///////////////// METODOS DE SEGMENTO //////////////////////

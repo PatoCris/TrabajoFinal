@@ -6,23 +6,23 @@
 
 package Persistencia;
 
-import java.io.Serializable;
-import javax.persistence.Query;
-import javax.persistence.EntityNotFoundException;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import Modelo.EstadoVehiculo;
 import Modelo.Vehiculo;
 import Persistencia.exceptions.NonexistentEntityException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 /**
  *
- * @author Asus
+ * @author cristian
  */
 public class VehiculoJpaController implements Serializable {
 
@@ -40,11 +40,29 @@ public class VehiculoJpaController implements Serializable {
     }
 
     public void create(Vehiculo vehiculo) {
+        if (vehiculo.getMisEstados() == null) {
+            vehiculo.setMisEstados(new ArrayList<EstadoVehiculo>());
+        }
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            List<EstadoVehiculo> attachedMisEstados = new ArrayList<EstadoVehiculo>();
+            for (EstadoVehiculo misEstadosEstadoVehiculoToAttach : vehiculo.getMisEstados()) {
+                misEstadosEstadoVehiculoToAttach = em.getReference(misEstadosEstadoVehiculoToAttach.getClass(), misEstadosEstadoVehiculoToAttach.getCodigo());
+                attachedMisEstados.add(misEstadosEstadoVehiculoToAttach);
+            }
+            vehiculo.setMisEstados(attachedMisEstados);
             em.persist(vehiculo);
+            for (EstadoVehiculo misEstadosEstadoVehiculo : vehiculo.getMisEstados()) {
+                Vehiculo oldUnVehiculoOfMisEstadosEstadoVehiculo = misEstadosEstadoVehiculo.getUnVehiculo();
+                misEstadosEstadoVehiculo.setUnVehiculo(vehiculo);
+                misEstadosEstadoVehiculo = em.merge(misEstadosEstadoVehiculo);
+                if (oldUnVehiculoOfMisEstadosEstadoVehiculo != null) {
+                    oldUnVehiculoOfMisEstadosEstadoVehiculo.getMisEstados().remove(misEstadosEstadoVehiculo);
+                    oldUnVehiculoOfMisEstadosEstadoVehiculo = em.merge(oldUnVehiculoOfMisEstadosEstadoVehiculo);
+                }
+            }
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -58,7 +76,34 @@ public class VehiculoJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            Vehiculo persistentVehiculo = em.find(Vehiculo.class, vehiculo.getCodigo());
+            List<EstadoVehiculo> misEstadosOld = persistentVehiculo.getMisEstados();
+            List<EstadoVehiculo> misEstadosNew = vehiculo.getMisEstados();
+            List<EstadoVehiculo> attachedMisEstadosNew = new ArrayList<EstadoVehiculo>();
+            for (EstadoVehiculo misEstadosNewEstadoVehiculoToAttach : misEstadosNew) {
+                misEstadosNewEstadoVehiculoToAttach = em.getReference(misEstadosNewEstadoVehiculoToAttach.getClass(), misEstadosNewEstadoVehiculoToAttach.getCodigo());
+                attachedMisEstadosNew.add(misEstadosNewEstadoVehiculoToAttach);
+            }
+            misEstadosNew = attachedMisEstadosNew;
+            vehiculo.setMisEstados(misEstadosNew);
             vehiculo = em.merge(vehiculo);
+            for (EstadoVehiculo misEstadosOldEstadoVehiculo : misEstadosOld) {
+                if (!misEstadosNew.contains(misEstadosOldEstadoVehiculo)) {
+                    misEstadosOldEstadoVehiculo.setUnVehiculo(null);
+                    misEstadosOldEstadoVehiculo = em.merge(misEstadosOldEstadoVehiculo);
+                }
+            }
+            for (EstadoVehiculo misEstadosNewEstadoVehiculo : misEstadosNew) {
+                if (!misEstadosOld.contains(misEstadosNewEstadoVehiculo)) {
+                    Vehiculo oldUnVehiculoOfMisEstadosNewEstadoVehiculo = misEstadosNewEstadoVehiculo.getUnVehiculo();
+                    misEstadosNewEstadoVehiculo.setUnVehiculo(vehiculo);
+                    misEstadosNewEstadoVehiculo = em.merge(misEstadosNewEstadoVehiculo);
+                    if (oldUnVehiculoOfMisEstadosNewEstadoVehiculo != null && !oldUnVehiculoOfMisEstadosNewEstadoVehiculo.equals(vehiculo)) {
+                        oldUnVehiculoOfMisEstadosNewEstadoVehiculo.getMisEstados().remove(misEstadosNewEstadoVehiculo);
+                        oldUnVehiculoOfMisEstadosNewEstadoVehiculo = em.merge(oldUnVehiculoOfMisEstadosNewEstadoVehiculo);
+                    }
+                }
+            }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
@@ -87,6 +132,11 @@ public class VehiculoJpaController implements Serializable {
                 vehiculo.getCodigo();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The vehiculo with id " + id + " no longer exists.", enfe);
+            }
+            List<EstadoVehiculo> misEstados = vehiculo.getMisEstados();
+            for (EstadoVehiculo misEstadosEstadoVehiculo : misEstados) {
+                misEstadosEstadoVehiculo.setUnVehiculo(null);
+                misEstadosEstadoVehiculo = em.merge(misEstadosEstadoVehiculo);
             }
             em.remove(vehiculo);
             em.getTransaction().commit();
@@ -142,7 +192,6 @@ public class VehiculoJpaController implements Serializable {
             em.close();
         }
     }
-   
     public List<Vehiculo> traerVehiculos(boolean activo){
         String sql="SELECT object (v) FROM Vehiculo v WHERE v.activo = "+activo;
         Query query = getEntityManager().createQuery(sql);
@@ -150,9 +199,8 @@ public class VehiculoJpaController implements Serializable {
     }
     
     public List<Vehiculo> traerVehiculoDominio(boolean activo, String dominio){
-        String sql="SELECT object (v) FROM Vehiculo v WHERE v.activo = "+activo+" AND v.domino LIKE '%"+dominio+"%'";
+        String sql="SELECT object (v) FROM Vehiculo v WHERE v.activo = "+activo+" AND v.dominio LIKE '%"+dominio+"%'";
         Query query = getEntityManager().createQuery(sql);
         return (List<Vehiculo>)query.getResultList();
     }
-    
 }

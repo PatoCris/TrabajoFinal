@@ -3,8 +3,10 @@ package Modelo;
 
 import java.io.Serializable;
 import java.util.*;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -44,17 +46,22 @@ public class Vehiculo implements Serializable {
     private long kmRecorrido;
     @Column(name = "fecha_compra")
     @Temporal(javax.persistence.TemporalType.DATE)
-    private Date fechaCompra;
+    private java.util.Date fechaCompra;
+    @Column(name = "fecha_fin_garantia")
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private java.util.Date fechaFinGarantia;
+    @Column(name = "km_cubierto")
+    private long kmCubierto;
     @Column(name = "activo")
     private boolean activo;
-    @Column(name = "una_garantia")
-    private Garantia unaGarantia;
     @JoinColumn(name = "un_modelo")
     @OneToOne
     private Modelo unModelo;
-    @OneToMany
+    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
     private List<Accesorio> misAccesorios = new LinkedList<>();
-    @OneToMany(mappedBy = "unVehiculo")
+    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+    private List<Equipamiento> misEquipamientos = new LinkedList<>();
+    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
     private List<EstadoVehiculo> misEstados = new LinkedList<>();
     
     //METODOS
@@ -62,16 +69,20 @@ public class Vehiculo implements Serializable {
     public Vehiculo() {
     }
 
-    public Vehiculo(String dominio, String nroChasis, String nroMotor, int anio, long kmRecorrido, Date fechaCompra, boolean activo, Modelo unModelo) {
+    public Vehiculo(String dominio, String nroChasis, String nroMotor, int anio, long kmRecorrido, java.util.Date fechaCompra, java.util.Date fechaFinGarantia, long kmCubierto, boolean activo, Modelo unModelo) {
         this.dominio = dominio;
         this.nroChasis = nroChasis;
         this.nroMotor = nroMotor;
         this.anio = anio;
         this.kmRecorrido = kmRecorrido;
         this.fechaCompra = fechaCompra;
-        this.activo = true;
+        this.fechaFinGarantia = fechaFinGarantia;
+        this.kmCubierto = kmCubierto;
+        this.activo = activo;
         this.unModelo = unModelo;
     }
+
+
 
     public int getCodigo() {
         return codigo;
@@ -125,7 +136,7 @@ public class Vehiculo implements Serializable {
         return fechaCompra;
     }
 
-    public void setFechaCompra(Date fechaCompra) {
+    public void setFechaCompra(java.util.Date fechaCompra) {
         this.fechaCompra = fechaCompra;
     }
 
@@ -135,14 +146,6 @@ public class Vehiculo implements Serializable {
 
     public void setActivo(boolean activo) {
         this.activo = activo;
-    }
-
-    public Garantia getUnaGarantia() {
-        return unaGarantia;
-    }
-
-    public void setUnaGarantia(Garantia unaGarantia) {
-        this.unaGarantia = unaGarantia;
     }
 
     public Modelo getUnModelo() {
@@ -168,6 +171,29 @@ public class Vehiculo implements Serializable {
     public void setMisEstados(List<EstadoVehiculo> misEstados) {
         this.misEstados = misEstados;
     }
-    
+
+    public Date getFechaFinGarantia() {
+        return fechaFinGarantia;
+    }
+
+    public void setFechaFinGarantia(Date fechaFinGarantia) {
+        this.fechaFinGarantia = fechaFinGarantia;
+    }
+
+    public long getKmCubierto() {
+        return kmCubierto;
+    }
+
+    public void setKmCubierto(long kmCubierto) {
+        this.kmCubierto = kmCubierto;
+    }
+
+    public List<Equipamiento> getMisEquipamientos() {
+        return misEquipamientos;
+    }
+
+    public void setMisEquipamientos(List<Equipamiento> misEquipamientos) {
+        this.misEquipamientos = misEquipamientos;
+    }
     
 }

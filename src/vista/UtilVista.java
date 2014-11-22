@@ -94,7 +94,16 @@ public class UtilVista {
             throw new Exception ("Error: El campo "+nombre+" está vacio.");
         }
     }
-
+    public Date ParseFecha(String fecha, String error) throws Exception{
+    SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+    Date fechaDate = null;
+    try {
+        fechaDate = formato.parse(fecha);
+    }catch (ParseException ex){
+        throw new Exception(error);
+    }
+    return fechaDate;
+}
 }
     
 
