@@ -419,12 +419,12 @@ public class ControladoraPrincipal {
     }
     
         ///////////// MÉTODOS DE EJEMPLAR ///////////////////
-    public void nuevoEjemplar(Date fechaIng, PiezaRecambio unaPRecambio, Proveedor unProveedor) throws Exception{
+    public void nuevoEjemplar(String fechaIng, PiezaRecambio unaPRecambio, Proveedor unProveedor) throws Exception{
         unEjemplar = new Ejemplar(fechaIng, unaPRecambio, unProveedor, true);
         cp.nuevoEjemplar(unEjemplar);
     }
 
-    public void editarEjemplar(int codigo, Date fechaIng, PiezaRecambio unaPRecambio, Proveedor unProveedor) throws Exception{
+    public void editarEjemplar(int codigo, String fechaIng, PiezaRecambio unaPRecambio, Proveedor unProveedor) throws Exception{
         unEjemplar = cp.traerEjemplar(codigo);
         unEjemplar.setFechaIngreso(fechaIng);
         unEjemplar.setUnaPiezaRecambio(unaPiezaRecambio);

@@ -29,6 +29,10 @@ public class JefeDeposito extends Empleado implements Serializable{
     
 //autorizarEntregaPieza();
 
+    @Override
+    public String toString() {
+        return "Jefe de Depósito";
+    }
 
     
     

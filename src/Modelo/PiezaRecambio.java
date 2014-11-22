@@ -138,5 +138,12 @@ public class PiezaRecambio implements Serializable {
     public void setGrupoParte(TipoReparacion grupoParte) {
         this.grupoParte = grupoParte;
     }
+
+    @Override
+    public String toString() {
+        return nombre;
+    }
+    
+    
     
 }

@@ -6,6 +6,9 @@
 
 package vista;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
@@ -90,7 +93,23 @@ public class UtilVista {
             throw new Exception ("Error: El campo "+nombre+" está vacio.");
         }
     }
+
+    void verificarTelefono(String telefono) throws Exception {
+    if(telefono.isEmpty()){
+            throw new Exception ("Error: Por favor ingrese un Teléfono válido.");
+        }
+    }
     
+    public Date ParseFecha(String fecha){
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        Date fechaDate = null;
+        try {
+            fechaDate = formato.parse(fecha);
+        }catch (ParseException ex){
+            System.out.println(ex);
+        }
+        return fechaDate;
+    }
 }
     
 

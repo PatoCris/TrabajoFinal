@@ -354,11 +354,11 @@ class ControladoraVista {
     }
     
     ///////////////// METODOS DE EJEMPLAR //////////////////////////
-    public void nuevoEjemplar(Date fecha, PiezaRecambio unaPRecambio, Proveedor unProveedor) throws Exception {
+    public void nuevoEjemplar(String fecha, PiezaRecambio unaPRecambio, Proveedor unProveedor) throws Exception {
         cp.nuevoEjemplar(fecha, unaPRecambio, unProveedor);
     }
 
-    public void editarEjemplar(int codigo, Date fecha, PiezaRecambio unaPRecambio, Proveedor unProveedor) throws Exception {
+    public void editarEjemplar(int codigo, String fecha, PiezaRecambio unaPRecambio, Proveedor unProveedor) throws Exception {
         cp.editarEjemplar(codigo, fecha, unaPRecambio, unProveedor);
     }
 
@@ -372,6 +372,28 @@ class ControladoraVista {
 
     public List<Ejemplar> traerEjemplarCodigo(boolean activo, int codigo) throws Exception {
         return cp.traerEjemplarCodigo(activo, codigo);
+    }
+
+    void evaluarTipoEmpleado(String tipoEmpleado) {
+        if(!tipoEmpleado.isEmpty()){
+            switch ( tipoEmpleado ) {
+      case "Jefe de Depósito":
+           //cp.nuevoJefeDeposito();
+           break;
+      case "Jefe de Taller":
+           
+           break;
+      case "Mecánico":
+           
+           break;
+      case "Perito":
+           
+           break;
+      default:
+           System.out.println("error" );
+           break;
+      }
+        }
     }
     
 }

@@ -34,5 +34,8 @@ public class Mecanico extends Empleado implements Serializable{
     public Mecanico(int codigo, int dni, String nombre, String apellido, String telefono, String direccion, long cuil, boolean activo) {
         super(dni, nombre, apellido, telefono, direccion, cuil, activo);
     }
-    
+        @Override
+    public String toString() {
+        return "Mecánico";
+    }
 }
