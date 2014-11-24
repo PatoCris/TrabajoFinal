@@ -48,6 +48,7 @@ public class frmMenu extends javax.swing.JFrame {
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         mnuGestionCliente = new javax.swing.JMenuItem();
+        mnuVincularClientesVehiculos = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         mnuVehiculo = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
@@ -122,6 +123,14 @@ public class frmMenu extends javax.swing.JFrame {
             }
         });
         jMenu2.add(mnuGestionCliente);
+
+        mnuVincularClientesVehiculos.setText("Vincular Clientes con Vehiculos");
+        mnuVincularClientesVehiculos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuVincularClientesVehiculosActionPerformed(evt);
+            }
+        });
+        jMenu2.add(mnuVincularClientesVehiculos);
 
         jMenuBar1.add(jMenu2);
 
@@ -517,6 +526,17 @@ public class frmMenu extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_mnuMecanicoActionPerformed
 
+    private void mnuVincularClientesVehiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuVincularClientesVehiculosActionPerformed
+        VincularClienteVehiculo vincularCV;
+        try {
+            vincularCV = new VincularClienteVehiculo(cv);
+            vincularCV.setVisible(true);
+            jdpPanelPrincipal.add(vincularCV);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }//GEN-LAST:event_mnuVincularClientesVehiculosActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -594,5 +614,6 @@ public class frmMenu extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnuTipoAnomalia;
     private javax.swing.JMenuItem mnuTipoReparacion;
     private javax.swing.JMenuItem mnuVehiculo;
+    private javax.swing.JMenuItem mnuVincularClientesVehiculos;
     // End of variables declaration//GEN-END:variables
 }

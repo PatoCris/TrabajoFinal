@@ -9,6 +9,8 @@ import Modelo.Accesorio;
 import Modelo.Anomalia;
 import Modelo.Cliente;
 import Modelo.ControladoraPrincipal;
+import Modelo.Deposito;
+import Modelo.Devolucion;
 import Modelo.Ejemplar;
 import Modelo.Empleado;
 import Modelo.Equipamiento;
@@ -16,6 +18,7 @@ import Modelo.Especialidad;
 import Modelo.Estado;
 import Modelo.JefeDeposito;
 import Modelo.JefeTaller;
+import Modelo.Localidad;
 import Modelo.Marca;
 import Modelo.Mecanico;
 import Modelo.Modelo;
@@ -24,9 +27,12 @@ import Modelo.Perito;
 import Modelo.PiezaRecambio;
 import Modelo.Proveedor;
 import Modelo.Segmento;
+import Modelo.Taller;
 import Modelo.TipoAnomalia;
 import Modelo.TipoReparacion;
 import Modelo.Vehiculo;
+import Persistencia.exceptions.NonexistentEntityException;
+import Persistencia.exceptions.PreexistingEntityException;
 import java.util.Date;
 import java.util.List;
 
@@ -333,18 +339,30 @@ class ControladoraVista {
     public void quitarEquipamientoVehiculo(int equipamiento, int codigo) throws Exception{
         cp.quitarEquipamientoVehiculo(equipamiento, codigo);
     }
-
-    ////////////////////// METODOS DE CLIENTE /////////////////////////////
-    public void nuevoCliente(int dni, String nombre, String apellido, String direccion, String telefono, String usuario, String clave, long cuil, boolean activo) throws Exception {
-        cp.nuevoCliente(dni, nombre, apellido, direccion, telefono, usuario, clave, cuil, activo);
+    public List<Vehiculo> traerVehiculosSinCliente() throws PreexistingEntityException, Exception{
+        return cp.traerVehiculosSinCliente();
+    }
+    public List<Vehiculo> traerVehiculosConCliente(Cliente cliente) throws PreexistingEntityException, Exception{
+        return cp.traerVehiculosConCliente(cliente);
+    }
+    public void borrarClienteVehiculo(int codigoCliente, int codigoVehiculo) throws PreexistingEntityException, Exception{
+        cp.borrarClienteVehiculo(codigoCliente, codigoVehiculo);
     }
 
-    public void editarCliente(int codigo, int dni, String nombre, String apellido, String direccion, String telefono, String usuario, String clave, long cuil, boolean activo) throws Exception {
-        cp.editarCliente(codigo, dni, nombre, apellido, direccion, telefono, usuario, clave, cuil, activo);
+    ////////////////////// METODOS DE CLIENTE /////////////////////////////
+    public void nuevoCliente(int dni, String nombre, String apellido, String direccion, String telefono, String usuario, String clave, long cuil, boolean activo, Localidad localidad) throws Exception {
+        cp.nuevoCliente(dni, nombre, apellido, direccion, telefono, usuario, clave, cuil, activo, localidad);
+    }
+
+    public void editarCliente(int codigo, int dni, String nombre, String apellido, String direccion, String telefono, String usuario, String clave, long cuil, boolean activo, Localidad localidad) throws Exception {
+        cp.editarCliente(codigo, dni, nombre, apellido, direccion, telefono, usuario, clave, cuil, activo, localidad);
     }
 
     public List<Cliente> traerClientes(boolean activo) throws Exception {
         return cp.traerClientes(activo);
+    }
+    public Cliente traerCliente(int codigo) throws Exception {
+        return cp.traerCliente(codigo);
     }
 
     public List<Cliente> traerClientesBusqueda(boolean activo, String apellido, int dni) throws Exception {
@@ -353,6 +371,13 @@ class ControladoraVista {
 
     public void eliminarCliente(int codigo) throws Exception {
         cp.eliminarCliente(codigo);
+    }
+    
+    public void agregarVehiculoCliente(Vehiculo vehiculo, int codigo) throws Exception{
+        cp.agregarVehiculoCliente(vehiculo, codigo);
+    }
+    public void quitarVehiculoCliente(Vehiculo vehiculo, int codigo) throws Exception{
+        cp.quitarVehiculoCliente(vehiculo, codigo);
     }
 
     ////////////////////// METODOS DE PIEZA RECAMBIO /////////////////////////////
@@ -497,5 +522,72 @@ class ControladoraVista {
     public List<Pedido> traerPedidosConVinculo(Mecanico unMecanico) throws Exception{
         return cp.traerPedidosConVinculo(unMecanico);
     }
+        ////////////////////// MÉTODOS DE LOCALIDAD ////////////////////////////
+    public List<Localidad> traerLocalidades(boolean activo) throws Exception{
+        return cp.traerLocalidades(activo);
+    }
+    public List<Localidad> traerLocalidadesNombre(boolean activo, String nombre) throws Exception{
+        return cp.traerLocalidadesNombre(activo, nombre);
+    }
     
+    ///////////////////////// METODOS DE DEVOLUCION ////////////////////////////////
+    public void nuevaDevolucion(Date fecha, String motivo, boolean activo, PiezaRecambio miPiezaRecambio) throws PreexistingEntityException, Exception{
+        cp.nuevaDevolucion(fecha, motivo, activo, miPiezaRecambio);
+    }
+    public void editarDevolucion(int codigo, Date fecha, String motivo, boolean activo, PiezaRecambio miPiezaRecambio) throws PreexistingEntityException, Exception{
+        cp.editarDevolucion(codigo, fecha, motivo, activo, miPiezaRecambio);
+    }
+    public Devolucion traerDevolucion(int codigo) throws PreexistingEntityException, Exception{
+        return cp.traerDevolucion(codigo);
+    }
+    public List<Devolucion> traerDevoluciones(boolean activo) throws PreexistingEntityException, Exception{
+        return cp.traerDevoluciones(activo);
+    }
+    public void eliminarDevolucion(int codigo) throws NonexistentEntityException, Exception{
+        cp.eliminarDevolucion(codigo);
+    }
+    public List<Devolucion> traerDevolucionesBusqueda(boolean activo, java.util.Date fecha) throws PreexistingEntityException, Exception{
+        return cp.traerDevolucionesBusqueda(activo, fecha);
+    }
+    public List<Devolucion> traerDevolucionSinDeposito() throws PreexistingEntityException, Exception{
+        return cp.traerDevolucionesSinDeposito();
+    }
+    public List<Devolucion> traerDevolucionConDeposito(int deposito) throws PreexistingEntityException, Exception{
+        return cp.traerDevolucionesConDeposito(deposito);
+    }
+    public List<Devolucion> traerDevolucionConDeposito(int deposito, Date fecha) throws PreexistingEntityException, Exception{
+        return cp.traerDevolucionesConDeposito(deposito, fecha);
+    }
+    
+                /////////////////////// METODOS DE TALLER ////////////////////////////////
+    public void nuevoTaller(String nombre, String direccion, String telefono, String correo, Date horaEntrada, Date horaSalida, boolean activo, Deposito unDeposito, JefeTaller unJefeTaller, Localidad unaLocalidad) throws PreexistingEntityException, Exception{
+        cp.nuevoTaller(nombre, direccion, telefono, correo, horaEntrada, horaSalida, activo, unDeposito, unJefeTaller, unaLocalidad);
+    }
+    public void editarTaller(int codigo, String nombre, String direccion, String telefono, String correo, Date horaEntrada, Date horaSalida, boolean activo, Deposito unDeposito, JefeTaller unJefeTaller, Localidad unaLocalidad) throws PreexistingEntityException, Exception{
+        cp.editarTaller(codigo, nombre, direccion, telefono, correo, horaEntrada, horaSalida, activo, unDeposito, unJefeTaller, unaLocalidad);
+    }
+  
+    public List<Taller> traerTalleres(boolean activo) throws PreexistingEntityException, Exception{
+        return cp.traerTalleres(activo);
+    }
+    public void eliminarTaller(int codigo) throws NonexistentEntityException, Exception{
+            cp.eliminarTaller(codigo);
+    }
+    public List<Taller> traerTallerNombre(boolean activo, String nombre) throws PreexistingEntityException, Exception{
+        return cp.traerTallerNombre(activo, nombre);
+    }   
+    public Taller traerTaller(int codigo) throws PreexistingEntityException, Exception{
+        return cp.traerTaller(codigo);
+    }
+    
+            /////////////////////// METODOS DE DEPOSITO ////////////////////////////////
+    public void nuevoDeposito(String nombre, String correo, String telefono, boolean activo, JefeDeposito unJefeDeposito) throws PreexistingEntityException, Exception{
+        cp.nuevoDeposito(nombre, correo, telefono, activo, unJefeDeposito);
+    }
+    public void editarDeposito(int codigo, String nombre, String correo, String telefono, boolean activo, JefeDeposito unJefeDeposito) throws PreexistingEntityException, Exception{
+        cp.editarDeposito(codigo, nombre, correo, telefono, activo, unJefeDeposito);
+    }
+    public void eliminarDeposito(int codigo) throws NonexistentEntityException, Exception{
+        cp.eliminarDeposito(codigo);
+    }
 }

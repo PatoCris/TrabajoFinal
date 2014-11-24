@@ -3,12 +3,16 @@ package Modelo;
 
 import java.io.Serializable;
 import java.util.*;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /*
@@ -47,9 +51,11 @@ public class Cliente implements Serializable {
     @Column(name = "activo")
     private boolean activo;
     
-    @OneToMany
+    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
     private List<Vehiculo> misVehiculos = new LinkedList<>();
-    
+    @JoinColumn(name = "un_modelo")
+    @OneToOne
+    private Localidad localidad;
     
     //Operaciones
     //Solicitar alta vehiculo
@@ -58,7 +64,7 @@ public class Cliente implements Serializable {
     public Cliente() {
     }
 
-    public Cliente(int dni, String nombre, String apellido, String direccion, String telefono, String usuario, String clave, long cuil, boolean activo) {
+    public Cliente(int dni, String nombre, String apellido, String direccion, String telefono, String usuario, String clave, long cuil, boolean activo, Localidad localidad) {
         this.dni = dni;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -68,6 +74,7 @@ public class Cliente implements Serializable {
         this.clave = clave;
         this.cuil = cuil;
         this.activo = activo;
+        this.localidad = localidad;
     }
 
     public int getCodigo() {
@@ -156,6 +163,14 @@ public class Cliente implements Serializable {
 
     public void setMisVehiculos(List<Vehiculo> misVehiculos) {
         this.misVehiculos = misVehiculos;
+    }
+
+    public Localidad getLocalidad() {
+        return localidad;
+    }
+
+    public void setLocalidad(Localidad localidad) {
+        this.localidad = localidad;
     }
  
 }

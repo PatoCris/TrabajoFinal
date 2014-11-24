@@ -23,11 +23,11 @@ import javax.persistence.criteria.Root;
  * @author cristian
  */
 public class ClienteJpaController implements Serializable {
-
+    
     public ClienteJpaController() {
         emf=Persistence.createEntityManagerFactory("TallerMecanicoPU");
     }
-
+    
     public ClienteJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
@@ -158,7 +158,7 @@ public class ClienteJpaController implements Serializable {
     public boolean exiteCliente(int dni){
         boolean retorno = true;
         try{
-            String sql = "SELECT object(c) FORM Cliente c WHERE c.dni = "+dni;
+            String sql = "SELECT object(c) FROM Cliente c WHERE c.dni = "+dni;
             Query query = getEntityManager().createQuery(sql);
             query.getSingleResult();
         }catch(Exception ex){
@@ -176,5 +176,10 @@ public class ClienteJpaController implements Serializable {
             existe = false;
         }
         return existe;
+    }
+    public void borrarClienteVehiculo(int codigoCliente, int codigoVehiculo){
+        String sql ="DELETE FROM Cliente c INNER JOIN c.misVehiculos mv";
+        Query query = getEntityManager().createQuery(sql);
+        query.executeUpdate();
     }
 }

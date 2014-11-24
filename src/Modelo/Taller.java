@@ -3,13 +3,14 @@ package Modelo;
 
 import java.io.Serializable;
 import java.util.*;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -42,38 +43,44 @@ public class Taller implements Serializable {
     private String correo;
     @Column(name = "hora_entrada")
     @Temporal(javax.persistence.TemporalType.DATE)
-    private Date horaEntrada;
+    private java.util.Date horaEntrada;
     @Column(name = "hora_salida")
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date horaSalida;
     @Column(name = "activo")
     private boolean activo;
+    
     @JoinColumn(name="un_deposito")
     @OneToOne
     private Deposito unDeposito;
+    
     @JoinColumn(name="un_jefe_taller")
     @OneToOne    
     private JefeTaller unJefeTaller;
-    @JoinColumn(name="un_mecanico")
-    @OneToOne
-    private Mecanico unMecanico;
+    
+    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+    private List<Mecanico> misMecanicos = new LinkedList<>();
+    
     @JoinColumn(name="una_localidad")
     @OneToOne
     private Localidad unaLocalidad;
-    @OneToMany
+    
+    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
     private List<AgendaMensual> misAgendasMensuales = new LinkedList<>();
-    @OneToMany
+    
+    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
     private List<Sector> misSectores = new LinkedList<>();
-    @OneToMany
+    
+    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
     private List<Perito> misPeritos = new LinkedList<>();
-    @OneToMany
+    
+    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
     private List<Localidad> zonasCubiertas = new LinkedList<>();
 
     public Taller() {
     }
 
-    public Taller(int codigo, String nombre, String direccion, String telefono, String correo, Date horaEntrada, Date horaSalida, boolean activo, Deposito unDeposito, JefeTaller unJefeTaller, Mecanico unMecanico, Localidad unaLocalidad) {
-        this.codigo = codigo;
+    public Taller(String nombre, String direccion, String telefono, String correo, Date horaEntrada, Date horaSalida, boolean activo, Deposito unDeposito, JefeTaller unJefeTaller, Localidad unaLocalidad) {
         this.nombre = nombre;
         this.direccion = direccion;
         this.telefono = telefono;
@@ -83,9 +90,10 @@ public class Taller implements Serializable {
         this.activo = activo;
         this.unDeposito = unDeposito;
         this.unJefeTaller = unJefeTaller;
-        this.unMecanico = unMecanico;
         this.unaLocalidad = unaLocalidad;
     }
+
+
 
     public int getCodigo() {
         return codigo;
@@ -165,14 +173,6 @@ public class Taller implements Serializable {
 
     public void setUnJefeTaller(JefeTaller unJefeTaller) {
         this.unJefeTaller = unJefeTaller;
-    }
-
-    public Mecanico getUnMecanico() {
-        return unMecanico;
-    }
-
-    public void setUnMecanico(Mecanico unMecanico) {
-        this.unMecanico = unMecanico;
     }
 
     public Localidad getUnaLocalidad() {
