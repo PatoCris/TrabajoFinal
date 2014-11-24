@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 
@@ -32,22 +34,24 @@ public class InformePiezaPedido implements Serializable {
     private boolean aprobado;
     @Column(name = "hora")
     @Temporal(javax.persistence.TemporalType.DATE)
-    private Date hora;
+    private java.util.Date hora;
     @Column(name = "fecha")
     @Temporal(javax.persistence.TemporalType.DATE)
-    private Date fecha;
+    private java.util.Date fecha;
     @Column(name = "activo")
     private boolean activo;
+    @JoinColumn(name="una_pieza")
+    @OneToOne
+    private PiezaRecambio unaPieza; 
 
     public InformePiezaPedido() {
     }
 
-    public InformePiezaPedido(int codigo, boolean aprobado, Date hora, Date fecha, boolean activo) {
-        this.codigo = codigo;
+    public InformePiezaPedido( boolean aprobado, java.util.Date fecha, boolean activo, PiezaRecambio unaPieza) {
         this.aprobado = aprobado;
-        this.hora = hora;
         this.fecha = fecha;
         this.activo = activo;
+        this.unaPieza = unaPieza;
     }
 
     public int getCodigo() {
@@ -66,19 +70,11 @@ public class InformePiezaPedido implements Serializable {
         this.aprobado = aprobado;
     }
 
-    public Date getHora() {
-        return hora;
-    }
-
-    public void setHora(Date hora) {
-        this.hora = hora;
-    }
-
-    public Date getFecha() {
+    public java.util.Date getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(java.util.Date fecha) {
         this.fecha = fecha;
     }
 
@@ -88,6 +84,14 @@ public class InformePiezaPedido implements Serializable {
 
     public void setActivo(boolean activo) {
         this.activo = activo;
+    }
+
+    public PiezaRecambio getUnaPieza() {
+        return unaPieza;
+    }
+
+    public void setUnaPieza(PiezaRecambio unaPieza) {
+        this.unaPieza = unaPieza;
     }
     
     

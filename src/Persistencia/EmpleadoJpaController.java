@@ -155,10 +155,10 @@ public class EmpleadoJpaController implements Serializable {
         return (List<Empleado>)query.getResultList();
     }
     
-    public boolean exiteEmpleado(int dni){
+    public boolean existeEmpleado(int dni){
         boolean retorno = true;
         try{
-            String sql = "SELECT object(e) FORM Empleado c WHERE e.dni = "+dni;
+            String sql = "SELECT object(e) FROM Empleado e WHERE e.dni ="+dni;
             Query query = getEntityManager().createQuery(sql);
             query.getSingleResult();
         }catch(Exception ex){
@@ -166,12 +166,12 @@ public class EmpleadoJpaController implements Serializable {
         }
         return retorno;
     }
-    public boolean exiteEmpleado(int dni, int codigo) {
+    public boolean existeEmpleado(int dni, int codigo) {
         boolean existe = true;
         try {
             String consulta = "SELECT object(e) FROM Empleado e WHERE e.dni = " + dni + " and e.codigo <> " + codigo;
             Query query = this.getEntityManager().createQuery(consulta);
-            query.getSingleResult();//si lanza excepcion el Cliente no existe
+            query.getSingleResult();
         } catch (Exception e) {
             existe = false;
         }

@@ -25,13 +25,13 @@ public class JefeTaller extends Empleado implements Serializable{
     
     //autorizarPedidoPieza();
 
-    public JefeTaller(int codigo, int dni, String nombre, String apellido, String telefono, String direccion, long cuil, boolean activo) {
+    public JefeTaller(int dni, String nombre, String apellido, String telefono, String direccion, long cuil, boolean activo) {
         super(dni, nombre, apellido, telefono, direccion, cuil, activo);
     }
 
     @Override
     public String toString() {
-        return "Jefe de Taller";
+        return super.getNombre()+" "+super.getApellido();
     }
 
     

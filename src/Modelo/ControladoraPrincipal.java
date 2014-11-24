@@ -34,6 +34,10 @@ public class ControladoraPrincipal {
     private Ejemplar unEjemplar = new Ejemplar();
     private Mecanico unMecanico = new Mecanico();
     private Pedido unPedido = new Pedido();
+    private JefeTaller unJefeTaller = new JefeTaller();
+    private JefeDeposito unJefeDeposito = new JefeDeposito();
+    private Perito unPerito = new Perito();
+    private InformePiezaPedido unInforme = new InformePiezaPedido();
  
     ///////////// CONTROLADORA PERSISTENCIA ////////////////
     private ControladoraPersistencia cp = new ControladoraPersistencia();
@@ -546,33 +550,33 @@ public class ControladoraPrincipal {
     }
 
     public void agregarEspecialidad(Especialidad unaEspecialidad, int codigo) throws Exception{
-        Mecanico unMecanico = cp.traerMecanico(codigo);
+        unMecanico = cp.traerMecanico(codigo);
         unMecanico.getMisEspecialidades().add(unaEspecialidad);
         cp.editarMecanico(unMecanico);
     }
     public void quitarEspecialidad(int especialidad, int codigo) throws Exception{
-        Mecanico unMecanico = cp.traerMecanico(codigo);
+        unMecanico = cp.traerMecanico(codigo);
         unMecanico.getMisEspecialidades().remove(especialidad);
         cp.editarMecanico(unMecanico);
     }
     
     public void agregarPedido(Pedido unPedido, int codigo) throws Exception{
-        Mecanico unMecanico = cp.traerMecanico(codigo);
+        unMecanico = cp.traerMecanico(codigo);
         unMecanico.getMisPedidos().add(unPedido);
         cp.editarMecanico(unMecanico);
     }
     public void quitarPedido(int pedido, int codigo) throws Exception{
-        Mecanico unMecanico = cp.traerMecanico(codigo);
+        unMecanico = cp.traerMecanico(codigo);
         unMecanico.getMisPedidos().remove(pedido);
         cp.editarMecanico(unMecanico);
     }
     
     ///////////////// METODOS DE PEDIDO ///////////////////
-    public void nuevoPedido(Date fecha, Date hora, String descripcion, int cantidad, boolean autorizado, boolean paraRecambio, boolean activo, Perito unPerito, JefeDeposito unJefeDeposito, JefeTaller unJefeTaller, Cliente unCliente) throws Exception{
-        unPedido = new Pedido(fecha, hora, descripcion, cantidad, autorizado, paraRecambio,true, unPerito, unJefeDeposito, unJefeTaller, unCliente);
+    public void nuevoPedido(Date fecha, Date hora, String descripcion, int cantidad, boolean autorizado, boolean paraRecambio, boolean activo, JefeDeposito unJefeDeposito, JefeTaller unJefeTaller, Cliente unCliente) throws Exception{
+        unPedido = new Pedido(fecha, hora, descripcion, cantidad, autorizado, paraRecambio,true, unJefeDeposito, unJefeTaller, unCliente);
         cp.nuevoPedido(unPedido);
     }
-    public void editarPedido(int codigo, Date fecha, Date hora, String descripcion, int cantidad, boolean autorizado, boolean paraRecambio, boolean activo, Perito unPerito, JefeDeposito unJefeDeposito, JefeTaller unJefeTaller, Cliente unCliente) throws Exception{
+    public void editarPedido(int codigo, Date fecha, Date hora, String descripcion, int cantidad, boolean autorizado, boolean paraRecambio, boolean activo, JefeDeposito unJefeDeposito, JefeTaller unJefeTaller, Cliente unCliente) throws Exception{
         unPedido = cp.traerPedido(codigo);
         unPedido.setFecha(fecha);
         unPedido.setHora(hora);
@@ -580,7 +584,6 @@ public class ControladoraPrincipal {
         unPedido.setCantidad(cantidad);
         unPedido.setParaRecambio(paraRecambio);
         unPedido.setActivo(activo);
-        unPedido.setUnPerito(unPerito);
         unPedido.setUnJefeDeposito(unJefeDeposito);
         unPedido.setUnJefeTaller(unJefeTaller);
         unPedido.setUnCliente(unCliente);
@@ -605,10 +608,160 @@ public class ControladoraPrincipal {
         return cp.traerPedidosConVinculo(unMecanico);
     }
     
+    ////////////////// MÉTODOS DE JEFE DE TALLER ////////////////////////
+    public void nuevoJefeTaller (int dni, String nombre, String apellido, String telefono, String direccion, long cuil, boolean activo) throws Exception{
+        if(cp.existeJefeTaller(dni)){
+            throw new Exception ("Error: Ya existe un Jefe de taller con ese DNI.");
+        }else{
+            unJefeTaller = new JefeTaller(dni, nombre, apellido, telefono, direccion, cuil, activo);
+            cp.nuevoJefeTaller(unJefeTaller);
+        }
+    }
+    public void editarJefeTaller(int codigo, int dni, String nombre, String apellido, String telefono, String direccion, long cuil, boolean activo) throws Exception{
+        if(cp.existeJefeTaller(dni, codigo)){
+            throw new Exception ("Error: Ya existe otro Jefe con ese DNI.");
+        }else{
+            unJefeTaller = cp.traerJefeTaller(codigo);
+            unJefeTaller.setDni(dni);
+            unJefeTaller.setNombre(nombre);
+            unJefeTaller.setApellido(apellido);
+            unJefeTaller.setTelefono(telefono);
+            unJefeTaller.setDireccion(direccion);
+            unJefeTaller.setCuil(cuil);
+            cp.editarJefeTaller(unJefeTaller);
+        }    
+    }
+    public List<JefeTaller> traerJefesTaller(boolean activo) throws Exception{
+        return cp.traerJefesTaller(activo);
+    }
+    public void eliminarJefeTaller(int codigo) throws Exception{
+        unJefeTaller = cp.traerJefeTaller(codigo);
+        unJefeTaller.setActivo(false);
+        cp.editarJefeTaller(unJefeTaller);
+    }
+    public List<JefeTaller> traerJefesTallerBusqueda(boolean activo, String apellido, int dni) throws Exception{
+        return cp.traerJefesTallerBusqueda(activo, apellido, dni);
+    }
+    
+    ////////////////// MÉTODOS DE JEFE DE DEPOSITO ////////////////////////
+    public void nuevoJefeDeposito (int dni, String nombre, String apellido, String telefono, String direccion, long cuil, boolean activo) throws Exception{
+        if(cp.existeJefeDeposito(dni) != null){
+            throw new Exception ("Error: Ya existe un empleado con ese DNI.");
+        }else{
+            unJefeDeposito = new JefeDeposito(dni, nombre, apellido, telefono, direccion, cuil, activo);
+            cp.nuevoJefeDeposito(unJefeDeposito);
+        }
+    }
+    public void editarJefeDeposito(int codigo, int dni, String nombre, String apellido, String telefono, String direccion, long cuil, boolean activo) throws Exception{
+        if(cp.existeJefeDeposito(dni, codigo)){
+            throw new Exception ("Error: Ya existe otro Jefe con ese DNI.");
+        }else{
+            unJefeDeposito = cp.traerJefeDeposito(codigo);
+            unJefeDeposito.setDni(dni);
+            unJefeDeposito.setNombre(nombre);
+            unJefeDeposito.setApellido(apellido);
+            unJefeDeposito.setTelefono(telefono);
+            unJefeDeposito.setDireccion(direccion);
+            unJefeDeposito.setCuil(cuil);
+            cp.editarJefeDeposito(unJefeDeposito);
+        }    
+    }
+    public List<JefeDeposito> traerJefesDeposito(boolean activo) throws Exception{
+        return cp.traerJefeDeposito(activo);
+    }
+    public void eliminarJefeDeposito(int codigo) throws Exception{
+        unJefeDeposito = cp.traerJefeDeposito(codigo);
+        unJefeDeposito.setActivo(false);
+        cp.editarJefeDeposito(unJefeDeposito);
+    }
+    public List<JefeDeposito> traerJefesDepositoBusqueda(boolean activo, String apellido, int dni) throws Exception{
+        return cp.traerJefesDepositoBusqueda(activo, apellido, dni);
+    }
+    public JefeDeposito existeJefeDeposito(int dni) throws Exception{
+        return cp.existeJefeDeposito(dni);
+    }
+    
+    ////////////////// MÉTODOS DE PERITO ////////////////////////
+    public void nuevoPerito (int dni, String nombre, String apellido, String telefono, String direccion, long cuil, boolean activo) throws Exception{
+        if(cp.existePerito(dni)){
+            throw new Exception ("Error: Ya existe un Perito con ese DNI.");
+        }else{
+            unPerito = new Perito(dni, nombre, apellido, telefono, direccion, cuil, activo);
+            cp.nuevoPerito(unPerito);
+        }
+    }
+    public void editarPerito(int codigo, int dni, String nombre, String apellido, String telefono, String direccion, long cuil, boolean activo) throws Exception{
+        if(cp.existePerito(dni, codigo)){
+            throw new Exception ("Error: Ya existe otro Perito con ese DNI.");
+        }else{
+            unPerito = (Perito) cp.traerPerito(codigo);
+            unPerito.setDni(dni);
+            unPerito.setNombre(nombre);
+            unPerito.setApellido(apellido);
+            unPerito.setTelefono(telefono);
+            unPerito.setDireccion(direccion);
+            unPerito.setCuil(cuil);
+            cp.editarPerito(unPerito);
+        }    
+    }
+    public List<Perito> traerPeritos(boolean activo) throws Exception{
+        return cp.traerPeritos(activo);
+    }
+    public void eliminarPerito(int codigo) throws Exception{
+        unPerito = (Perito) cp.traerPerito(codigo);
+        unPerito.setActivo(false);
+        cp.editarPerito(unPerito);
+    }
+    public List<Perito> traerPeritosBusqueda(boolean activo, String apellido, int dni) throws Exception{
+        return cp.traerPeritosBusqueda(activo, apellido, dni);
+    }
+    
+    public Perito traerPerito(int codigo) throws Exception{
+        return cp.traerPerito(codigo);
+    }
+
+    public void agregarInforme(InformePiezaPedido unInforme, int codigo) throws Exception{
+        unPerito = cp.traerPerito(codigo);
+        unPerito.getMisInformesPPedido().add(unInforme);
+        cp.editarPerito(unPerito);
+    }
+    public void quitarInforme(int miInforme, int codigo) throws Exception{
+        unPerito = cp.traerPerito(codigo);
+        unPerito.getMisInformesPPedido().remove(miInforme);
+        cp.editarPerito(unPerito);
+    }
+    
+    
+    ////////////////////// MÉTODOS DE INFORMES /////////////////////////////
+    public void nuevoInforme(boolean aprobado, java.util.Date fecha, boolean activo, PiezaRecambio pieza) throws Exception{
+        unInforme = new InformePiezaPedido(aprobado,fecha, true, pieza);
+        cp.nuevoInforme(unInforme);
+    }
+    public void editarInforme(int codigo, boolean aprobado, java.util.Date fecha, boolean activo, PiezaRecambio pieza) throws Exception{
+        unInforme = cp.traerInforme(codigo);
+        unInforme.setAprobado(aprobado);
+        unInforme.setFecha(fecha);
+        unInforme.setUnaPieza(pieza);
+        cp.editarInforme(unInforme);
+    }
+    public void eliminarInforme(int codigo) throws Exception{
+        unInforme = cp.traerInforme(codigo);
+        unInforme.setActivo(false);
+        cp.editarInforme(unInforme);
+    }
+    
     /////////////////// METODO MAIN ///////////////////////////
         public static void main(String[] args) {
             frmMenu miMenuPrincipal = new frmMenu();
             miMenuPrincipal.setVisible(true);
+    }
+
+    public List<InformePiezaPedido> traerInformeSinVinculo(Perito unPerito) {
+        return cp.traerInformeSinVinculo(unPerito);
+    }
+
+    public List<InformePiezaPedido> traerInformesConVinculo(Perito unPerito) {
+        return cp.traerInformesConVinculo(unPerito);
     }
 
 }

@@ -157,10 +157,10 @@ public class MecanicoJpaController implements Serializable {
         return (List<Mecanico>)query.getResultList();
     }
     
-    public boolean exiteMecanico(int dni){
+    public boolean existeMecanico(int dni){
         boolean retorno = true;
         try{
-            String sql = "SELECT object(m) FORM Mecanico m WHERE m.dni = "+dni;
+            String sql = "SELECT Object(m) FROM Mecanico m WHERE m.dni = "+dni;
             Query query = getEntityManager().createQuery(sql);
             query.getSingleResult();
         }catch(Exception ex){
@@ -168,7 +168,7 @@ public class MecanicoJpaController implements Serializable {
         }
         return retorno;
     }
-    public boolean exiteMecanico(int dni, int codigo) {
+    public boolean existeMecanico(int dni, int codigo) {
         boolean existe = true;
         try {
             String consulta = "SELECT object(m) FROM Mecanico m WHERE m.dni = " + dni + " and m.codigo <> " + codigo;

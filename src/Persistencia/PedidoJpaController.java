@@ -21,12 +21,12 @@ import javax.persistence.criteria.Root;
 
 /**
  *
- * @author cristian
+ * @author Asus
  */
 public class PedidoJpaController implements Serializable {
 
-    public PedidoJpaController (){
-        emf= Persistence.createEntityManagerFactory("TallerMecanicoPU");
+    public PedidoJpaController(){
+        emf = Persistence.createEntityManagerFactory("TallerMecanicoPU");
     }
     public PedidoJpaController(EntityManagerFactory emf) {
         this.emf = emf;
@@ -141,7 +141,7 @@ public class PedidoJpaController implements Serializable {
         }
     }
     
-    public List<Pedido> traerPedidos(boolean activo) {
+      public List<Pedido> traerPedidos(boolean activo) {
         String sql = "SELECT Object(p) FROM Pedido p WHERE p.activo =" + activo;
         Query query = getEntityManager().createQuery(sql);
         return (List<Pedido>) query.getResultList();

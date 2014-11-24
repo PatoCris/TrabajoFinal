@@ -14,6 +14,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
@@ -23,6 +24,9 @@ import javax.persistence.criteria.Root;
  */
 public class JefeDepositoJpaController implements Serializable {
 
+    public JefeDepositoJpaController() {
+        emf=Persistence.createEntityManagerFactory("TallerMecanicoPU");
+    }
     public JefeDepositoJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
@@ -136,4 +140,42 @@ public class JefeDepositoJpaController implements Serializable {
         }
     }
     
+    public List<JefeDeposito> traerJefesDeposito(boolean activo){
+        String sql ="SELECT object(e) FROM JefeDeposito e WHERE e.activo = "+activo;
+        Query query = getEntityManager().createQuery(sql);
+        return (List<JefeDeposito>)query.getResultList();
+    }
+    
+    public List<JefeDeposito> traerJefesDepositoBusqueda(boolean activo, String apellido, int dni){
+        String sql ="SELECT object(e) FROM JefeDeposito e WHERE e.activo = "+activo;
+        if(!apellido.equals(""))
+            sql = sql + " AND e.apellido LIKE '%"+apellido+"%'";
+        if(dni != 0)
+            sql = sql + " AND e.dni ="+dni;
+        Query query = getEntityManager().createQuery(sql);
+        return (List<JefeDeposito>)query.getResultList();
+    }
+    
+    public JefeDeposito existeJefeDeposito(int dni){
+        JefeDeposito jefe = null;
+        try{
+            String sql = "SELECT Object(e) FROM JefeDeposito e WHERE e.dni ="+dni;
+            Query query = getEntityManager().createQuery(sql);
+            jefe = (JefeDeposito) query.getSingleResult();
+        }catch(Exception ex){
+            jefe = null;
+        }
+        return jefe;
+    }
+    public boolean existeJefeDeposito(int dni, int codigo) {
+        boolean existe = true;
+        try {
+            String consulta = "SELECT object(e) FROM JefeDeposito e WHERE e.dni = " + dni + " and e.codigo <> " + codigo;
+            Query query = this.getEntityManager().createQuery(consulta);
+            query.getSingleResult();
+        } catch (Exception e) {
+            existe = false;
+        }
+        return existe;
+    }
 }

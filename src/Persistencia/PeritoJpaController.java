@@ -14,6 +14,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
@@ -23,6 +24,9 @@ import javax.persistence.criteria.Root;
  */
 public class PeritoJpaController implements Serializable {
 
+    public PeritoJpaController(){
+        emf = Persistence.createEntityManagerFactory("TallerMecanicoPU");
+    }
     public PeritoJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
@@ -134,6 +138,45 @@ public class PeritoJpaController implements Serializable {
         } finally {
             em.close();
         }
+    }
+    
+    public List<Perito> traerPeritos(boolean activo){
+        String sql ="SELECT object(p) FROM Perito p WHERE p.activo = "+activo;
+        Query query = getEntityManager().createQuery(sql);
+        return (List<Perito>)query.getResultList();
+    }
+    
+    public List<Perito> traerPeritosBusqueda(boolean activo, String apellido, int dni){
+        String sql ="SELECT object(p) FROM Perito p WHERE p.activo = "+activo;
+        if(!apellido.equals(""))
+            sql = sql + " AND p.apellido LIKE '%"+apellido+"%'";
+        if(dni != 0)
+            sql = sql + " AND p.dni ="+dni;
+        Query query = getEntityManager().createQuery(sql);
+        return (List<Perito>)query.getResultList();
+    }
+    
+    public boolean existePerito(int dni){
+        boolean retorno = true;
+        try{
+            String sql = "SELECT Object(p) FROM Perito p WHERE p.dni = "+dni;
+            Query query = getEntityManager().createQuery(sql);
+            query.getSingleResult();
+        }catch(Exception ex){
+            retorno = false;
+        }
+        return retorno;
+    }
+    public boolean existePerito(int dni, int codigo) {
+        boolean existe = true;
+        try {
+            String consulta = "SELECT object(p) FROM Perito p WHERE p.dni = " + dni + " and p.codigo <> " + codigo;
+            Query query = this.getEntityManager().createQuery(consulta);
+            query.getSingleResult();
+        } catch (Exception e) {
+            existe = false;
+        }
+        return existe;
     }
     
 }

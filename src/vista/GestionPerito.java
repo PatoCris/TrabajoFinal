@@ -3,14 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package vista;
 
-import Modelo.Especialidad;
-import Modelo.Mecanico;
-import Modelo.Pedido;
+import Modelo.InformePiezaPedido;
+import Modelo.Perito;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -20,28 +18,25 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Asus
  */
-public class GestionMecanico extends javax.swing.JInternalFrame {
-
+public class GestionPerito extends javax.swing.JInternalFrame {
     private ControladoraVista cv;
     private String bandera;
     private DefaultTableModel miTabla;
     private UtilVista util;
     private DefaultListModel miLista;
-
-
     /**
-     * Creates new form GestionMecanico
+     * Creates new form GestionPerito
      */
-    public GestionMecanico(ControladoraVista controladoraVista) throws Exception {
+    public GestionPerito(ControladoraVista controladoraVista) throws Exception {
         initComponents();
         cv = controladoraVista;
         util = new UtilVista();
         miLista = new DefaultListModel();
-        cargarTabla(tblMecanicos, cv.traerMecanicos(true));
+        cargarTabla(tblPeritos, cv.traerPeritos(true));
         estadoInicio();
     }
 
-    public void limpiar() {
+   public void limpiar() {
         txtDni.setText("");
         txtCodigo.setText("");
         txtNombre.setText("");
@@ -64,42 +59,40 @@ public class GestionMecanico extends javax.swing.JInternalFrame {
         btnEditar.setEnabled(true);
         btnEliminar.setEnabled(true);
         btnNuevo.setEnabled(true);
-        lstEspecialidades.setEnabled(false);
-        lstEspecialidadesMec.setEnabled(false);
         lstPedidos.setEnabled(false);
-        lstPedidosMec.setEnabled(false);
-        btnAgregarEsp.setEnabled(false);
-        btnAgregarPedido.setEnabled(false);
-        btnQuitarEsp.setEnabled(false);
-        btnQuitarPedido.setEnabled(false);
+        lstPedidosPerito.setEnabled(false);
+        btnAgregarInforme.setEnabled(false);
+        btnQuitarInforme.setEnabled(false);
         limpiar();
     }
-
-    public void cargarTabla(JTable laTabla, List<Mecanico> lista) throws Exception {
+    
+    public void cargarTabla(JTable laTabla, List<Perito> lista) throws Exception {
         miTabla = new DefaultTableModel();
         String cabecera[] = {"Código", "DNI", "Nombre", "Apellido", "Telefono", "Dirección", "CUIL"};
         miTabla.setColumnIdentifiers(cabecera);
         Object fila[] = new Object[miTabla.getColumnCount()];
         int cantidad = lista.size();
         if (cantidad > 0) {
-            for (Mecanico unMecanico : lista) {
-                fila[0] = unMecanico.getCodigo();
-                fila[1] = unMecanico.getDni();
-                fila[2] = unMecanico.getNombre();
-                fila[3] = unMecanico.getApellido();
-                fila[4] = unMecanico.getTelefono();
-                fila[5] = unMecanico.getDireccion();
-                fila[6] = unMecanico.getCuil();
+            for (Perito unPerito : lista) {
+                fila[0] = unPerito.getCodigo();
+                fila[1] = unPerito.getDni();
+                fila[2] = unPerito.getNombre();
+                fila[3] = unPerito.getApellido();
+                fila[4] = unPerito.getTelefono();
+                fila[5] = unPerito.getDireccion();
+                fila[6] = unPerito.getCuil();
                 miTabla.addRow(fila);
             }
         }
         laTabla.setModel(miTabla);
     }
 
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -115,27 +108,19 @@ public class GestionMecanico extends javax.swing.JInternalFrame {
         txtTelefono = new javax.swing.JTextField();
         txtDireccion = new javax.swing.JTextField();
         txtCuil = new javax.swing.JTextField();
-        jLabel11 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        lstEspecialidades = new javax.swing.JList();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        lstEspecialidadesMec = new javax.swing.JList();
         jLabel12 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
         lstPedidos = new javax.swing.JList();
         jScrollPane5 = new javax.swing.JScrollPane();
-        lstPedidosMec = new javax.swing.JList();
-        btnQuitarEsp = new javax.swing.JButton();
-        btnAgregarEsp = new javax.swing.JButton();
-        btnAgregarPedido = new javax.swing.JButton();
-        btnQuitarPedido = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        lstPedidosPerito = new javax.swing.JList();
+        btnAgregarInforme = new javax.swing.JButton();
+        btnQuitarInforme = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         btnNuevo = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblMecanicos = new javax.swing.JTable();
+        tblPeritos = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         txtBusquedaDni = new javax.swing.JTextField();
@@ -147,8 +132,11 @@ public class GestionMecanico extends javax.swing.JInternalFrame {
         btnEliminar = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
 
-        setTitle("Gestión de Mecánicos");
-        setName("frmMecanicos"); // NOI18N
+        setTitle("Gestión de Peritos");
+        setName("frmPeritos"); // NOI18N
+
+        jLabel1.setFont(new java.awt.Font("Politica", 1, 24)); // NOI18N
+        jLabel1.setText("GESTIÓN DE PERITOS");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -204,49 +192,26 @@ public class GestionMecanico extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel11.setFont(new java.awt.Font("Politica", 0, 16)); // NOI18N
-        jLabel11.setText("Especialidades");
-
-        jScrollPane2.setViewportView(lstEspecialidades);
-
-        jScrollPane3.setViewportView(lstEspecialidadesMec);
-
         jLabel12.setFont(new java.awt.Font("Politica", 0, 16)); // NOI18N
-        jLabel12.setText("Pedidos");
+        jLabel12.setText("Inormes de Piezas Pedidas");
 
         jScrollPane4.setViewportView(lstPedidos);
 
-        jScrollPane5.setViewportView(lstPedidosMec);
+        jScrollPane5.setViewportView(lstPedidosPerito);
 
-        btnQuitarEsp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/agregar.png"))); // NOI18N
-        btnQuitarEsp.setEnabled(false);
-        btnQuitarEsp.addActionListener(new java.awt.event.ActionListener() {
+        btnAgregarInforme.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/desagregar.fw.png"))); // NOI18N
+        btnAgregarInforme.setEnabled(false);
+        btnAgregarInforme.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnQuitarEspActionPerformed(evt);
+                btnAgregarInformeActionPerformed(evt);
             }
         });
 
-        btnAgregarEsp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/desagregar.fw.png"))); // NOI18N
-        btnAgregarEsp.setEnabled(false);
-        btnAgregarEsp.addActionListener(new java.awt.event.ActionListener() {
+        btnQuitarInforme.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/agregar.png"))); // NOI18N
+        btnQuitarInforme.setEnabled(false);
+        btnQuitarInforme.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAgregarEspActionPerformed(evt);
-            }
-        });
-
-        btnAgregarPedido.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/desagregar.fw.png"))); // NOI18N
-        btnAgregarPedido.setEnabled(false);
-        btnAgregarPedido.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAgregarPedidoActionPerformed(evt);
-            }
-        });
-
-        btnQuitarPedido.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/agregar.png"))); // NOI18N
-        btnQuitarPedido.setEnabled(false);
-        btnQuitarPedido.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnQuitarPedidoActionPerformed(evt);
+                btnQuitarInformeActionPerformed(evt);
             }
         });
 
@@ -284,33 +249,19 @@ public class GestionMecanico extends javax.swing.JInternalFrame {
                             .addComponent(txtCuil, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(497, 497, 497)
-                        .addComponent(jLabel12))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(206, 206, 206)
+                        .addGap(36, 36, 36)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnQuitarEsp, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(btnAgregarEsp, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(1, 1, 1)))
-                        .addGap(259, 259, 259)
-                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnQuitarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(btnAgregarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(1, 1, 1)))
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(44, 44, 44)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addComponent(jLabel11)))
-                .addContainerGap(29, Short.MAX_VALUE))
+                            .addComponent(jLabel12)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnQuitarInforme, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                        .addComponent(btnAgregarInforme, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(1, 1, 1)))
+                                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(76, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -336,48 +287,36 @@ public class GestionMecanico extends javax.swing.JInternalFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel6)))
-                        .addGap(17, 17, 17)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(31, 31, 31)
-                                .addComponent(btnQuitarPedido)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnAgregarPedido))))
+                                .addComponent(jLabel6))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(71, 71, 71)
-                        .addComponent(jLabel8)))
-                .addContainerGap(20, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(42, 42, 42)
+                        .addComponent(jLabel8))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(42, 42, 42)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel5))
+                                .addGap(45, 45, 45))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addGap(19, 19, 19)))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel12)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5))
-                        .addGap(54, 54, 54))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addGap(28, 28, 28)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnQuitarEsp)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnAgregarEsp)
-                .addGap(56, 56, 56))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(36, 36, 36)
+                        .addComponent(btnQuitarInforme)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnAgregarInforme)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-
-        jLabel1.setFont(new java.awt.Font("Politica", 1, 24)); // NOI18N
-        jLabel1.setText("GESTIÓN DE MECÁNICOS");
 
         btnGuardar.setFont(new java.awt.Font("Politica", 0, 16)); // NOI18N
         btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/save.png"))); // NOI18N
@@ -408,7 +347,7 @@ public class GestionMecanico extends javax.swing.JInternalFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        tblMecanicos.setModel(new javax.swing.table.DefaultTableModel(
+        tblPeritos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -419,12 +358,12 @@ public class GestionMecanico extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        tblMecanicos.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblPeritos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblMecanicosMouseClicked(evt);
+                tblPeritosMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(tblMecanicos);
+        jScrollPane1.setViewportView(tblPeritos);
 
         jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -570,7 +509,7 @@ public class GestionMecanico extends javax.swing.JInternalFrame {
                                 .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -578,8 +517,8 @@ public class GestionMecanico extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuardar)
                     .addComponent(btnCancelar)
@@ -615,6 +554,55 @@ public class GestionMecanico extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_txtCuilKeyTyped
 
+    private void btnAgregarInformeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarInformeActionPerformed
+        if (tblPeritos.getSelectedRow() != -1) {
+            if (lstPedidos.getSelectedValue() != null) {
+                try {
+                    int codigo = Integer.valueOf(tblPeritos.getValueAt(tblPeritos.getSelectedRow(), 0).toString());
+                    Perito unPerito = cv.traerPerito(codigo);
+                    InformePiezaPedido unInforme = (InformePiezaPedido) lstPedidos.getSelectedValue();
+                    cv.agregarInforme(unInforme, codigo);
+
+                    List<InformePiezaPedido> informesSinV = cv.traerInformeSinVinculo(unPerito);
+                    List<InformePiezaPedido> misInformes = cv.traerInformesConVinculo(unPerito);
+                    DefaultListModel dInformes = util.cargarLista(misInformes);
+                    DefaultListModel dInformesSinV = util.cargarLista(informesSinV);
+                    lstPedidosPerito.setModel(dInformes);
+                    lstPedidos.setModel(dInformesSinV);
+
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Error: Seleccione un elemento de la lista de Informe de Pedidos para agregar.");
+            }
+        }
+    }//GEN-LAST:event_btnAgregarInformeActionPerformed
+
+    private void btnQuitarInformeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuitarInformeActionPerformed
+//        if (tblPeritos.getSelectedRow() != -1) {
+//            if (lstPedidosPerito.getSelectedValue() != null) {
+//                try {
+//                    int codigo = Integer.valueOf(tblPeritos.getValueAt(tblPeritos.getSelectedRow(), 0).toString());
+//                    Mecanico unMecanico = cv.traerMecanico(codigo);
+//                    int miPedido = lstPedidosPerito.getSelectedIndex();
+//                    cv.quitarPedido(miPedido, codigo);
+//
+//                    List<Pedido> pedidosSinV = cv.traerPedidosSinVinculo(unMecanico);
+//                    List<Pedido> misPedidos = cv.traerPedidosConVinculo(unMecanico);
+//                    DefaultListModel dPedidos = util.cargarLista(misPedidos);
+//                    DefaultListModel dPedidosSinV = util.cargarLista(pedidosSinV);
+//                    lstPedidosPerito.setModel(dPedidos);
+//                    lstEspecialidades.setModel(dPedidosSinV);
+//                } catch (Exception ex) {
+//                    JOptionPane.showMessageDialog(null, ex.getMessage());
+//                }
+//            } else {
+//                JOptionPane.showMessageDialog(null, "Error: Seleccione un elemento de la lista de Pedidos para quitar.");
+//            }
+//        }
+    }//GEN-LAST:event_btnQuitarInformeActionPerformed
+
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         try {
             int dniInt = 0;
@@ -634,17 +622,17 @@ public class GestionMecanico extends javax.swing.JInternalFrame {
             cuilInt = new Long(Long.parseLong(cuil));
 
             if (bandera.equals("nuevo")) {
-                this.cv.nuevoMecanico(dniInt, nombre, apellido, telefono, direccion, cuilInt, true);
+                this.cv.nuevoPerito(dniInt, nombre, apellido, telefono, direccion, cuilInt, true);
                 bandera = "";
                 estadoInicio();
             } else {
                 if (bandera.equals("editar")) {
                     int codigo = Integer.valueOf(txtCodigo.getText());
-                    this.cv.editarMecanico(codigo, dniInt, nombre, apellido, telefono, direccion, cuilInt, true);
+                    this.cv.editarPerito(codigo, dniInt, nombre, apellido, telefono, direccion, cuilInt, true);
                     estadoInicio();
                 }
             }
-            cargarTabla(tblMecanicos, cv.traerMecanicos(true)); //ACTUALIZAMOS LA TABLA
+            cargarTabla(tblPeritos, cv.traerPeritos(true)); //ACTUALIZAMOS LA TABLA
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
@@ -670,31 +658,30 @@ public class GestionMecanico extends javax.swing.JInternalFrame {
         limpiar();
     }//GEN-LAST:event_btnNuevoActionPerformed
 
-    private void tblMecanicosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMecanicosMouseClicked
+    private void tblPeritosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPeritosMouseClicked
         try {
-            if (tblMecanicos.getSelectedRow() != -1) {
-                int codigo = Integer.valueOf(tblMecanicos.getValueAt(tblMecanicos.getSelectedRow(), 0).toString());
-                txtCodigo.setText(tblMecanicos.getValueAt(tblMecanicos.getSelectedRow(), 0).toString());
-                txtDni.setText(tblMecanicos.getValueAt(tblMecanicos.getSelectedRow(), 1).toString());
-                txtNombre.setText(tblMecanicos.getValueAt(tblMecanicos.getSelectedRow(), 2).toString());
-                txtApellido.setText(tblMecanicos.getValueAt(tblMecanicos.getSelectedRow(), 3).toString());
-                txtTelefono.setText(tblMecanicos.getValueAt(tblMecanicos.getSelectedRow(), 4).toString());
-                txtDireccion.setText(tblMecanicos.getValueAt(tblMecanicos.getSelectedRow(), 5).toString());
-                txtCuil.setText(tblMecanicos.getValueAt(tblMecanicos.getSelectedRow(), 6).toString());
-                Mecanico unMecanico = null;
-//            this.cargarListasDeVinculos(unMecanico);
-                unMecanico = cv.traerMecanico(codigo);
-                lstEspecialidadesMec.setModel(util.cargarLista(cv.traerEspecialidadesConVinculo(unMecanico)));
-                lstEspecialidades.setModel(util.cargarLista(cv.traerEspecialidadesSinVinculo(unMecanico)));
-                lstPedidosMec.setModel(util.cargarLista(cv.traerPedidosConVinculo(unMecanico)));
-                lstPedidos.setModel(util.cargarLista(cv.traerPedidosSinVinculo(unMecanico)));
+            if (tblPeritos.getSelectedRow() != -1) {
+                int codigo = Integer.valueOf(tblPeritos.getValueAt(tblPeritos.getSelectedRow(), 0).toString());
+                txtCodigo.setText(tblPeritos.getValueAt(tblPeritos.getSelectedRow(), 0).toString());
+                txtDni.setText(tblPeritos.getValueAt(tblPeritos.getSelectedRow(), 1).toString());
+                txtNombre.setText(tblPeritos.getValueAt(tblPeritos.getSelectedRow(), 2).toString());
+                txtApellido.setText(tblPeritos.getValueAt(tblPeritos.getSelectedRow(), 3).toString());
+                txtTelefono.setText(tblPeritos.getValueAt(tblPeritos.getSelectedRow(), 4).toString());
+                txtDireccion.setText(tblPeritos.getValueAt(tblPeritos.getSelectedRow(), 5).toString());
+                txtCuil.setText(tblPeritos.getValueAt(tblPeritos.getSelectedRow(), 6).toString());
+                Perito unPerito = null;
+
+                unPerito = cv.traerPerito(codigo);
+
+                lstPedidosPerito.setModel(util.cargarLista(cv.traerInformesConVinculo(unPerito)));
+                lstPedidos.setModel(util.cargarLista(cv.traerInformeSinVinculo(unPerito)));
             }
 
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
 
         }
-    }//GEN-LAST:event_tblMecanicosMouseClicked
+    }//GEN-LAST:event_tblPeritosMouseClicked
 
     private void txtBusquedaDniKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaDniKeyTyped
         char c = evt.getKeyChar();
@@ -712,7 +699,7 @@ public class GestionMecanico extends javax.swing.JInternalFrame {
                 dniBusquedaInt = Integer.valueOf(dniBusqueda);
             }
             try {
-                cargarTabla(tblMecanicos, cv.traerMecanicosBusqueda(true, apellidoBusqueda, dniBusquedaInt));
+                cargarTabla(tblPeritos, cv.traerPeritosBusqueda(true, apellidoBusqueda, dniBusquedaInt));
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, ex.getMessage());
             }
@@ -723,7 +710,7 @@ public class GestionMecanico extends javax.swing.JInternalFrame {
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         try {
-            cargarTabla(tblMecanicos, cv.traerMecanicos(true));
+            cargarTabla(tblPeritos, cv.traerPeritos(true));
             txtBusquedaApellido.setText("");
             txtBusquedaDni.setText("");
         } catch (Exception ex) {
@@ -732,7 +719,7 @@ public class GestionMecanico extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        if (tblMecanicos.getSelectedRow() != -1) {
+        if (tblPeritos.getSelectedRow() != -1) {
             bandera = "editar";
             txtDni.setEnabled(true);
             txtNombre.setEnabled(true);
@@ -745,31 +732,27 @@ public class GestionMecanico extends javax.swing.JInternalFrame {
             btnEditar.setEnabled(false);
             btnNuevo.setEnabled(false);
             btnEliminar.setEnabled(false);
-            btnAgregarEsp.setEnabled(true);
-            btnAgregarPedido.setEnabled(true);
-            btnQuitarEsp.setEnabled(true);
-            btnQuitarPedido.setEnabled(true);
-            lstEspecialidades.setEnabled(true);
-            lstEspecialidadesMec.setEnabled(true);
+            btnAgregarInforme.setEnabled(true);
+            btnQuitarInforme.setEnabled(true);
             lstPedidos.setEnabled(true);
-            lstPedidosMec.setEnabled(true);
+            lstPedidosPerito.setEnabled(true);
 
         } else {
-            JOptionPane.showMessageDialog(null, "Seleccione un Mecánico para editar.");
+            JOptionPane.showMessageDialog(null, "Seleccione un Perito para editar.");
         }
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         try {
-            if (tblMecanicos.getSelectedRow() != -1) {
-                int seleccion = JOptionPane.showConfirmDialog(null, "¿Está seguro desea eliminar el Mecánico?", "Input", JOptionPane.YES_NO_OPTION);
+            if (tblPeritos.getSelectedRow() != -1) {
+                int seleccion = JOptionPane.showConfirmDialog(null, "¿Está seguro desea eliminar el Perito?", "Input", JOptionPane.YES_NO_OPTION);
                 if (seleccion == JOptionPane.YES_OPTION) {
-                    int codigo = Integer.valueOf(tblMecanicos.getValueAt(tblMecanicos.getSelectedRow(), 0).toString());
-                    cv.elminarMecanico(codigo);
-                    cargarTabla(tblMecanicos, cv.traerMecanicos(true));
+                    int codigo = Integer.valueOf(tblPeritos.getValueAt(tblPeritos.getSelectedRow(), 0).toString());
+                    cv.elminarPerito(codigo);
+                    cargarTabla(tblPeritos, cv.traerPeritos(true));
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "Seleccione un Mecánico de la lista.");
+                JOptionPane.showMessageDialog(null, "Seleccione un Perito de la lista.");
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
@@ -780,134 +763,20 @@ public class GestionMecanico extends javax.swing.JInternalFrame {
         this.dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
 
-    private void btnQuitarEspActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuitarEspActionPerformed
-        if (tblMecanicos.getSelectedRow() != -1) {
-            if (lstEspecialidadesMec.getSelectedValue() != null) {
-                try {
-                    int codigo = Integer.valueOf(tblMecanicos.getValueAt(tblMecanicos.getSelectedRow(), 0).toString());
-                    Mecanico unMecanico = cv.traerMecanico(codigo);
-                    int miEspecialidad = lstEspecialidadesMec.getSelectedIndex();
-                    cv.quitarEspecialidad(miEspecialidad, codigo);
-
-                    List<Especialidad> especialidadSinV = cv.traerEspecialidadesSinVinculo(unMecanico);
-                    List<Especialidad> misEspecilidades = cv.traerEspecialidadesConVinculo(unMecanico);
-                    DefaultListModel dEspecialidades = util.cargarLista(misEspecilidades);
-                    DefaultListModel dEspecialidadesSinV = util.cargarLista(especialidadSinV);
-                    lstEspecialidadesMec.setModel(dEspecialidades);
-                    lstEspecialidades.setModel(dEspecialidadesSinV);
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, ex.getMessage());
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "Error: Seleccione un elemento de la lista de Especialidades para quitar.");
-            }
-        }
-    }//GEN-LAST:event_btnQuitarEspActionPerformed
-
-    private void btnAgregarEspActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarEspActionPerformed
-        if (tblMecanicos.getSelectedRow() != -1) {
-            if (lstEspecialidades.getSelectedValue() != null) {
-                try {
-                    int codigo = Integer.valueOf(tblMecanicos.getValueAt(tblMecanicos.getSelectedRow(), 0).toString());
-                    Mecanico unMecanico = cv.traerMecanico(codigo);
-                    Especialidad miEspecialidad = (Especialidad) lstEspecialidades.getSelectedValue();
-                    cv.agregarEspecialidad(miEspecialidad, codigo);
-
-                    List<Especialidad> especialidadSinV = cv.traerEspecialidadesSinVinculo(unMecanico);
-                    List<Especialidad> misEspecialidades = cv.traerEspecialidadesConVinculo(unMecanico);
-                    DefaultListModel dEspecialidades = util.cargarLista(misEspecialidades);
-                    DefaultListModel dEspecialidadaesSinV = util.cargarLista(especialidadSinV);
-                    lstEspecialidadesMec.setModel(dEspecialidades);
-                    lstEspecialidades.setModel(dEspecialidadaesSinV);
-
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, ex.getMessage());
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "Error: Seleccione un elemento de la lista de Especialidades para agregar.");
-            }
-        }
-    }//GEN-LAST:event_btnAgregarEspActionPerformed
-
-    private void btnAgregarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarPedidoActionPerformed
-        if (tblMecanicos.getSelectedRow() != -1) {
-            if (lstPedidos.getSelectedValue() != null) {
-                try {
-                    int codigo = Integer.valueOf(tblMecanicos.getValueAt(tblMecanicos.getSelectedRow(), 0).toString());
-                    Mecanico unMecanico = cv.traerMecanico(codigo);
-                    Pedido miPedido = (Pedido) lstPedidos.getSelectedValue();
-                    cv.agregarPedido(miPedido, codigo);
-
-                    List<Pedido> pedidoSinV = cv.traerPedidosSinVinculo(unMecanico);
-                    List<Pedido> misPedidos = cv.traerPedidosConVinculo(unMecanico);
-                    DefaultListModel dPedidos = util.cargarLista(misPedidos);
-                    DefaultListModel dPedidosSinV = util.cargarLista(pedidoSinV);
-                    lstPedidosMec.setModel(dPedidos);
-                    lstPedidos.setModel(dPedidosSinV);
-
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, ex.getMessage());
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "Error: Seleccione un elemento de la lista de Pedidos para agregar.");
-            }
-        }
-    }//GEN-LAST:event_btnAgregarPedidoActionPerformed
-
-    private void btnQuitarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuitarPedidoActionPerformed
-        if (tblMecanicos.getSelectedRow() != -1) {
-            if (lstPedidosMec.getSelectedValue() != null) {
-                try {
-                    int codigo = Integer.valueOf(tblMecanicos.getValueAt(tblMecanicos.getSelectedRow(), 0).toString());
-                    Mecanico unMecanico = cv.traerMecanico(codigo);
-                    int miPedido = lstPedidosMec.getSelectedIndex();
-                    cv.quitarPedido(miPedido, codigo);
-
-                    List<Pedido> pedidosSinV = cv.traerPedidosSinVinculo(unMecanico);
-                    List<Pedido> misPedidos = cv.traerPedidosConVinculo(unMecanico);
-                    DefaultListModel dPedidos = util.cargarLista(misPedidos);
-                    DefaultListModel dPedidosSinV = util.cargarLista(pedidosSinV);
-                    lstPedidosMec.setModel(dPedidos);
-                    lstEspecialidades.setModel(dPedidosSinV);
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, ex.getMessage());
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "Error: Seleccione un elemento de la lista de Pedidos para quitar.");
-            }
-        }
-    }//GEN-LAST:event_btnQuitarPedidoActionPerformed
-
-    public void cargarListasDeVinculos(Mecanico unMecanico) {
-        try {
-            unMecanico = cv.traerMecanico(unMecanico.getCodigo());
-            lstEspecialidadesMec.setModel(util.cargarLista(cv.traerEspecialidadesConVinculo(unMecanico)));
-            lstEspecialidades.setModel(util.cargarLista(cv.traerEspecialidadesSinVinculo(unMecanico)));
-            lstPedidosMec.setModel(util.cargarLista(cv.traerPedidosConVinculo(unMecanico)));
-            lstPedidos.setModel(util.cargarLista(cv.traerPedidosSinVinculo(unMecanico)));
-
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage());
-        }
-
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizar;
-    private javax.swing.JButton btnAgregarEsp;
-    private javax.swing.JButton btnAgregarPedido;
+    private javax.swing.JButton btnAgregarInforme;
     private javax.swing.JButton btnBusqueda;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnNuevo;
-    private javax.swing.JButton btnQuitarEsp;
-    private javax.swing.JButton btnQuitarPedido;
+    private javax.swing.JButton btnQuitarInforme;
     private javax.swing.JButton btnSalir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -921,15 +790,11 @@ public class GestionMecanico extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JList lstEspecialidades;
-    private javax.swing.JList lstEspecialidadesMec;
     private javax.swing.JList lstPedidos;
-    private javax.swing.JList lstPedidosMec;
-    private javax.swing.JTable tblMecanicos;
+    private javax.swing.JList lstPedidosPerito;
+    private javax.swing.JTable tblPeritos;
     private javax.swing.JTextField txtApellido;
     private javax.swing.JTextField txtBusquedaApellido;
     private javax.swing.JTextField txtBusquedaDni;

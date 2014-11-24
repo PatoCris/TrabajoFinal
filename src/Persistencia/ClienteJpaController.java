@@ -147,7 +147,7 @@ public class ClienteJpaController implements Serializable {
     }
     
     public List<Cliente> traerClientesBusqueda(boolean activo, String apellido, int dni){
-        String sql ="SELECT object(c) FROM Cliente c WHERE c.activo = "+activo;
+        String sql ="SELECT Object(c) FROM Cliente c WHERE c.activo = "+activo;
         if(!apellido.equals(""))
             sql = sql + " AND c.apellido = '"+apellido+"'";
         if(dni != 0)
@@ -158,7 +158,7 @@ public class ClienteJpaController implements Serializable {
     public boolean exiteCliente(int dni){
         boolean retorno = true;
         try{
-            String sql = "SELECT object(c) FORM Cliente c WHERE c.dni = "+dni;
+            String sql = "SELECT Object(c) FROM Cliente c WHERE c.dni ="+dni;
             Query query = getEntityManager().createQuery(sql);
             query.getSingleResult();
         }catch(Exception ex){

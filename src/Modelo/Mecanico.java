@@ -54,6 +54,6 @@ public class Mecanico extends Empleado implements Serializable{
     
         @Override
     public String toString() {
-        return "Mecánico";
+        return super.getNombre()+" "+super.getApellido();
     }
 }

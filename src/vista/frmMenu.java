@@ -69,10 +69,14 @@ public class frmMenu extends javax.swing.JFrame {
         mnuEspecialidades = new javax.swing.JMenuItem();
         mnuEmpleados = new javax.swing.JMenuItem();
         mnuMecanico = new javax.swing.JMenuItem();
+        mnuJefeTaller = new javax.swing.JMenuItem();
+        mnuJefeDeposito = new javax.swing.JMenuItem();
+        mnuPerito = new javax.swing.JMenuItem();
         mnuDeposito = new javax.swing.JMenu();
         mnuGestionAccesorios = new javax.swing.JMenuItem();
         mnuPiezaRecambio = new javax.swing.JMenuItem();
         mnuEjemplares = new javax.swing.JMenuItem();
+        mnuPedidos = new javax.swing.JMenuItem();
         mnuServicio = new javax.swing.JMenu();
         mnuTipoReparacion = new javax.swing.JMenuItem();
         mnuAnomalias = new javax.swing.JMenuItem();
@@ -230,6 +234,25 @@ public class frmMenu extends javax.swing.JFrame {
         });
         jMenu6.add(mnuMecanico);
 
+        mnuJefeTaller.setText("Gestión Jefe de Taller");
+        mnuJefeTaller.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuJefeTallerActionPerformed(evt);
+            }
+        });
+        jMenu6.add(mnuJefeTaller);
+
+        mnuJefeDeposito.setText("Gestión Jefe de Depósito");
+        mnuJefeDeposito.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuJefeDepositoActionPerformed(evt);
+            }
+        });
+        jMenu6.add(mnuJefeDeposito);
+
+        mnuPerito.setText("Gestión Perito");
+        jMenu6.add(mnuPerito);
+
         jMenuBar1.add(jMenu6);
 
         mnuDeposito.setText("Depósito");
@@ -257,6 +280,14 @@ public class frmMenu extends javax.swing.JFrame {
             }
         });
         mnuDeposito.add(mnuEjemplares);
+
+        mnuPedidos.setText("Gestion Pedidos");
+        mnuPedidos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuPedidosActionPerformed(evt);
+            }
+        });
+        mnuDeposito.add(mnuPedidos);
 
         jMenuBar1.add(mnuDeposito);
 
@@ -517,6 +548,39 @@ public class frmMenu extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_mnuMecanicoActionPerformed
 
+    private void mnuJefeDepositoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuJefeDepositoActionPerformed
+        GestionJefeDeposito miGJD;
+        try {
+            miGJD = new GestionJefeDeposito(cv);
+            miGJD.setVisible(true);
+            jdpPanelPrincipal.add(miGJD);
+        } catch (Exception e) {
+            JOptionPane.showConfirmDialog(null, e.getMessage());
+        }
+    }//GEN-LAST:event_mnuJefeDepositoActionPerformed
+
+    private void mnuJefeTallerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuJefeTallerActionPerformed
+        GestionJefeTaller miGJT;
+        try {
+            miGJT = new GestionJefeTaller(cv);
+            miGJT.setVisible(true);
+            jdpPanelPrincipal.add(miGJT);
+        } catch (Exception e) {
+            JOptionPane.showConfirmDialog(null, e.getMessage());
+        }
+    }//GEN-LAST:event_mnuJefeTallerActionPerformed
+
+    private void mnuPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuPedidosActionPerformed
+        GestionPedido miGPedido;
+        try {
+            miGPedido = new GestionPedido(cv);
+            miGPedido.setVisible(true);
+            jdpPanelPrincipal.add(miGPedido);
+        } catch (Exception e) {
+            JOptionPane.showConfirmDialog(null, e.getMessage());
+        }
+    }//GEN-LAST:event_mnuPedidosActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -571,7 +635,7 @@ public class frmMenu extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
-    private javax.swing.JDesktopPane jdpPanelPrincipal;
+    public static javax.swing.JDesktopPane jdpPanelPrincipal;
     private javax.swing.JMenuItem mnuAcercaDe;
     private javax.swing.JMenuItem mnuAnomalias;
     private javax.swing.JMenu mnuDeposito;
@@ -584,9 +648,13 @@ public class frmMenu extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnuGestionEquipamiento;
     private javax.swing.JMenuItem mnuGestionProveedores;
     private javax.swing.JMenuItem mnuGestionSegmento;
+    private javax.swing.JMenuItem mnuJefeDeposito;
+    private javax.swing.JMenuItem mnuJefeTaller;
     private javax.swing.JMenuItem mnuMarca;
     private javax.swing.JMenuItem mnuMecanico;
     private javax.swing.JMenuItem mnuModelo;
+    private javax.swing.JMenuItem mnuPedidos;
+    private javax.swing.JMenuItem mnuPerito;
     private javax.swing.JMenuItem mnuPiezaRecambio;
     private javax.swing.JMenu mnuProveedores;
     private javax.swing.JMenuItem mnuReparaciones;

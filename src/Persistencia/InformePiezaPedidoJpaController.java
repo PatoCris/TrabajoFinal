@@ -7,6 +7,7 @@
 package Persistencia;
 
 import Modelo.InformePiezaPedido;
+import Modelo.Perito;
 import Persistencia.exceptions.NonexistentEntityException;
 import java.io.Serializable;
 import java.util.List;
@@ -14,15 +15,19 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 /**
  *
- * @author cristian
+ * @author Asus
  */
 public class InformePiezaPedidoJpaController implements Serializable {
-
+    
+    public InformePiezaPedidoJpaController(){
+        emf = Persistence.createEntityManagerFactory("TallerMecanicoPU");
+    }
     public InformePiezaPedidoJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
@@ -135,5 +140,18 @@ public class InformePiezaPedidoJpaController implements Serializable {
             em.close();
         }
     }
+
+    List<InformePiezaPedido> traerInformeSinVinculo(Perito unPerito) {
+        String sql ="SELECT Object(i) from InformePiezaPedido i where i.codigo NOT IN (SELECT ip.codigo FROM  Perito p INNER JOIN p.misInformesPPedido ip WHERE p.codigo ="+unPerito.getCodigo()+")";
+        Query query = getEntityManager().createQuery(sql);
+        return (List<InformePiezaPedido>)query.getResultList();    
+    }
+
+    List<InformePiezaPedido> traerInformesConVinculo(Perito unPerito) {
+    String sql ="SELECT Object(i) from InformePiezaPedido i where i.codigo IN (SELECT ip.codigo FROM  Perito p INNER JOIN p.misInformesPPedido ip WHERE p.codigo ="+unPerito.getCodigo()+")";
+        Query query = getEntityManager().createQuery(sql);
+        return (List<InformePiezaPedido>)query.getResultList();   
+    }
+    
     
 }

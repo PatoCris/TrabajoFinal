@@ -112,18 +112,21 @@ public class UtilVista {
         }
     }
     
-    public Date ParseFecha(String fecha){
-        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-        Date fechaDate = null;
-        try {
-            fechaDate = formato.parse(fecha);
-        }catch (ParseException ex){
-            System.out.println(ex);
-        }
-        return fechaDate;
-
+   public Date ParseHora (String hora, String error)throws Exception{
+   SimpleDateFormat formato = new SimpleDateFormat("hh:mm:ss");
+   Date horaDate = null;
+       try {
+           horaDate = formato.parse(hora);
+       } catch (ParseException ex) {
+           throw new Exception(error);
+       }
+       return horaDate;
+   }
+    public static String getHoraActual() {
+        Date ahora = new Date();
+        SimpleDateFormat formateador = new SimpleDateFormat("hh:mm:ss");
+        return formateador.format(ahora);
     }
-    
 }
 
     

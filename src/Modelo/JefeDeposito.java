@@ -31,7 +31,7 @@ public class JefeDeposito extends Empleado implements Serializable{
 
     @Override
     public String toString() {
-        return "Jefe de Depósito";
+        return super.getNombre()+" "+super.getApellido();
     }
 
     

@@ -14,10 +14,14 @@ import Modelo.Empleado;
 import Modelo.Equipamiento;
 import Modelo.Especialidad;
 import Modelo.Estado;
+import Modelo.InformePiezaPedido;
+import Modelo.JefeDeposito;
+import Modelo.JefeTaller;
 import Modelo.Marca;
 import Modelo.Mecanico;
 import Modelo.Modelo;
 import Modelo.Pedido;
+import Modelo.Perito;
 import Modelo.PiezaRecambio;
 import Modelo.Proveedor;
 import Modelo.Segmento;
@@ -51,6 +55,10 @@ public class ControladoraPersistencia {
     private EjemplarJpaController ejemplarJpa = new EjemplarJpaController();
     private MecanicoJpaController mecanicoJpa = new MecanicoJpaController();
     private PedidoJpaController pedidoJpa = new PedidoJpaController();
+    private JefeTallerJpaController jefeTallerJpa = new JefeTallerJpaController();
+    private JefeDepositoJpaController jefeDepositoJpa = new JefeDepositoJpaController();
+    private PeritoJpaController peritoJpa = new PeritoJpaController();
+    private InformePiezaPedidoJpaController informeJpa = new InformePiezaPedidoJpaController();
     
     ///////////////// METODOS DE ACCESORIO //////////////////////
     public void crearAccesorio(Accesorio accesorio) throws PreexistingEntityException, Exception{
@@ -251,10 +259,10 @@ public class ControladoraPersistencia {
         return empleadoJpa.traerEmpleadosBusqueda(activo, apellido, dni);
     }
     public boolean existeEmpleado(int dni) throws NonexistentEntityException, Exception{
-        return empleadoJpa.exiteEmpleado(dni);
+        return empleadoJpa.existeEmpleado(dni);
     }
     public boolean existeEmpleado(int dni, int codigo) throws NonexistentEntityException, Exception{
-        return empleadoJpa.exiteEmpleado(dni, codigo);
+        return empleadoJpa.existeEmpleado(dni, codigo);
     }
     
     ///////////////////////// METODOS ESPECIALIDAD ////////////////////////////////
@@ -431,10 +439,10 @@ public class ControladoraPersistencia {
         return mecanicoJpa.traerMecanicosBusqueda(activo, apellido, dni);
     }
     public boolean existeMecanico(int dni) throws NonexistentEntityException, Exception{
-        return mecanicoJpa.exiteMecanico(dni);
+        return mecanicoJpa.existeMecanico(dni);
     }
     public boolean existeMecanico(int dni, int codigo) throws NonexistentEntityException, Exception{
-        return mecanicoJpa.exiteMecanico(dni, codigo);
+        return mecanicoJpa.existeMecanico(dni, codigo);
     }
     
         ///////////////////////// METODOS PEDIDOS ////////////////////////////////
@@ -465,6 +473,106 @@ public class ControladoraPersistencia {
     }
     public List<Pedido> traerPedidosConVinculo(Mecanico unMecanico) throws PreexistingEntityException, Exception{
         return pedidoJpa.traerPedidosConVinculo(unMecanico);
+    }
+    
+    ///////////////// METODOS DE JEFE DE TALLER //////////////////////
+    public void nuevoJefeTaller(JefeTaller unJefe) throws PreexistingEntityException, Exception{
+        jefeTallerJpa.create(unJefe);
+    }
+    public void editarJefeTaller(JefeTaller unJefe) throws PreexistingEntityException, Exception{
+        jefeTallerJpa.edit(unJefe);
+    }
+    public JefeTaller traerJefeTaller(int codigo) throws PreexistingEntityException, Exception{
+        return jefeTallerJpa.findJefeTaller(codigo);
+    }
+    public List<JefeTaller> traerJefesTaller(boolean activo) throws PreexistingEntityException, Exception{
+        return jefeTallerJpa.traerJefesTaller(activo);
+    }
+    public void eliminarJefeTaller(int codigo) throws NonexistentEntityException, Exception{
+        jefeTallerJpa.destroy(codigo);
+    }
+    public List<JefeTaller> traerJefesTallerBusqueda(boolean activo, String apellido, int dni) throws PreexistingEntityException, Exception{
+        return jefeTallerJpa.traerJefesTallerBusqueda(activo, apellido, dni);
+    }
+    public boolean existeJefeTaller(int dni) throws NonexistentEntityException, Exception{
+        return jefeTallerJpa.existeJefeTaller(dni);
+    }
+    public boolean existeJefeTaller(int dni, int codigo) throws NonexistentEntityException, Exception{
+        return jefeTallerJpa.existeJefeTaller(dni, codigo);
+    }
+    
+    ///////////////// METODOS DE JEFE DE DEPOSITO //////////////////////
+    public void nuevoJefeDeposito(JefeDeposito unJefe) throws PreexistingEntityException, Exception{
+        jefeDepositoJpa.create(unJefe);
+    }
+    public void editarJefeDeposito(JefeDeposito unJefe) throws PreexistingEntityException, Exception{
+        jefeDepositoJpa.edit(unJefe);
+    }
+    public JefeDeposito traerJefeDeposito(int codigo) throws PreexistingEntityException, Exception{
+        return jefeDepositoJpa.findJefeDeposito(codigo);
+    }
+    public List<JefeDeposito> traerJefeDeposito(boolean activo) throws PreexistingEntityException, Exception{
+        return jefeDepositoJpa.traerJefesDeposito(activo);
+    }
+    public void eliminarJefeDeposito(int codigo) throws NonexistentEntityException, Exception{
+        jefeDepositoJpa.destroy(codigo);
+    }
+    public List<JefeDeposito> traerJefesDepositoBusqueda(boolean activo, String apellido, int dni) throws PreexistingEntityException, Exception{
+        return jefeDepositoJpa.traerJefesDepositoBusqueda(activo, apellido, dni);
+    }
+    public JefeDeposito existeJefeDeposito(int dni) throws NonexistentEntityException, Exception{
+        return jefeDepositoJpa.existeJefeDeposito(dni);
+    }
+    public boolean existeJefeDeposito(int dni, int codigo) throws NonexistentEntityException, Exception{
+        return jefeDepositoJpa.existeJefeDeposito(dni, codigo);
+    }
+    
+    ///////////////// METODOS DE PERITO//////////////////////
+    public void nuevoPerito(Perito unPerito)throws PreexistingEntityException, Exception{
+        peritoJpa.create(unPerito);
+    }
+    public void editarPerito(Perito unPerito) throws PreexistingEntityException, Exception{
+        peritoJpa.edit(unPerito);
+    }
+    public Perito traerPerito(int codigo) throws PreexistingEntityException, Exception{
+        return peritoJpa.findPerito(codigo);
+    }
+    public List<Perito> traerPeritos(boolean activo) throws PreexistingEntityException, Exception{
+        return peritoJpa.traerPeritos(activo);
+    }
+    public void eliminarPerito(int codigo) throws NonexistentEntityException, Exception{
+        peritoJpa.destroy(codigo);
+    }
+    public List<Perito> traerPeritosBusqueda(boolean activo, String apellido, int dni) throws PreexistingEntityException, Exception{
+        return peritoJpa.traerPeritosBusqueda(activo, apellido, dni);
+    }
+    public boolean existePerito(int dni) throws NonexistentEntityException, Exception{
+        return peritoJpa.existePerito(dni);
+    }
+    public boolean existePerito(int dni, int codigo) throws NonexistentEntityException, Exception{
+        return peritoJpa.existePerito(dni, codigo);
+    }
+
+    ///////////////// METODOS DE INFORME PIEZA PEDIDO //////////////////////
+    public void nuevoInforme(InformePiezaPedido unInforme) throws PreexistingEntityException, Exception{
+        informeJpa.create(unInforme);
+    }
+    public void editarInforme(InformePiezaPedido unInforme) throws PreexistingEntityException, Exception{
+        informeJpa.edit(unInforme);
+    }
+    public void eliminarInforme(int codigo) throws NonexistentEntityException, Exception{
+        informeJpa.destroy(codigo);
+    }
+    public InformePiezaPedido traerInforme(int codigo) throws PreexistingEntityException, Exception{
+        return informeJpa.findInformePiezaPedido(codigo);
+    }
+
+    public List<InformePiezaPedido> traerInformeSinVinculo(Perito unPerito) {
+        return informeJpa.traerInformeSinVinculo(unPerito);
+    }
+
+    public List<InformePiezaPedido> traerInformesConVinculo(Perito unPerito) {
+        return informeJpa.traerInformesConVinculo(unPerito);
     }
     
 }

@@ -33,10 +33,10 @@ public class Pedido implements Serializable {
     private int codigo;
     @Column(name = "fecha")
     @Temporal(javax.persistence.TemporalType.DATE)
-    private Date fecha;
+    private java.util.Date fecha;
     @Column(name = "hora")
     @Temporal(javax.persistence.TemporalType.DATE)
-    private Date hora;
+    private java.util.Date hora;
     @Column(name = "descripcion")
     private String descripcion;
     @Column(name = "cantidad")
@@ -47,9 +47,6 @@ public class Pedido implements Serializable {
     private boolean paraRecambio;
     @Column(name = "activo")
     private boolean activo;
-    @JoinColumn(name="un_perito")
-    @OneToOne
-    private Perito unPerito;
     @JoinColumn(name="un_jefe_deposito")
     @OneToOne
     private JefeDeposito unJefeDeposito;
@@ -63,12 +60,14 @@ public class Pedido implements Serializable {
     @JoinColumn(name="un_vehiculo")
     @OneToOne
     private Vehiculo unVehiculo;
+    @JoinColumn(name="una_pieza")
+    @OneToOne
+    private PiezaRecambio unaPieza;
 
     public Pedido() {
     }
 
-    public Pedido(Date fecha, Date hora, String descripcion, int cantidad, boolean autorizado, boolean paraRecambio, boolean activo, Perito unPerito, JefeDeposito unJefeDeposito, JefeTaller unJefeTaller, Cliente unCliente) {
-        this.codigo = codigo;
+    public Pedido(java.util.Date fecha, java.util.Date hora, String descripcion, int cantidad, boolean autorizado, boolean paraRecambio, boolean activo, JefeDeposito unJefeDeposito, JefeTaller unJefeTaller, Cliente unCliente) {
         this.fecha = fecha;
         this.hora = hora;
         this.descripcion = descripcion;
@@ -76,10 +75,10 @@ public class Pedido implements Serializable {
         this.autorizado = autorizado;
         this.paraRecambio = paraRecambio;
         this.activo = activo;
-        this.unPerito = unPerito;
         this.unJefeDeposito = unJefeDeposito;
         this.unJefeTaller = unJefeTaller;
         this.unCliente = unCliente;
+        this.unaPieza = unaPieza;
     }
 
     public int getCodigo() {
@@ -90,19 +89,19 @@ public class Pedido implements Serializable {
         this.codigo = codigo;
     }
 
-    public Date getFecha() {
+    public java.util.Date getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(java.util.Date fecha) {
         this.fecha = fecha;
     }
 
-    public Date getHora() {
+    public java.util.Date getHora() {
         return hora;
     }
 
-    public void setHora(Date hora) {
+    public void setHora(java.util.Date hora) {
         this.hora = hora;
     }
 
@@ -146,14 +145,6 @@ public class Pedido implements Serializable {
         this.activo = activo;
     }
 
-    public Perito getUnPerito() {
-        return unPerito;
-    }
-
-    public void setUnPerito(Perito unPerito) {
-        this.unPerito = unPerito;
-    }
-
     public JefeDeposito getUnJefeDeposito() {
         return unJefeDeposito;
     }
@@ -177,6 +168,23 @@ public class Pedido implements Serializable {
     public void setUnCliente(Cliente unCliente) {
         this.unCliente = unCliente;
     }
+
+    public Vehiculo getUnVehiculo() {
+        return unVehiculo;
+    }
+
+    public void setUnVehiculo(Vehiculo unVehiculo) {
+        this.unVehiculo = unVehiculo;
+    }
+
+    public PiezaRecambio getUnaPieza() {
+        return unaPieza;
+    }
+
+    public void setUnaPieza(PiezaRecambio unaPieza) {
+        this.unaPieza = unaPieza;
+    }
+    
     
 }
 

@@ -14,6 +14,7 @@ import Modelo.Empleado;
 import Modelo.Equipamiento;
 import Modelo.Especialidad;
 import Modelo.Estado;
+import Modelo.InformePiezaPedido;
 import Modelo.JefeDeposito;
 import Modelo.JefeTaller;
 import Modelo.Marca;
@@ -471,12 +472,12 @@ class ControladoraVista {
     }
     
     ///////////////// METODOS DE PEDIDOS ////////////////////////
-    public void nuevaPedido(Date fecha, Date hora, String descripcion, int cantidad, boolean autorizado, boolean paraRecambio, boolean activo, Perito unPerito, JefeDeposito unJefeDeposito, JefeTaller unJefeTaller, Cliente unCliente) throws Exception {
-        cp.nuevoPedido(fecha, hora, descripcion, cantidad, autorizado, paraRecambio,true, unPerito, unJefeDeposito, unJefeTaller, unCliente);
+    public void nuevaPedido(Date fecha, Date hora, String descripcion, int cantidad, boolean autorizado, boolean paraRecambio, boolean activo, JefeDeposito unJefeDeposito, JefeTaller unJefeTaller, Cliente unCliente) throws Exception {
+        cp.nuevoPedido(fecha, hora, descripcion, cantidad, autorizado, paraRecambio,true, unJefeDeposito, unJefeTaller, unCliente);
     }
 
-    public void editarEspecialidad(int codigo, Date fecha, Date hora, String descripcion, int cantidad, boolean autorizado, boolean paraRecambio, boolean activo, Perito unPerito, JefeDeposito unJefeDeposito, JefeTaller unJefeTaller, Cliente unCliente) throws Exception {
-        cp.editarPedido(codigo, fecha, hora, descripcion, cantidad, autorizado, paraRecambio,true, unPerito, unJefeDeposito, unJefeTaller, unCliente);
+    public void editarEspecialidad(int codigo, Date fecha, Date hora, String descripcion, int cantidad, boolean autorizado, boolean paraRecambio, boolean activo, JefeDeposito unJefeDeposito, JefeTaller unJefeTaller, Cliente unCliente) throws Exception {
+        cp.editarPedido(codigo, fecha, hora, descripcion, cantidad, autorizado, paraRecambio,true, unJefeDeposito, unJefeTaller, unCliente);
     }
 
     public List<Pedido> trerPedidos(boolean activo) throws Exception {
@@ -498,4 +499,98 @@ class ControladoraVista {
         return cp.traerPedidosConVinculo(unMecanico);
     }
     
+    ///////////////////// METODOS DE JEFE DE TALLER ////////////////////////
+    public void nuevoJefeTaller(int dni, String nombre, String apellido, String telefono, String direccion, long cuil, boolean activo) throws Exception {
+        cp.nuevoJefeTaller(dni, nombre, apellido, telefono, direccion, cuil, activo);
+    }
+
+    public void editarJefeTaller(int codigo, int dni, String nombre, String apellido, String telefono, String direccion, long cuil, boolean activo) throws Exception {
+        cp.editarJefeTaller(codigo, dni, nombre, apellido, telefono, direccion, cuil, activo);
+    }
+
+    public List<JefeTaller> traerJefesTaller(boolean activo) throws Exception {
+        return cp.traerJefesTaller(activo);
+    }
+
+    public void elminarJefeTaller(int codigo) throws Exception {
+        cp.eliminarJefeTaller(codigo);
+    }
+
+    public List<JefeTaller> traerJefesTallerBusqueda(boolean activo, String apellido, int dni) throws Exception {
+        return cp.traerJefesTallerBusqueda(activo, apellido, dni);
+    }
+    
+    ///////////////////// METODOS DE JEFE DE DEPOSITO ////////////////////////
+    public void nuevoJefeDeposito(int dni, String nombre, String apellido, String telefono, String direccion, long cuil, boolean activo) throws Exception {
+        cp.nuevoJefeDeposito(dni, nombre, apellido, telefono, direccion, cuil, activo);
+    }
+
+    public void editarJefeDeposito(int codigo, int dni, String nombre, String apellido, String telefono, String direccion, long cuil, boolean activo) throws Exception {
+        cp.editarJefeDeposito(codigo, dni, nombre, apellido, telefono, direccion, cuil, activo);
+    }
+
+    public List<JefeDeposito> traerJefesDeposito(boolean activo) throws Exception {
+        return cp.traerJefesDeposito(activo);
+    }
+
+    public void elminarJefeDeposito(int codigo) throws Exception {
+        cp.eliminarJefeDeposito(codigo);
+    }
+
+    public List<JefeDeposito> traerJefesDepositoBusqueda(boolean activo, String apellido, int dni) throws Exception {
+        return cp.traerJefesDepositoBusqueda(activo, apellido, dni);
+    }
+    
+    ///////////////////// METODOS DE PERITO ////////////////////////
+    public void nuevoPerito(int dni, String nombre, String apellido, String telefono, String direccion, long cuil, boolean activo) throws Exception {
+        cp.nuevoPerito(dni, nombre, apellido, telefono, direccion, cuil, activo);
+    }
+
+    public void editarPerito(int codigo, int dni, String nombre, String apellido, String telefono, String direccion, long cuil, boolean activo) throws Exception {
+        cp.editarPerito(codigo, dni, nombre, apellido, telefono, direccion, cuil, activo);
+    }
+
+    public List<Perito> traerPeritos(boolean activo) throws Exception {
+        return cp.traerPeritos(activo);
+    }
+
+    public void elminarPerito(int codigo) throws Exception {
+        cp.eliminarPerito(codigo);
+    }
+
+    public List<Perito> traerPeritosBusqueda(boolean activo, String apellido, int dni) throws Exception {
+        return cp.traerPeritosBusqueda(activo, apellido, dni);
+    }
+    
+    public Perito traerPerito(int codigo) throws Exception {
+        return cp.traerPerito(codigo);
+    }
+
+    public void agregarInforme(InformePiezaPedido unInforme, int codigo) throws Exception{
+        cp.agregarInforme(unInforme, codigo);
+    }
+    public void quitarInforme(int informe, int codigo) throws Exception{
+        cp.quitarInforme(informe, codigo);
+    }
+
+    ///////////////// METODOS DE INFORMES ////////////////////////
+    public void nuevoInforme(boolean aprobado, java.util.Date fecha, boolean activo, PiezaRecambio pieza) throws Exception {
+        cp.nuevoInforme(aprobado, fecha, activo, pieza);
+    }
+    public void editarInforme(int codigo, boolean aprobado, java.util.Date fecha, boolean activo, PiezaRecambio pieza) throws Exception {
+        cp.editarInforme(codigo, aprobado, fecha, activo, pieza);
+    }
+    public void eliminarInforme(int codigo) throws Exception {
+        cp.eliminarInforme(codigo);
+    }
+
+    public List<InformePiezaPedido> traerInformeSinVinculo(Perito unPerito) {
+        return cp.traerInformeSinVinculo(unPerito);
+    }
+
+    public List<InformePiezaPedido> traerInformesConVinculo(Perito unPerito) {
+        return cp.traerInformesConVinculo(unPerito);
+    }
+
+                
 }

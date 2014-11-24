@@ -27,7 +27,7 @@ public class Perito extends Empleado{
     public Perito() {
     }
     
-    public Perito(int codigo, int dni, String nombre, String apellido, String telefono, String direccion, long cuil, boolean activo) {
+    public Perito(int dni, String nombre, String apellido, String telefono, String direccion, long cuil, boolean activo) {
         super(dni, nombre, apellido, telefono, direccion, cuil, activo);
     }
 
@@ -37,6 +37,6 @@ public class Perito extends Empleado{
     
         @Override
     public String toString() {
-        return "Perito";
+        return super.getNombre()+" "+super.getApellido();
     }
 }
