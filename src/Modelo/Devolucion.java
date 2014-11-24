@@ -44,8 +44,7 @@ public class Devolucion implements Serializable {
     public Devolucion() {
     }
 
-    public Devolucion(int codigo, Date fecha, String motivo, boolean activo, PiezaRecambio miPiezaRecambio) {
-        this.codigo = codigo;
+    public Devolucion(Date fecha, String motivo, boolean activo, PiezaRecambio miPiezaRecambio) {
         this.fecha = fecha;
         this.motivo = motivo;
         this.activo = activo;

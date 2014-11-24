@@ -9,11 +9,13 @@ package Persistencia;
 import Modelo.Devolucion;
 import Persistencia.exceptions.NonexistentEntityException;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
@@ -22,6 +24,10 @@ import javax.persistence.criteria.Root;
  * @author cristian
  */
 public class DevolucionJpaController implements Serializable {
+
+    public DevolucionJpaController() {
+        emf=Persistence.createEntityManagerFactory("TallerMecanicoPU");
+    }
 
     public DevolucionJpaController(EntityManagerFactory emf) {
         this.emf = emf;
@@ -135,5 +141,33 @@ public class DevolucionJpaController implements Serializable {
             em.close();
         }
     }
+        
+    public List<Devolucion> traerDevoluciones(boolean activo){
+        String sql ="SELECT object(d) FROM Devolucion d WHERE d.activo = "+activo;
+        Query query = getEntityManager().createQuery(sql);
+        return (List<Devolucion>)query.getResultList();
+    }
     
+    public List<Devolucion> traerDevoluciones(boolean activo, java.util.Date fecha){
+        String sql ="SELECT object(d) FROM Devolucion d WHERE d.activo = "+activo+" AND d.fecha = "+fecha;
+        Query query = getEntityManager().createQuery(sql);
+        return (List<Devolucion>)query.getResultList();
+    }
+    
+    public List<Devolucion> traerDevolucionesSinDeposito(){
+        String sql ="SELECT Object(d) FROM Devolucion d where d.codigo NOT IN (SELECT md.codigo FROM  Deposito dp INNER JOIN dp.misDevoluciones md)";
+        Query query = getEntityManager().createQuery(sql);
+        return (List<Devolucion>)query.getResultList();
+    }
+    
+    public List<Devolucion> traerDevolucionesConDeposito(int deposito){
+        String sql ="SELECT Object(d) FROM Devolucion d where d.codigo NOT IN (SELECT md.codigo FROM  Deposito dp INNER JOIN dp.misDevoluciones md WHERE dp.codigo ="+deposito+")";
+        Query query = getEntityManager().createQuery(sql);
+        return (List<Devolucion>)query.getResultList();
+    }
+    public List<Devolucion> traerDevolucionesConDeposito(int deposito, Date fecha){
+        String sql ="SELECT Object(d) FROM Devolucion d where d.codigo NOT IN (SELECT md.codigo FROM  Deposito dp INNER JOIN dp.misDevoluciones md WHERE dp.codigo ="+deposito+" AND dp.fecha = "+fecha+")";
+        Query query = getEntityManager().createQuery(sql);
+        return (List<Devolucion>)query.getResultList();
+    }
 }

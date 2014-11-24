@@ -14,6 +14,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
@@ -22,6 +23,10 @@ import javax.persistence.criteria.Root;
  * @author cristian
  */
 public class TallerJpaController implements Serializable {
+
+    public TallerJpaController() {
+        emf=Persistence.createEntityManagerFactory("TallerMecanicoPU");
+    }
 
     public TallerJpaController(EntityManagerFactory emf) {
         this.emf = emf;
@@ -135,5 +140,15 @@ public class TallerJpaController implements Serializable {
             em.close();
         }
     }
+    public List<Taller> traerTalleres(boolean activo){
+        String sql ="SELECT object(t) FROM Taller t WHERE t.activo = "+activo;
+        Query query = getEntityManager().createQuery(sql);
+        return (List<Taller>)query.getResultList();
+    }
     
+    public List<Taller> traerTalleresNombre(boolean activo, String nombre){
+        String sql ="SELECT object(t) FROM Taller t WHERE t.activo = "+activo+" AND t.nombre LIKE '%"+nombre+"%'";
+        Query query = getEntityManager().createQuery(sql);
+        return (List<Taller>)query.getResultList();
+    }
 }

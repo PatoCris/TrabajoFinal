@@ -3,13 +3,14 @@ package Modelo;
 
 import java.io.Serializable;
 import java.util.*;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -39,23 +40,24 @@ public class Deposito implements Serializable {
     private String telefono;
     @Column(name = "activo")
     private boolean activo;
+    
     @JoinColumn(name="un_jefe_deposito")
     @OneToOne
     private JefeDeposito unJefeDeposito;
-    @OneToMany
-    private List<PiezaRecambio> misPiezasRecambio = new LinkedList<>();
-    @OneToMany
+    
+    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+    private List<Ejemplar> misEjemplares = new LinkedList<>();
+    
+    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
     private List<Devolucion> misDevoluciones = new LinkedList<>();
-    @OneToMany
-    private List<InformePiezaPedido> misInformesPPedido = new LinkedList<>();
+    
     
     //Metodos
     //buscarPieza()
     public Deposito() {
     }
 
-    public Deposito(int codigo, String nombre, String correo, String telefono, boolean activo, JefeDeposito unJefeDeposito) {
-        this.codigo = codigo;
+    public Deposito(String nombre, String correo, String telefono, boolean activo, JefeDeposito unJefeDeposito) {
         this.nombre = nombre;
         this.correo = correo;
         this.telefono = telefono;
@@ -111,17 +113,19 @@ public class Deposito implements Serializable {
         this.unJefeDeposito = unJefeDeposito;
     }
 
-    public List<PiezaRecambio> getMisPiezasRecambio() {
-        return misPiezasRecambio;
+    public List<Ejemplar> getMisEjemplares() {
+        return misEjemplares;
+    }
+
+    public void setMisEjemplares(List<Ejemplar> misEjemplares) {
+        this.misEjemplares = misEjemplares;
     }
 
     public List<Devolucion> getMisDevoluciones() {
         return misDevoluciones;
     }
 
-    public List<InformePiezaPedido> getMisInformesPPedido() {
-        return misInformesPPedido;
+    public void setMisDevoluciones(List<Devolucion> misDevoluciones) {
+        this.misDevoluciones = misDevoluciones;
     }
-
-
 }

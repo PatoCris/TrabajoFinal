@@ -6,6 +6,8 @@
 
 package Persistencia;
 
+import Modelo.Cliente;
+import Modelo.Equipamiento;
 import Modelo.EstadoVehiculo;
 import Modelo.Vehiculo;
 import Persistencia.exceptions.NonexistentEntityException;
@@ -200,6 +202,17 @@ public class VehiculoJpaController implements Serializable {
     
     public List<Vehiculo> traerVehiculoDominio(boolean activo, String dominio){
         String sql="SELECT object (v) FROM Vehiculo v WHERE v.activo = "+activo+" AND v.dominio LIKE '%"+dominio+"%'";
+        Query query = getEntityManager().createQuery(sql);
+        return (List<Vehiculo>)query.getResultList();
+    }
+    public List<Vehiculo> traerVehiculosSinCliente(){
+        String sql ="SELECT Object(ve) from Vehiculo ve where ve.codigo NOT IN (SELECT mv.codigo FROM  Cliente c INNER JOIN c.misVehiculos mv)";
+        Query query = getEntityManager().createQuery(sql);
+        return (List<Vehiculo>)query.getResultList();
+    }
+    
+    public List<Vehiculo> traerVehiculosConCliente(Cliente cliente){
+        String sql ="SELECT Object(ve) from Vehiculo ve where ve.codigo IN (SELECT mv.codigo FROM  Cliente c INNER JOIN c.misVehiculos mv WHERE c.codigo ="+cliente.getCodigo()+")";
         Query query = getEntityManager().createQuery(sql);
         return (List<Vehiculo>)query.getResultList();
     }
