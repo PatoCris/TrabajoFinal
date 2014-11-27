@@ -8,6 +8,8 @@ package vista;
 
 import Modelo.AgendaMensual;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -534,7 +536,18 @@ public void limpiar(){
     }//GEN-LAST:event_tblAgendasMouseClicked
 
     private void btnTurnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTurnoActionPerformed
-        // TODO add your handling code here:
+        if(tblAgendas.getSelectedRow() != -1){  
+            try {
+                int codigo = Integer.valueOf(txtCodigo.getText());
+                GestionTurno gt = new GestionTurno(cv, codigo);
+                gt.setVisible(true);
+                frmMenu.jdpPanelPrincipal.add(gt);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage());
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Seleccione una Agenda.");
+        }
     }//GEN-LAST:event_btnTurnoActionPerformed
 
 

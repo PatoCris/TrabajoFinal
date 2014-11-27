@@ -792,13 +792,18 @@ public class ControladoraPersistencia {
     public void nuevoModulo(Modulo modulo) throws NonexistentEntityException, Exception{
         moduloJpa.create(modulo);
     }
-    
+    public void editarModulo(Modulo modulo) throws NonexistentEntityException, Exception{
+        moduloJpa.edit(modulo);
+    }
     public int ultimoModulo() throws NonexistentEntityException, Exception{
         return moduloJpa.ultimoModulo();
     }
     
     public Modulo traerModulo(int codigo) throws NonexistentEntityException, Exception{
         return moduloJpa.findModulo(codigo);
+    }
+    public List<Modulo> traerModulosLibres(boolean activo, int codigoAg, int cantidadModulos){
+        return moduloJpa.traerModulosLibres(activo, codigoAg, cantidadModulos);
     }
 
     ///////////////////////// TIPO DIAGNOSTICO ////////////////////////////////
@@ -889,7 +894,9 @@ public class ControladoraPersistencia {
     public List<Turno> traerTurnosDelVehiculo(Vehiculo vehiculo, int codigoAgenda) throws PreexistingEntityException, Exception{
         return turnoJpa.traerTurnosDelVehiculo(vehiculo, codigoAgenda);
     } 
-    
+    public int ultimoTurno() throws PreexistingEntityException, Exception{
+        return turnoJpa.ultimaTuno();
+    }
     
     //////////////////////////////METODOS DE SERVICIO//////////////////////////
     public List<Servicio> traerServicios(boolean activo){

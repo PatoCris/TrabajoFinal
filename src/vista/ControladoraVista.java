@@ -858,8 +858,8 @@ class ControladoraVista {
     }
     
     ///////////////// METODOS DE TURNO ////////////////////////
-    public void nuevoTurno(java.util.Date fecha, java.util.Date hora, Trazabilidad unaTrazabilidad, Servicio unServicio, Vehiculo unVehiculo, Cliente unCliente, boolean activo) throws Exception {
-        cp.nuevoTurno(fecha, hora, unaTrazabilidad, unServicio, unVehiculo, unCliente, true);
+    public void nuevoTurno(java.util.Date fecha, java.util.Date hora, Trazabilidad unaTrazabilidad, Servicio unServicio, Vehiculo unVehiculo, Cliente unCliente, boolean activo, int codigoAgenda) throws Exception {
+        cp.nuevoTurno(fecha, hora, unaTrazabilidad, unServicio, unVehiculo, unCliente, true, codigoAgenda);
     }
 
     public void editarTurno(int codigo, java.util.Date fecha, java.util.Date hora, Trazabilidad unaTrazabilidad, Servicio unServicio, Vehiculo unVehiculo, Cliente unCliente, boolean activo) throws Exception {

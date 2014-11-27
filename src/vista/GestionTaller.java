@@ -595,7 +595,7 @@ public void estadoInicio(){
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-<<<<<<< HEAD
+
         jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 10, 460, 180));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 48, 1055, 242));
@@ -603,10 +603,10 @@ public void estadoInicio(){
         jLabel1.setFont(new java.awt.Font("Politica", 1, 24)); // NOI18N
         jLabel1.setText("GESTIÓN DE CLIENTES");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 11, -1, -1));
-=======
+
         jLabel1.setFont(new java.awt.Font("Politica", 1, 24)); // NOI18N
         jLabel1.setText("GESTIÓN DE TALLERES");
->>>>>>> 42b39ba068b93d7337138b2afa2872fbd4563976
+
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Búsqueda", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Politica", 1, 16))); // NOI18N
 
@@ -748,9 +748,9 @@ public void estadoInicio(){
                 .addContainerGap())
         );
 
-<<<<<<< HEAD
+
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 300, -1, -1));
-=======
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -776,7 +776,7 @@ public void estadoInicio(){
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
->>>>>>> 42b39ba068b93d7337138b2afa2872fbd4563976
+
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

@@ -3,8 +3,10 @@ package Modelo;
 
 import java.io.Serializable;
 import java.util.*;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -50,7 +52,7 @@ public class Servicio implements Serializable {
     private double impuesto;
     @Column(name = "activo")
     private boolean activo;
-    @OneToMany
+    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
     private List<EstadoVehiculo> misEstadosVehiculo = new LinkedList<>();
 
     public Servicio() {

@@ -3,7 +3,9 @@ package Modelo;
 
 import java.io.Serializable;
 import java.util.*;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -26,7 +28,7 @@ public class Diagnostico extends Servicio implements Serializable{
     @JoinColumn(name="mi_pieza_recambio")
     @OneToOne
     private TipoDiagnostico unTipoDiagnostico;
-    @OneToMany
+    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
     private List<Anomalia> misAnomalias= new LinkedList<>();
 
     public Diagnostico() {
