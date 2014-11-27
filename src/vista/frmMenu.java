@@ -80,10 +80,11 @@ public class frmMenu extends javax.swing.JFrame {
         mnuPedidos = new javax.swing.JMenuItem();
         mnuServicio = new javax.swing.JMenu();
         mnuTipoReparacion = new javax.swing.JMenuItem();
+        mnuTipoAnomalia = new javax.swing.JMenuItem();
+        mnuTipoDiagnostico = new javax.swing.JMenuItem();
         mnuAnomalias = new javax.swing.JMenuItem();
         mnuDiagnosticos = new javax.swing.JMenuItem();
         mnuReparaciones = new javax.swing.JMenuItem();
-        mnuTipoAnomalia = new javax.swing.JMenuItem();
         mnuProveedores = new javax.swing.JMenu();
         mnuGestionProveedores = new javax.swing.JMenuItem();
 
@@ -260,6 +261,11 @@ public class frmMenu extends javax.swing.JFrame {
         jMenu6.add(mnuJefeDeposito);
 
         mnuPerito.setText("Gestión Perito");
+        mnuPerito.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuPeritoActionPerformed(evt);
+            }
+        });
         jMenu6.add(mnuPerito);
 
         jMenuBar1.add(jMenu6);
@@ -302,13 +308,29 @@ public class frmMenu extends javax.swing.JFrame {
 
         mnuServicio.setText("Servicios");
 
-        mnuTipoReparacion.setText("Gestión de Tipos de Reparación");
+        mnuTipoReparacion.setText("Gestión Tipos de Reparación");
         mnuTipoReparacion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnuTipoReparacionActionPerformed(evt);
             }
         });
         mnuServicio.add(mnuTipoReparacion);
+
+        mnuTipoAnomalia.setText("Gestión Tipo de Anomalia");
+        mnuTipoAnomalia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuTipoAnomaliaActionPerformed(evt);
+            }
+        });
+        mnuServicio.add(mnuTipoAnomalia);
+
+        mnuTipoDiagnostico.setText("Gestión Tipo de Diagnóstico");
+        mnuTipoDiagnostico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuTipoDiagnosticoActionPerformed(evt);
+            }
+        });
+        mnuServicio.add(mnuTipoDiagnostico);
 
         mnuAnomalias.setText("Gestión de Anomalias");
         mnuAnomalias.addActionListener(new java.awt.event.ActionListener() {
@@ -328,14 +350,6 @@ public class frmMenu extends javax.swing.JFrame {
 
         mnuReparaciones.setText("Gestión de Reparaciones");
         mnuServicio.add(mnuReparaciones);
-
-        mnuTipoAnomalia.setText("Gestión Tipo de Anomalia");
-        mnuTipoAnomalia.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnuTipoAnomaliaActionPerformed(evt);
-            }
-        });
-        mnuServicio.add(mnuTipoAnomalia);
 
         jMenuBar1.add(mnuServicio);
 
@@ -415,7 +429,14 @@ public class frmMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_mnuAnomaliasActionPerformed
 
     private void mnuDiagnosticosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuDiagnosticosActionPerformed
-        // TODO add your handling code here:
+        GestionDiagnostico unaGD;
+        try{
+            unaGD = new GestionDiagnostico(cv);
+            unaGD.setVisible(true);
+            jdpPanelPrincipal.add(unaGD);
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
     }//GEN-LAST:event_mnuDiagnosticosActionPerformed
 
     private void mnuTipoAnomaliaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuTipoAnomaliaActionPerformed
@@ -602,6 +623,28 @@ public class frmMenu extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_mnuVincularClientesVehiculosActionPerformed
 
+    private void mnuPeritoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuPeritoActionPerformed
+        GestionPerito unPerito;
+        try {
+            unPerito = new GestionPerito(cv);
+            unPerito.setVisible(true);
+            jdpPanelPrincipal.add(unPerito);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }//GEN-LAST:event_mnuPeritoActionPerformed
+
+    private void mnuTipoDiagnosticoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuTipoDiagnosticoActionPerformed
+        GestionTipoDiagnostico miGTD;
+        try {
+            miGTD = new GestionTipoDiagnostico(cv);
+            miGTD.setVisible(true);
+            jdpPanelPrincipal.add(miGTD);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }//GEN-LAST:event_mnuTipoDiagnosticoActionPerformed
+
 
     /**
      * @param args the command line arguments
@@ -682,6 +725,7 @@ public class frmMenu extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnuReparaciones;
     private javax.swing.JMenu mnuServicio;
     private javax.swing.JMenuItem mnuTipoAnomalia;
+    private javax.swing.JMenuItem mnuTipoDiagnostico;
     private javax.swing.JMenuItem mnuTipoReparacion;
     private javax.swing.JMenuItem mnuVehiculo;
     private javax.swing.JMenuItem mnuVincularClientesVehiculos;

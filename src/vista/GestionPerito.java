@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package vista;
 
 import Modelo.InformePiezaPedido;
@@ -19,11 +18,13 @@ import javax.swing.table.DefaultTableModel;
  * @author Asus
  */
 public class GestionPerito extends javax.swing.JInternalFrame {
+
     private ControladoraVista cv;
     private String bandera;
     private DefaultTableModel miTabla;
     private UtilVista util;
     private DefaultListModel miLista;
+
     /**
      * Creates new form GestionPerito
      */
@@ -33,10 +34,12 @@ public class GestionPerito extends javax.swing.JInternalFrame {
         util = new UtilVista();
         miLista = new DefaultListModel();
         cargarTabla(tblPeritos, cv.traerPeritos(true));
+        
+        lstPedidos.setModel(util.cargarLista(this.cv.traerInformes(true)));
         estadoInicio();
     }
 
-   public void limpiar() {
+    public void limpiar() {
         txtDni.setText("");
         txtCodigo.setText("");
         txtNombre.setText("");
@@ -44,6 +47,8 @@ public class GestionPerito extends javax.swing.JInternalFrame {
         txtTelefono.setText("");
         txtDireccion.setText("");
         txtCuil.setText("");
+        lstPedidosPerito.setModel(util.cargarLista(null));
+        lstPedidos.setModel(util.cargarLista(null));
     }
 
     public void estadoInicio() {
@@ -63,9 +68,11 @@ public class GestionPerito extends javax.swing.JInternalFrame {
         lstPedidosPerito.setEnabled(false);
         btnAgregarInforme.setEnabled(false);
         btnQuitarInforme.setEnabled(false);
+        lstPedidosPerito.setModel(util.cargarLista(null));
+        lstPedidos.setModel(util.cargarLista(null));
         limpiar();
     }
-    
+
     public void cargarTabla(JTable laTabla, List<Perito> lista) throws Exception {
         miTabla = new DefaultTableModel();
         String cabecera[] = {"Código", "DNI", "Nombre", "Apellido", "Telefono", "Dirección", "CUIL"};
@@ -87,7 +94,6 @@ public class GestionPerito extends javax.swing.JInternalFrame {
         laTabla.setModel(miTabla);
     }
 
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -115,6 +121,7 @@ public class GestionPerito extends javax.swing.JInternalFrame {
         lstPedidosPerito = new javax.swing.JList();
         btnAgregarInforme = new javax.swing.JButton();
         btnQuitarInforme = new javax.swing.JButton();
+        jLabel13 = new javax.swing.JLabel();
         btnGuardar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         btnNuevo = new javax.swing.JButton();
@@ -131,6 +138,7 @@ public class GestionPerito extends javax.swing.JInternalFrame {
         btnEditar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
+        btnVinculos = new javax.swing.JToggleButton();
 
         setTitle("Gestión de Peritos");
         setName("frmPeritos"); // NOI18N
@@ -193,7 +201,7 @@ public class GestionPerito extends javax.swing.JInternalFrame {
         });
 
         jLabel12.setFont(new java.awt.Font("Politica", 0, 16)); // NOI18N
-        jLabel12.setText("Inormes de Piezas Pedidas");
+        jLabel12.setText("Informes de Piezas Pedidas del Perito");
 
         jScrollPane4.setViewportView(lstPedidos);
 
@@ -214,6 +222,9 @@ public class GestionPerito extends javax.swing.JInternalFrame {
                 btnQuitarInformeActionPerformed(evt);
             }
         });
+
+        jLabel13.setFont(new java.awt.Font("Politica", 0, 16)); // NOI18N
+        jLabel13.setText("Informes de Piezas Pedidas");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -249,18 +260,19 @@ public class GestionPerito extends javax.swing.JInternalFrame {
                             .addComponent(txtCuil, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(36, 36, 36)
+                        .addGap(20, 20, 20)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel12))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel12)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnQuitarInforme, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                        .addComponent(btnAgregarInforme, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(1, 1, 1)))
-                                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addComponent(btnQuitarInforme, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(btnAgregarInforme, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(1, 1, 1)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel13)
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(76, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -268,9 +280,19 @@ public class GestionPerito extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(15, 15, 15)
+                        .addGap(68, 68, 68)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtDireccion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(42, 42, 42)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(15, 15, 15)
                                 .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(7, 7, 7)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -279,43 +301,34 @@ public class GestionPerito extends javax.swing.JInternalFrame {
                                     .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtCuil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(txtCuil, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(68, 68, 68)
+                                .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(15, 15, 15)
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel6))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(71, 71, 71)
-                        .addComponent(jLabel8))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(42, 42, 42)
+                                .addComponent(jLabel6)))
+                        .addGap(31, 31, 31)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel13)
+                            .addComponent(jLabel12))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel5))
-                                .addGap(45, 45, 45))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addGap(19, 19, 19)))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel12)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(36, 36, 36)
-                        .addComponent(btnQuitarInforme)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnAgregarInforme)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(36, 36, 36)
+                                .addComponent(btnQuitarInforme)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnAgregarInforme)))))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         btnGuardar.setFont(new java.awt.Font("Politica", 0, 16)); // NOI18N
@@ -483,6 +496,14 @@ public class GestionPerito extends javax.swing.JInternalFrame {
             }
         });
 
+        btnVinculos.setFont(new java.awt.Font("Politica", 0, 16)); // NOI18N
+        btnVinculos.setText("Gestionar Vinculos");
+        btnVinculos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVinculosActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -500,6 +521,8 @@ public class GestionPerito extends javax.swing.JInternalFrame {
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnVinculos)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnEditar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnEliminar)
@@ -529,7 +552,8 @@ public class GestionPerito extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEliminar)
                     .addComponent(btnEditar)
-                    .addComponent(btnSalir))
+                    .addComponent(btnSalir)
+                    .addComponent(btnVinculos))
                 .addGap(41, 41, 41))
         );
 
@@ -580,27 +604,26 @@ public class GestionPerito extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnAgregarInformeActionPerformed
 
     private void btnQuitarInformeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuitarInformeActionPerformed
-//        if (tblPeritos.getSelectedRow() != -1) {
-//            if (lstPedidosPerito.getSelectedValue() != null) {
-//                try {
-//                    int codigo = Integer.valueOf(tblPeritos.getValueAt(tblPeritos.getSelectedRow(), 0).toString());
-//                    Mecanico unMecanico = cv.traerMecanico(codigo);
-//                    int miPedido = lstPedidosPerito.getSelectedIndex();
-//                    cv.quitarPedido(miPedido, codigo);
-//
-//                    List<Pedido> pedidosSinV = cv.traerPedidosSinVinculo(unMecanico);
-//                    List<Pedido> misPedidos = cv.traerPedidosConVinculo(unMecanico);
-//                    DefaultListModel dPedidos = util.cargarLista(misPedidos);
-//                    DefaultListModel dPedidosSinV = util.cargarLista(pedidosSinV);
-//                    lstPedidosPerito.setModel(dPedidos);
-//                    lstEspecialidades.setModel(dPedidosSinV);
-//                } catch (Exception ex) {
-//                    JOptionPane.showMessageDialog(null, ex.getMessage());
-//                }
-//            } else {
-//                JOptionPane.showMessageDialog(null, "Error: Seleccione un elemento de la lista de Pedidos para quitar.");
-//            }
-//        }
+        if (tblPeritos.getSelectedRow() != -1) {
+            if (lstPedidosPerito.getSelectedValue() != null) {
+                try {
+                    int codigo = Integer.valueOf(tblPeritos.getValueAt(tblPeritos.getSelectedRow(), 0).toString());
+                    Perito unPerito = cv.traerPerito(codigo);
+                    int miInforme = lstPedidosPerito.getSelectedIndex();
+                    cv.quitarInforme(miInforme, codigo);
+                    List<InformePiezaPedido> informesSinV = cv.traerInformeSinVinculo(unPerito);
+                    List<InformePiezaPedido> misInformes = cv.traerInformesConVinculo(unPerito);
+                    DefaultListModel dinformesConV = util.cargarLista(misInformes);
+                    DefaultListModel dinformesSinV = util.cargarLista(informesSinV);
+                    lstPedidosPerito.setModel(dinformesConV);
+                    lstPedidos.setModel(dinformesSinV);
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Error: Seleccione un elemento de la lista de Informes de Pieza de Pedido del Perito para quitar.");
+            }
+        }
     }//GEN-LAST:event_btnQuitarInformeActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
@@ -763,6 +786,15 @@ public class GestionPerito extends javax.swing.JInternalFrame {
         this.dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
 
+    private void btnVinculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVinculosActionPerformed
+        if (tblPeritos.getSelectedRow() != -1) {
+            lstPedidos.setEnabled(true);
+            lstPedidosPerito.setEnabled(true);
+            btnAgregarInforme.setEnabled(true);
+            btnQuitarInforme.setEnabled(true);
+        }
+    }//GEN-LAST:event_btnVinculosActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizar;
@@ -775,9 +807,11 @@ public class GestionPerito extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnQuitarInforme;
     private javax.swing.JButton btnSalir;
+    private javax.swing.JToggleButton btnVinculos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

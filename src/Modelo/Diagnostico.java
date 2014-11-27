@@ -32,8 +32,8 @@ public class Diagnostico extends Servicio implements Serializable{
     public Diagnostico() {
     }
 
-    public Diagnostico(TipoDiagnostico unTipoDiagnostico, int codigo, String nombre, String descripcion, double costo, double impuesto, boolean activo) {
-        super(codigo, nombre, descripcion, costo, impuesto, activo);
+    public Diagnostico(TipoDiagnostico unTipoDiagnostico, String nombre, String descripcion, double costo, double impuesto, boolean activo) {
+        super( nombre, descripcion, costo, impuesto, activo);
         this.unTipoDiagnostico = unTipoDiagnostico;
     }
     
@@ -52,6 +52,10 @@ public class Diagnostico extends Servicio implements Serializable{
 
     public void setMisAnomalias(List<Anomalia> misAnomalias) {
         this.misAnomalias = misAnomalias;
+    }
+
+    public void setUnTipoDiagnostico(TipoDiagnostico unTipoDiagnostico) {
+        this.unTipoDiagnostico = unTipoDiagnostico;
     }
 
     

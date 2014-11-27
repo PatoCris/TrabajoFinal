@@ -14,6 +14,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
@@ -23,6 +24,10 @@ import javax.persistence.criteria.Root;
  */
 public class ProcesoJpaController implements Serializable {
 
+    public ProcesoJpaController(){
+        emf = Persistence.createEntityManagerFactory("TallerMecanicoPU");
+    }
+    
     public ProcesoJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
@@ -135,5 +140,24 @@ public class ProcesoJpaController implements Serializable {
             em.close();
         }
     }
-    
+    public List<Proceso> traerProcesos(boolean activo){
+        String sql="SELECT object (p) FROM Proceso p WHERE p.activo = "+activo;
+        Query query = getEntityManager().createQuery(sql);
+        return (List<Proceso>)query.getResultList();
+    }
+    public List<Proceso> traerProcesoNombre(boolean activo, String nombre){
+        String sql="SELECT object (p) FROM Proceso p WHERE p.activo = "+activo+" AND p.nombre LIKE '%"+nombre+"%'";
+        Query query = getEntityManager().createQuery(sql);
+        return (List<Proceso>)query.getResultList();
+    }
+    public List<Proceso> traerProcesosConTipoDiagnostico(int diagnostico){
+        String sql ="SELECT Object(p) FROM Proceso p where p.codigo IN (SELECT mp.codigo FROM  TipoDiagnostico td INNER JOIN td.misProcesos mp WHERE td.codigo ="+diagnostico+")";
+        Query query = getEntityManager().createQuery(sql);
+        return (List<Proceso>)query.getResultList();
+    }
+    public int recuperarUltimoProceso(){
+        String sql ="SELECT MAX(p.codigo) FROM Proceso p";
+        Query query = getEntityManager().createQuery(sql);
+        return (int)query.getSingleResult();
+    }
 }

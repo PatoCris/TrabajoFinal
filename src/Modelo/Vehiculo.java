@@ -195,5 +195,11 @@ public class Vehiculo implements Serializable {
     public void setMisEquipamientos(List<Equipamiento> misEquipamientos) {
         this.misEquipamientos = misEquipamientos;
     }
+
+    @Override
+    public String toString() {
+        return getDominio();
+    }
+    
     
 }

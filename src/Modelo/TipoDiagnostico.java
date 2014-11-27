@@ -43,12 +43,11 @@ public class TipoDiagnostico implements Serializable {
     public TipoDiagnostico() {
     }
 
-    public TipoDiagnostico(int codigo, String nombre, String descripcion, int catidadModulos, boolean activo) {
-        this.codigo = codigo;
+    public TipoDiagnostico( String nombre, String descripcion, boolean activo) {
         this.nombre = nombre;
         this.descripcion = descripcion;
-        this.catidadModulos = catidadModulos;
-        this.activo = activo;
+//        this.catidadModulos = catidadModulos;
+        this.activo = true;
     }
 
     public int getCodigo() {
@@ -93,6 +92,13 @@ public class TipoDiagnostico implements Serializable {
 
     public List<Proceso> getMisProcesos() {
         return misProcesos;
+    }
+    
+    
+
+    @Override
+    public String toString() {
+        return nombre;
     }
     
     

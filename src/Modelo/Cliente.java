@@ -172,5 +172,11 @@ public class Cliente implements Serializable {
     public void setLocalidad(Localidad localidad) {
         this.localidad = localidad;
     }
+
+    @Override
+    public String toString() {
+        return nombre +" "+ apellido;
+    }
  
+    
 }

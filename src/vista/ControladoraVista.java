@@ -11,6 +11,7 @@ import Modelo.Cliente;
 import Modelo.ControladoraPrincipal;
 import Modelo.Deposito;
 import Modelo.Devolucion;
+import Modelo.Diagnostico;
 import Modelo.Ejemplar;
 import Modelo.Empleado;
 import Modelo.Equipamiento;
@@ -26,11 +27,16 @@ import Modelo.Modelo;
 import Modelo.Pedido;
 import Modelo.Perito;
 import Modelo.PiezaRecambio;
+import Modelo.Proceso;
 import Modelo.Proveedor;
 import Modelo.Segmento;
+import Modelo.Servicio;
 import Modelo.Taller;
 import Modelo.TipoAnomalia;
+import Modelo.TipoDiagnostico;
 import Modelo.TipoReparacion;
+import Modelo.Trazabilidad;
+import Modelo.Turno;
 import Modelo.Vehiculo;
 import Persistencia.exceptions.NonexistentEntityException;
 import Persistencia.exceptions.PreexistingEntityException;
@@ -133,6 +139,13 @@ class ControladoraVista {
 
     public List<Anomalia> traerAnomaliasBusqueda(boolean activo, String nivel, TipoAnomalia tipo) throws Exception {
         return cp.traerAnomaliasBusqueda(activo, nivel, tipo);
+    }
+    public List<Anomalia> traerAnomaliasSinVinculoConDiagnostico(Diagnostico unDiagnostico){
+        return cp.traerAnomaliasSinVinculoConDiagnostico(unDiagnostico);
+    }
+    
+    public List<Anomalia> traerAnomaliasVinculadoDiagnostico(Diagnostico unDiagnostico){
+        return cp.traerAnomaliasVinculadoDiagnostico(unDiagnostico);
     }
 
     ///////////////// METODOS DE MARCA ////////////////////////
@@ -412,7 +425,13 @@ class ControladoraVista {
     public void quitarVehiculoCompatible(int modelo, int codigo) throws Exception{
         cp.quitarVehiculoCompatible(modelo, codigo);
     }
-    //Para subir la ultima version 
+    public List<PiezaRecambio> traerPiezasSinVinculoConProceso(Proceso unProceso) {
+        return cp.traerPiezasSinVinculoConProceso(unProceso);
+    }
+
+    public List<PiezaRecambio> traerPiezasConVinculoConProceso(Proceso unProceso) {
+        return cp.traerPiezasConVinculoConProceso(unProceso);
+    }
 
     
     ///////////////// METODOS DE PROVEEDOR ////////////////////////
@@ -497,15 +516,15 @@ class ControladoraVista {
     }
     
     ///////////////// METODOS DE PEDIDOS ////////////////////////
-    public void nuevaPedido(Date fecha, Date hora, String descripcion, int cantidad, boolean autorizado, boolean paraRecambio, boolean activo, JefeDeposito unJefeDeposito, JefeTaller unJefeTaller, Cliente unCliente) throws Exception {
-        cp.nuevoPedido(fecha, hora, descripcion, cantidad, autorizado, paraRecambio,true, unJefeDeposito, unJefeTaller, unCliente);
+    public void nuevoPedido(java.util.Date fecha, java.util.Date hora, String descripcion, int cantidad, boolean autorizado, boolean paraRecambio, boolean activo, JefeDeposito unJefeDeposito, JefeTaller unJefeTaller, Cliente unCliente, PiezaRecambio unaPieza, Vehiculo unVehiculo) throws Exception {
+        cp.nuevoPedido(fecha, hora, descripcion, cantidad, autorizado, paraRecambio,true, unJefeDeposito, unJefeTaller, unCliente, unaPieza, unVehiculo);
     }
 
-    public void editarEspecialidad(int codigo, Date fecha, Date hora, String descripcion, int cantidad, boolean autorizado, boolean paraRecambio, boolean activo, JefeDeposito unJefeDeposito, JefeTaller unJefeTaller, Cliente unCliente) throws Exception {
-        cp.editarPedido(codigo, fecha, hora, descripcion, cantidad, autorizado, paraRecambio,true, unJefeDeposito, unJefeTaller, unCliente);
+    public void editarPedido(int codigo, java.util.Date fecha, java.util.Date hora, String descripcion, int cantidad, boolean autorizado, boolean paraRecambio, boolean activo, JefeDeposito unJefeDeposito, JefeTaller unJefeTaller, Cliente unCliente, PiezaRecambio unaPieza, Vehiculo unVehiculo) throws Exception {
+        cp.editarPedido(codigo, fecha, hora, descripcion, cantidad, autorizado, paraRecambio, true, unJefeDeposito, unJefeTaller, unCliente, unaPieza, unVehiculo);
     }
 
-    public List<Pedido> trerPedidos(boolean activo) throws Exception {
+    public List<Pedido> traerPedidos(boolean activo) throws Exception {
         return cp.traerPedidos(activo);
     }
 
@@ -522,6 +541,17 @@ class ControladoraVista {
     }
     public List<Pedido> traerPedidosConVinculo(Mecanico unMecanico) throws Exception{
         return cp.traerPedidosConVinculo(unMecanico);
+    }
+    
+    public List<Pedido> traerPedidosDeVehiculo(String busqueda) {
+        return cp.traerPedidosDeVehiculo(busqueda);
+    }
+    
+    public Pedido traerPedido(int codigo) throws Exception{
+        return cp.traerPedido(codigo);
+    }
+    public void agregarInfoAPedido(Pedido unPedido, InformePiezaPedido unInforme) throws Exception{
+        this.cp.agregarInfoAPedido(unPedido, unInforme);
     }
         ////////////////////// MÉTODOS DE LOCALIDAD ////////////////////////////
     public List<Localidad> traerLocalidades(boolean activo) throws Exception{
@@ -674,7 +704,12 @@ class ControladoraVista {
     public List<InformePiezaPedido> traerInformesConVinculo(Perito unPerito) {
         return cp.traerInformesConVinculo(unPerito);
     }
-
+    public InformePiezaPedido recuperarUltimoInforme() throws Exception{
+        return cp.recuperarUltimoInforme();
+    }
+    public List<InformePiezaPedido> traerInformes(boolean activo) {
+        return cp.traerInformes(activo);
+    }
                 
 
             /////////////////////// METODOS DE DEPOSITO ////////////////////////////////
@@ -688,4 +723,131 @@ class ControladoraVista {
         cp.eliminarDeposito(codigo);
     }
 
+///////////////// METODOS DE TIPO DIAGNOSTICO ////////////////////////
+    public void nuevoTipoDiagnostico(String nombre, String descrpcion, boolean activo) throws Exception {
+        cp.nuevoTipoDiagnostico(nombre, descrpcion, activo);
+    }
+
+    public void editarTipoDiagnostico(int codigo, String nombre, String descrpcion, int cantModulos, boolean activo) throws Exception {
+        cp.editarTipoDiagnostico(codigo, nombre, descrpcion, cantModulos, activo);
+    }
+
+    public List<TipoDiagnostico> traerTipoDiagnostico(boolean activo) throws Exception {
+        return cp.traerTipoDiagnostico(activo);
+    }
+
+    public void elminarTipoDiagnostico(int codigo) throws Exception {
+        cp.eliminarTipoDiagnostico(codigo);
+    }
+
+    public List<TipoDiagnostico> traerTipoDiagnosticoNombre(boolean activo, String nombre) throws Exception {
+        return cp.traerTipoDiagnosticoNombre(activo, nombre);
+    }
+    public TipoDiagnostico traerTipoDiagnostico(int codigo) throws Exception{
+        return cp.traerTD(codigo);
+    }
+    public void agregarProcesoADiagnostico(TipoDiagnostico unTD, Proceso unProceso) throws Exception{
+        this.cp.agregarProcesoADiagnostico(unTD, unProceso);
+    }
+
+    ///////////////// METODOS DE PROCESO ////////////////////////
+    public void nuevoProceso(String nombre, String descrpcion, int cantModulos, boolean activo, Especialidad unaEsp) throws Exception {
+        cp.nuevoProceso(nombre, descrpcion, cantModulos, true, unaEsp);
+    }
+
+    public void editarProceso(int codigo, String nombre, String descrpcion, int cantModulos, boolean activo, Especialidad unaEsp) throws Exception {
+        cp.editarProceso(codigo, nombre, descrpcion, cantModulos, activo, unaEsp);
+    }
+
+    public List<Proceso> traerProcesos(boolean activo) throws Exception {
+        return cp.traerProcesos(activo);
+    }
+
+    public void eliminarProceso(int codigo) throws Exception {
+        cp.eliminarProceso(codigo);
+    }
+
+    public List<Proceso> traerProcesosNombre(boolean activo, String nombre) throws Exception {
+        return cp.traerProcesosNombre(activo, nombre);
+    }
+    public Proceso traerProceso(int codigo) throws Exception{
+        return cp.traerProceso(codigo);
+    }
+
+    public void agregarPiezaAProceso(PiezaRecambio unaPieza, int codigo) throws Exception {
+        this.cp.agregarPiezaAProceso(unaPieza, codigo);
+    }
+
+    public void quitarPiezaDeProceso(int codigoPieza, int codigoProceso) throws Exception {
+        this.cp.quitarPiezaDeProceso(codigoPieza, codigoProceso);
+    }
+    public List<Proceso> traerProcesosConTipoDiagnostico (int diagnostico){
+        return this.cp.traerProcesosConTipoDiagnostico(diagnostico);
+    }
+    public Proceso recuperarUltimoProceso() throws Exception{
+        return this.cp.recuperarUltimoProceso();
+    }
+    
+    ///////////////// METODOS DE DIAGNOSTICO ////////////////////////
+    public void nuevoDiagnostico(TipoDiagnostico unTipo, String nombre, String descrpcion, double costo, double impuesto, boolean activo) throws Exception {
+        cp.nuevoDiagnostico(unTipo, nombre, descrpcion, costo, impuesto, activo);
+    }
+
+    public void editarDiagnostico(int codigo, TipoDiagnostico unTipo, String nombre, String descrpcion, double costo, double impuesto, boolean activo) throws Exception {
+        cp.editarDiagnostico(codigo, unTipo, nombre, descrpcion, costo, impuesto, activo);
+    }
+
+    public List<Diagnostico> traerDiagnostico(boolean activo) throws Exception {
+        return cp.traerDiagnostico(activo);
+    }
+
+    public void elminarDiagnostico(int codigo) throws Exception {
+        cp.eliminarDiagnostico(codigo);
+    }
+
+    public List<Diagnostico> traerDiagnosticoNombre(boolean activo, String nombre) throws Exception {
+        return cp.traerDiagnosticoNombre(activo, nombre);
+    }
+    public Diagnostico traerDiagnostico(int codigo) throws Exception{
+        return cp.traerDiagnostico(codigo);
+    }
+    public void agregarAnomaliaADiagnostico(Anomalia unaAnomalia, Diagnostico unDiagnostico) throws Exception{
+        this.cp.agregarAnomaliaADiagnostico(unDiagnostico, unaAnomalia);
+    }
+    public void quitarAnomaliaDeDiagnostico(int codigoAnomalia, int codigoDiag) throws Exception{
+        this.cp.quitarAnomaliaDeDiagnostico(codigoAnomalia, codigoDiag);
+    }
+    
+    ///////////////// METODOS DE TURNO ////////////////////////
+    public void nuevoTurno(java.util.Date fecha, java.util.Date hora, Trazabilidad unaTrazabilidad, Servicio unServicio, Vehiculo unVehiculo, Cliente unCliente, boolean activo) throws Exception {
+        cp.nuevoTurno(fecha, hora, unaTrazabilidad, unServicio, unVehiculo, unCliente, true);
+    }
+
+    public void editarTurno(int codigo, java.util.Date fecha, java.util.Date hora, Trazabilidad unaTrazabilidad, Servicio unServicio, Vehiculo unVehiculo, Cliente unCliente, boolean activo) throws Exception {
+        cp.editarTurno(codigo, fecha, hora, unaTrazabilidad, unServicio, unVehiculo, unCliente, true);
+    }
+
+    public List<Turno> traerTurnos(boolean activo, int codigoAg) throws Exception {
+        return cp.traerTurnos(activo, codigoAg);
+    }
+
+    public void eliminarTurno(int codigo) throws Exception {
+        cp.eliminarTurno(codigo);
+    }
+    public Turno traerTurno(int codigo) throws Exception{
+        return cp.traerTurno(codigo);
+    }
+
+//    public List<Turno> traerTurnosNombre(boolean activo, String nombre) throws Exception {
+//        return cp.traerTurnosNombre(activo, nombre);
+//    }
+    public List<Turno> traerTurnosDelVehiculo(String busqueda, int codigoAg) throws Exception{
+        return cp.traerTurnosDelVehiculo(busqueda, codigoAg);
+    }
+    
+    
+    //////////////////////////////METODOS DE SERVICIO//////////////////////////
+    public List<Servicio> traerServicios(boolean activo){
+        return cp.traerServicios(activo);
+    }
 }

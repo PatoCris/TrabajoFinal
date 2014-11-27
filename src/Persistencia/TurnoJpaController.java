@@ -7,6 +7,7 @@
 package Persistencia;
 
 import Modelo.Turno;
+import Modelo.Vehiculo;
 import Persistencia.exceptions.NonexistentEntityException;
 import java.io.Serializable;
 import java.util.List;
@@ -14,6 +15,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
@@ -23,6 +25,9 @@ import javax.persistence.criteria.Root;
  */
 public class TurnoJpaController implements Serializable {
 
+    public TurnoJpaController(){
+        emf=Persistence.createEntityManagerFactory("TallerMecanicoPU");
+    }
     public TurnoJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
@@ -134,6 +139,18 @@ public class TurnoJpaController implements Serializable {
         } finally {
             em.close();
         }
+    }
+    
+    public List<Turno> traerTurnos(boolean activo, int codigoAg){
+        String sql ="SELECT object(t) FROM Turno t WHERE t.activo = "+activo+" AND t.codigo IN ( SELECT mt.codigo FROM AgendaMensual v INNER jOIN v.misTurnos mt WHERE v.codigo="+codigoAg+")";
+        Query query = getEntityManager().createQuery(sql);
+        return (List<Turno>)query.getResultList();
+    }
+    
+    public List<Turno> traerTurnosDelVehiculo(Vehiculo unVehiculo, int codigoAgenda){
+        String sql = "SELECT Object(t) FROM Turno t WHERE Turno.Vehiculo.dominio LIKE '%"+unVehiculo.getDominio()+"%' AND t.codigo IN (SELECT mt.codigo FROM AgendaMensual v INNER JOIN v.misTurnos mt WHERE v.codigo="+codigoAgenda+")";
+        Query query = getEntityManager().createQuery(sql);
+        return (List<Turno>)query.getResultList();
     }
     
 }

@@ -35,10 +35,10 @@ public class Turno implements Serializable {
     private int codigo;
     @Column(name = "fecha")
     @Temporal(javax.persistence.TemporalType.DATE)
-    private Date fecha;
+    private java.util.Date fecha;
     @Column(name = "hora")
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date hora;
+    @Temporal(javax.persistence.TemporalType.TIME)
+    private java.util.Date hora;
     @Column(name = "activo")
     private boolean activo;
     @OneToMany
@@ -59,15 +59,14 @@ public class Turno implements Serializable {
     public Turno() {
     }
 
-    public Turno(int codigo, Date fecha, Date hora, boolean activo, Trazabilidad unaTrazabilidad, Servicio unServicio, Vehiculo unVehiculo, Cliente unCliente) {
-        this.codigo = codigo;
+    public Turno( java.util.Date fecha, java.util.Date hora, Trazabilidad unaTrazabilidad, Servicio unServicio, Vehiculo unVehiculo, Cliente unCliente, boolean activo) {
         this.fecha = fecha;
         this.hora = hora;
-        this.activo = activo;
         this.unaTrazabilidad = unaTrazabilidad;
         this.unServicio = unServicio;
         this.unVehiculo = unVehiculo;
         this.unCliente = unCliente;
+        this.activo = activo;
     }
 
     public int getCodigo() {
@@ -78,19 +77,19 @@ public class Turno implements Serializable {
         this.codigo = codigo;
     }
 
-    public Date getFecha() {
+    public java.util.Date getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(java.util.Date fecha) {
         this.fecha = fecha;
     }
 
-    public Date getHora() {
+    public java.util.Date getHora() {
         return hora;
     }
 
-    public void setHora(Date hora) {
+    public void setHora(java.util.Date hora) {
         this.hora = hora;
     }
 
@@ -136,6 +135,10 @@ public class Turno implements Serializable {
 
     public List<Modulo> getMisModulos() {
         return misModulos;
+    }
+
+    public void setMisModulos(List<Modulo> misModulos) {
+        this.misModulos = misModulos;
     }
 
     

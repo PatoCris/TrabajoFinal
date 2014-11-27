@@ -693,7 +693,7 @@ public class GestionVehiculo extends javax.swing.JInternalFrame {
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         if (tblVehiculos.getSelectedRow() != -1) {
             bandera = "editar";
-            //Habilitar cajas
+            
             txtAnio.setEnabled(true);
             txtDominio.setEnabled(true);
             txtKms.setEnabled(true);

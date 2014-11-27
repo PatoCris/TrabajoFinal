@@ -6,7 +6,7 @@
 
 package Persistencia;
 
-import Modelo.TipoDiagnostico;
+import Modelo.Servicio;
 import Persistencia.exceptions.NonexistentEntityException;
 import java.io.Serializable;
 import java.util.List;
@@ -20,14 +20,14 @@ import javax.persistence.criteria.Root;
 
 /**
  *
- * @author cristian
+ * @author Asus
  */
-public class TipoDiagnosticoJpaController implements Serializable {
-
-    public TipoDiagnosticoJpaController(){
-        emf = Persistence.createEntityManagerFactory("TallerMecanicoPU");
+public class ServicioJpaController implements Serializable {
+    
+    public ServicioJpaController(){
+        emf=Persistence.createEntityManagerFactory("TallerMecanicoPU");
     }
-    public TipoDiagnosticoJpaController(EntityManagerFactory emf) {
+    public ServicioJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
     private EntityManagerFactory emf = null;
@@ -36,12 +36,12 @@ public class TipoDiagnosticoJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(TipoDiagnostico tipoDiagnostico) {
+    public void create(Servicio servicio) {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            em.persist(tipoDiagnostico);
+            em.persist(servicio);
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -50,19 +50,19 @@ public class TipoDiagnosticoJpaController implements Serializable {
         }
     }
 
-    public void edit(TipoDiagnostico tipoDiagnostico) throws NonexistentEntityException, Exception {
+    public void edit(Servicio servicio) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            tipoDiagnostico = em.merge(tipoDiagnostico);
+            servicio = em.merge(servicio);
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                int id = tipoDiagnostico.getCodigo();
-                if (findTipoDiagnostico(id) == null) {
-                    throw new NonexistentEntityException("The tipoDiagnostico with id " + id + " no longer exists.");
+                int id = servicio.getCodigo();
+                if (findServicio(id) == null) {
+                    throw new NonexistentEntityException("The servicio with id " + id + " no longer exists.");
                 }
             }
             throw ex;
@@ -78,14 +78,14 @@ public class TipoDiagnosticoJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            TipoDiagnostico tipoDiagnostico;
+            Servicio servicio;
             try {
-                tipoDiagnostico = em.getReference(TipoDiagnostico.class, id);
-                tipoDiagnostico.getCodigo();
+                servicio = em.getReference(Servicio.class, id);
+                servicio.getCodigo();
             } catch (EntityNotFoundException enfe) {
-                throw new NonexistentEntityException("The tipoDiagnostico with id " + id + " no longer exists.", enfe);
+                throw new NonexistentEntityException("The servicio with id " + id + " no longer exists.", enfe);
             }
-            em.remove(tipoDiagnostico);
+            em.remove(servicio);
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -94,19 +94,19 @@ public class TipoDiagnosticoJpaController implements Serializable {
         }
     }
 
-    public List<TipoDiagnostico> findTipoDiagnosticoEntities() {
-        return findTipoDiagnosticoEntities(true, -1, -1);
+    public List<Servicio> findServicioEntities() {
+        return findServicioEntities(true, -1, -1);
     }
 
-    public List<TipoDiagnostico> findTipoDiagnosticoEntities(int maxResults, int firstResult) {
-        return findTipoDiagnosticoEntities(false, maxResults, firstResult);
+    public List<Servicio> findServicioEntities(int maxResults, int firstResult) {
+        return findServicioEntities(false, maxResults, firstResult);
     }
 
-    private List<TipoDiagnostico> findTipoDiagnosticoEntities(boolean all, int maxResults, int firstResult) {
+    private List<Servicio> findServicioEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            cq.select(cq.from(TipoDiagnostico.class));
+            cq.select(cq.from(Servicio.class));
             Query q = em.createQuery(cq);
             if (!all) {
                 q.setMaxResults(maxResults);
@@ -118,20 +118,20 @@ public class TipoDiagnosticoJpaController implements Serializable {
         }
     }
 
-    public TipoDiagnostico findTipoDiagnostico(int id) {
+    public Servicio findServicio(int id) {
         EntityManager em = getEntityManager();
         try {
-            return em.find(TipoDiagnostico.class, id);
+            return em.find(Servicio.class, id);
         } finally {
             em.close();
         }
     }
 
-    public int getTipoDiagnosticoCount() {
+    public int getServicioCount() {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            Root<TipoDiagnostico> rt = cq.from(TipoDiagnostico.class);
+            Root<Servicio> rt = cq.from(Servicio.class);
             cq.select(em.getCriteriaBuilder().count(rt));
             Query q = em.createQuery(cq);
             return ((Long) q.getSingleResult()).intValue();
@@ -140,16 +140,9 @@ public class TipoDiagnosticoJpaController implements Serializable {
         }
     }
     
-    public List<TipoDiagnostico> traerTipoDiagnostico(boolean activo){
-        String sql ="SELECT object(t) FROM TipoDiagnostico t WHERE t.activo = "+activo;
+    public List<Servicio> traerServicios(boolean activo){
+        String sql="SELECT object (s) FROM Servicio s WHERE s.activo = "+activo;
         Query query = getEntityManager().createQuery(sql);
-        return (List<TipoDiagnostico>)query.getResultList();
+        return (List<Servicio>)query.getResultList();
     }
-    
-    public List<TipoDiagnostico> traerTipoDiagnosticoNombre(boolean activo, String nombre){
-        String sql ="SELECT object(tr) FROM TipoDiagnostico tr WHERE tr.activo = "+activo+" AND tr.nombre LIKE '%"+nombre+"%'";
-        Query query = getEntityManager().createQuery(sql);
-        return (List<TipoDiagnostico>)query.getResultList();
-    }
-    
 }

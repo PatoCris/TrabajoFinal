@@ -216,4 +216,9 @@ public class VehiculoJpaController implements Serializable {
         Query query = getEntityManager().createQuery(sql);
         return (List<Vehiculo>)query.getResultList();
     }
+    public Vehiculo traerVehiculoDominio(String dominio){
+        String sql="SELECT object (v) FROM Vehiculo v WHERE v.dominio LIKE '%"+dominio+"%'";
+        Query query = getEntityManager().createQuery(sql);
+        return (Vehiculo)query.getSingleResult();
+    }
 }

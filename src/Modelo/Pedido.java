@@ -35,7 +35,7 @@ public class Pedido implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     private java.util.Date fecha;
     @Column(name = "hora")
-    @Temporal(javax.persistence.TemporalType.DATE)
+    @Temporal(javax.persistence.TemporalType.TIME)
     private java.util.Date hora;
     @Column(name = "descripcion")
     private String descripcion;
@@ -63,11 +63,14 @@ public class Pedido implements Serializable {
     @JoinColumn(name="una_pieza")
     @OneToOne
     private PiezaRecambio unaPieza;
+    @JoinColumn(name="un_informe")
+    @OneToOne
+    private InformePiezaPedido unInforme;
 
     public Pedido() {
     }
 
-    public Pedido(java.util.Date fecha, java.util.Date hora, String descripcion, int cantidad, boolean autorizado, boolean paraRecambio, boolean activo, JefeDeposito unJefeDeposito, JefeTaller unJefeTaller, Cliente unCliente) {
+    public Pedido(java.util.Date fecha, java.util.Date hora, String descripcion, int cantidad, boolean autorizado, boolean paraRecambio, boolean activo, JefeDeposito unJefeDeposito, JefeTaller unJefeTaller, Cliente unCliente, PiezaRecambio unaPieza, Vehiculo unVehiculo) {
         this.fecha = fecha;
         this.hora = hora;
         this.descripcion = descripcion;
@@ -79,6 +82,7 @@ public class Pedido implements Serializable {
         this.unJefeTaller = unJefeTaller;
         this.unCliente = unCliente;
         this.unaPieza = unaPieza;
+        this.unVehiculo = unVehiculo;
     }
 
     public int getCodigo() {
@@ -184,6 +188,20 @@ public class Pedido implements Serializable {
     public void setUnaPieza(PiezaRecambio unaPieza) {
         this.unaPieza = unaPieza;
     }
+
+    public InformePiezaPedido getUnInforme() {
+        return unInforme;
+    }
+
+    public void setUnInforme(InformePiezaPedido unInforme) {
+        this.unInforme = unInforme;
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(codigo);
+    }
+    
     
     
 }

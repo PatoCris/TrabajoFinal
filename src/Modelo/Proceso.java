@@ -49,8 +49,7 @@ public class Proceso implements Serializable {
     public Proceso() {
     }
 
-    public Proceso(int codigo, String nombre, String descripcion, int cantidadModulos, boolean activo, Especialidad unaEspecialidad) {
-        this.codigo = codigo;
+    public Proceso(String nombre, String descripcion, int cantidadModulos, boolean activo, Especialidad unaEspecialidad) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.cantidadModulos = cantidadModulos;
@@ -108,6 +107,15 @@ public class Proceso implements Serializable {
 
     public List<PiezaRecambio> getMisPiezasRecambios() {
         return misPiezasRecambios;
+    }
+
+    public void setMisPiezasRecambios(List<PiezaRecambio> misPiezasRecambios) {
+        this.misPiezasRecambios = misPiezasRecambios;
+    }
+
+    @Override
+    public String toString() {
+        return getNombre().toString();
     }
     
     

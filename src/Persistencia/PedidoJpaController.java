@@ -164,4 +164,10 @@ public class PedidoJpaController implements Serializable {
         Query query = getEntityManager().createQuery(sql);
         return (List<Pedido>)query.getResultList();
     }
+    
+    public List<Pedido> traerPedidosDeVehiculo(String dominio){
+        String sql="SELECT object(p) FROM Pedido p WHERE p.unVehiculo.dominio ='"+dominio+"'";
+        Query query = getEntityManager().createQuery(sql);
+        return (List<Pedido>) query.getResultList();
+    }
 }

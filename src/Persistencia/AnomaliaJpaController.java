@@ -7,6 +7,7 @@
 package Persistencia;
 
 import Modelo.Anomalia;
+import Modelo.Diagnostico;
 import Modelo.TipoAnomalia;
 import Persistencia.exceptions.NonexistentEntityException;
 import java.io.Serializable;
@@ -156,6 +157,18 @@ public class AnomaliaJpaController implements Serializable {
         if(tipo != null){
             sql = sql + " AND a.unTipoAnomalia.codigo = "+tipo.getCodigo();
         }
+        Query query = getEntityManager().createQuery(sql);
+        return (List<Anomalia>)query.getResultList();
+    }
+    
+    public List<Anomalia> traerAnomaliasSinVinculoConDiagnostico(Diagnostico unDiagnostico){
+        String sql ="SELECT Object(a) from Anomalia a where a.codigo NOT IN (SELECT ad.codigo FROM  Diagnostico d INNER JOIN d.misAnomalias ad WHERE d.codigo ="+unDiagnostico.getCodigo()+")";
+        Query query = getEntityManager().createQuery(sql);
+        return (List<Anomalia>)query.getResultList();
+    }
+    
+    public List<Anomalia> traerAnomaliasVinculadoDiagnostico(Diagnostico unDiagnostico){
+        String sql ="SELECT Object(a) from Anomalia a where a.codigo IN (SELECT ad.codigo FROM  Diagnostico d INNER JOIN d.misAnomalias ad WHERE d.codigo ="+unDiagnostico.getCodigo()+")";
         Query query = getEntityManager().createQuery(sql);
         return (List<Anomalia>)query.getResultList();
     }

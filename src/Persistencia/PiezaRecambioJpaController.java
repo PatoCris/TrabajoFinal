@@ -8,6 +8,7 @@ package Persistencia;
 
 import Modelo.Modelo;
 import Modelo.PiezaRecambio;
+import Modelo.Proceso;
 import Modelo.TipoReparacion;
 import Persistencia.exceptions.NonexistentEntityException;
 import java.io.Serializable;
@@ -159,7 +160,18 @@ public class PiezaRecambioJpaController implements Serializable {
         Query query = getEntityManager().createQuery(sql);
         return (List<PiezaRecambio>)query.getResultList();
     }
+    
+    List<PiezaRecambio> traerPiezasSinVinculoConProceso(Proceso unProceso) {
+        String sql ="SELECT Object(p) from PiezaRecambio p where p.codigo NOT IN (SELECT po.codigo FROM  Proceso o INNER JOIN o.misPiezasRecambios po WHERE o.codigo ="+unProceso.getCodigo()+")";
+        Query query = getEntityManager().createQuery(sql);
+        return (List<PiezaRecambio>)query.getResultList();    
+    }
 
+    List<PiezaRecambio> traerPiezasConVinculoSinProceso(Proceso unProceso) {
+    String sql ="SELECT Object(p) from PiezaRecambio p where p.codigo IN (SELECT po.codigo FROM  Proceso o INNER JOIN o.misPiezasRecambios po WHERE o.codigo ="+unProceso.getCodigo()+")";
+        Query query = getEntityManager().createQuery(sql);
+        return (List<PiezaRecambio>)query.getResultList();   
+    }
         
     
 }

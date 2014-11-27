@@ -158,7 +158,7 @@ public class ClienteJpaController implements Serializable {
     public boolean exiteCliente(int dni){
         boolean retorno = true;
         try{
-            String sql = "SELECT Object(c) FROM Cliente c WHERE c.dni ="+dni;
+            String sql = "SELECT Object(c) FROM Cliente c WHERE c.dni = "+dni;
             Query query = getEntityManager().createQuery(sql);
             query.getSingleResult();
         }catch(Exception ex){

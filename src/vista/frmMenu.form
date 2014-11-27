@@ -207,6 +207,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Gesti&#xf3;n Perito"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mnuPeritoActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>
@@ -256,10 +259,26 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="mnuTipoReparacion">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Gesti&#xf3;n de Tipos de Reparaci&#xf3;n"/>
+                <Property name="text" type="java.lang.String" value="Gesti&#xf3;n Tipos de Reparaci&#xf3;n"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mnuTipoReparacionActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="mnuTipoAnomalia">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Gesti&#xf3;n Tipo de Anomalia"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mnuTipoAnomaliaActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="mnuTipoDiagnostico">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Gesti&#xf3;n Tipo de Diagn&#xf3;stico"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mnuTipoDiagnosticoActionPerformed"/>
               </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mnuAnomalias">
@@ -282,14 +301,6 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Gesti&#xf3;n de Reparaciones"/>
               </Properties>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="mnuTipoAnomalia">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Gesti&#xf3;n Tipo de Anomalia"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mnuTipoAnomaliaActionPerformed"/>
-              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>

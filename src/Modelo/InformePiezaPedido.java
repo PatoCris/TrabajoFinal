@@ -93,6 +93,11 @@ public class InformePiezaPedido implements Serializable {
     public void setUnaPieza(PiezaRecambio unaPieza) {
         this.unaPieza = unaPieza;
     }
+
+    @Override
+    public String toString() {
+        return fecha + " " + unaPieza;
+    }
     
     
 }

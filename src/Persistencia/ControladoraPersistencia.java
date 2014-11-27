@@ -11,6 +11,7 @@ import Modelo.Anomalia;
 import Modelo.Cliente;
 import Modelo.Deposito;
 import Modelo.Devolucion;
+import Modelo.Diagnostico;
 import Modelo.Ejemplar;
 import Modelo.Empleado;
 import Modelo.Equipamiento;
@@ -29,11 +30,15 @@ import Modelo.Modelo;
 import Modelo.Pedido;
 import Modelo.Perito;
 import Modelo.PiezaRecambio;
+import Modelo.Proceso;
 import Modelo.Proveedor;
 import Modelo.Segmento;
+import Modelo.Servicio;
 import Modelo.Taller;
 import Modelo.TipoAnomalia;
+import Modelo.TipoDiagnostico;
 import Modelo.TipoReparacion;
+import Modelo.Turno;
 import Modelo.Vehiculo;
 import Persistencia.exceptions.NonexistentEntityException;
 import Persistencia.exceptions.PreexistingEntityException;
@@ -73,6 +78,12 @@ public class ControladoraPersistencia {
     private DevolucionJpaController devolucionJpa = new DevolucionJpaController();
     private TallerJpaController tallerJpa = new TallerJpaController();
     private DepositoJpaController depositoJpa = new DepositoJpaController();
+    private TipoDiagnosticoJpaController tipoDiagnosticoJpa = new TipoDiagnosticoJpaController();
+    private ProcesoJpaController procesoJpa = new ProcesoJpaController();
+    private DiagnosticoJpaController diagnosticoJpa = new DiagnosticoJpaController();
+    private TurnoJpaController turnoJpa = new TurnoJpaController();
+    private ServicioJpaController servicioJpa = new ServicioJpaController();
+            
 
     
     ///////////////// METODOS DE ACCESORIO //////////////////////
@@ -159,6 +170,13 @@ public class ControladoraPersistencia {
     }
     public List<Anomalia> traerAnomaliasBusqueda(boolean activo, String nivel, TipoAnomalia tipo) throws PreexistingEntityException, Exception{
         return anomaliaJpa.traerAnomaliasBusqueda(activo, nivel, tipo);
+    }
+    public List<Anomalia> traerAnomaliasSinVinculoConDiagnostico(Diagnostico unDiagnostico){
+        return anomaliaJpa.traerAnomaliasSinVinculoConDiagnostico(unDiagnostico);
+    }
+    
+    public List<Anomalia> traerAnomaliasVinculadoDiagnostico(Diagnostico unDiagnostico){
+        return anomaliaJpa.traerAnomaliasVinculadoDiagnostico(unDiagnostico);
     }
     
     ///////////////// METODOS DE TIPO DE ANOMALIA //////////////////////
@@ -347,7 +365,10 @@ public class ControladoraPersistencia {
     }
     public List<Vehiculo> traerVehiculoDominio(boolean activo, String dominio) throws PreexistingEntityException, Exception{
         return vehiculoJpa.traerVehiculoDominio(activo, dominio);
-    }   
+    }  
+    public Vehiculo traerVehiculoDominio(String dominio) throws PreexistingEntityException, Exception{
+        return vehiculoJpa.traerVehiculoDominio(dominio);
+    }
     public Vehiculo traerVehiculo(int codigo) throws PreexistingEntityException, Exception{
         return vehiculoJpa.findVehiculo(codigo);
     }
@@ -400,6 +421,12 @@ public class ControladoraPersistencia {
     }
     public List<PiezaRecambio> traerPiezaRecambiosBusqueda(boolean activo, String nombre, TipoReparacion tipo) throws PreexistingEntityException, Exception{
         return piezaRecambioJpa.traerPiezaRecambiosBusqueda(activo, nombre, tipo);
+    }
+    public List<PiezaRecambio> traerPiezasSinVinculoConProceso(Proceso unProceso) {
+        return piezaRecambioJpa.traerPiezasSinVinculoConProceso(unProceso);
+    }
+    public List<PiezaRecambio> traerPiezasConVinculoConProceso(Proceso unProceso) {
+        return piezaRecambioJpa.traerPiezasConVinculoSinProceso(unProceso);
     }
 
         ///////////////// METODOS DE PROVEEDOR //////////////////////
@@ -497,6 +524,9 @@ public class ControladoraPersistencia {
     }
     public List<Pedido> traerPedidosConVinculo(Mecanico unMecanico) throws PreexistingEntityException, Exception{
         return pedidoJpa.traerPedidosConVinculo(unMecanico);
+    }
+    public List<Pedido> traerPedidosDeVehiculo(String dominio){
+        return pedidoJpa.traerPedidosDeVehiculo(dominio);
     }
     
 
@@ -599,7 +629,13 @@ public class ControladoraPersistencia {
     public List<InformePiezaPedido> traerInformesConVinculo(Perito unPerito) {
         return informeJpa.traerInformesConVinculo(unPerito);
     }
-    
+    public int recuperarUltimoInforme(){
+        return informeJpa.ultimoInformePiezaPedido();
+        
+    }
+    public List<InformePiezaPedido> traerInformes(boolean activo){
+        return informeJpa.traerInformes(activo);
+    }
 
         ///////////////////// METODOS DE LOCALIDAD ////////////////////////////
 
@@ -674,4 +710,98 @@ public class ControladoraPersistencia {
         return depositoJpa.findDeposito(codigo);
     }
 
+    ///////////////////////// TIPO DIAGNOSTICO ////////////////////////////////
+    public void nuevoTipoDiagnostico(TipoDiagnostico unTipoDiagnostico) throws PreexistingEntityException, Exception{
+        tipoDiagnosticoJpa.create(unTipoDiagnostico);
+    }
+    public void editarTipoDiagnostico(TipoDiagnostico unTipoDiagnostico) throws PreexistingEntityException, Exception{
+        tipoDiagnosticoJpa.edit(unTipoDiagnostico);
+    }
+    public TipoDiagnostico traerTD(int codigo) throws PreexistingEntityException, Exception{
+        return tipoDiagnosticoJpa.findTipoDiagnostico(codigo);
+    }
+    public List<TipoDiagnostico> traerTipoDiagnostico(boolean activo) throws PreexistingEntityException, Exception{
+        return tipoDiagnosticoJpa.traerTipoDiagnostico(activo);
+    }
+    public void eliminarTipoDiagnostico(int codigo) throws NonexistentEntityException, Exception{
+        tipoDiagnosticoJpa.destroy(codigo);
+    }
+    public List<TipoDiagnostico> traerTipoDiagnosticoNombre(boolean activo, String nombre) throws PreexistingEntityException, Exception{
+        return tipoDiagnosticoJpa.traerTipoDiagnosticoNombre(activo, nombre);
+    }
+    
+    //////////////////////// METODOS DE PROCESO /////////////////////////////
+    public void nuevoProceso(Proceso unProceso) throws PreexistingEntityException, Exception{
+        procesoJpa.create(unProceso);
+    }
+    public void editarProceso(Proceso unProceso) throws PreexistingEntityException, Exception{
+        procesoJpa.edit(unProceso);
+    }
+    public Proceso traerProceso(int codigo) throws PreexistingEntityException, Exception{
+        return procesoJpa.findProceso(codigo);
+    }
+    public List<Proceso> traerProcesos(boolean activo) throws PreexistingEntityException, Exception{
+        return procesoJpa.traerProcesos(activo);
+    }
+    public void eliminarProceso(int codigo) throws NonexistentEntityException, Exception{
+        procesoJpa.destroy(codigo);
+    }
+    public List<Proceso> traerProcesosNombre(boolean activo, String nombre) throws PreexistingEntityException, Exception{
+        return procesoJpa.traerProcesoNombre(activo, nombre);
+    }
+    public List<Proceso> traerProcesosConTipoDiagnostico(int diagnostico){
+        return procesoJpa.traerProcesosConTipoDiagnostico(diagnostico);
+    }
+    public int recuperarUltimoProceso(){
+        return procesoJpa.recuperarUltimoProceso();
+    }
+    
+    /////////////////////////  DIAGNOSTICO ////////////////////////////////
+    public void nuevoDiagnostico(Diagnostico unDiagnostico) throws PreexistingEntityException, Exception{
+        diagnosticoJpa.create(unDiagnostico);
+    }
+    public void editarDiagnostico(Diagnostico unDiagnostico) throws PreexistingEntityException, Exception{
+        diagnosticoJpa.edit(unDiagnostico);
+    }
+    public Diagnostico traerDiagnostico(int codigo) throws PreexistingEntityException, Exception{
+        return diagnosticoJpa.findDiagnostico(codigo);
+    }
+    public List<Diagnostico> traerDiagnostico(boolean activo) throws PreexistingEntityException, Exception{
+        return diagnosticoJpa.traerDiagnostico(activo);
+    }
+    public void eliminarDiagnostico(int codigo) throws NonexistentEntityException, Exception{
+        diagnosticoJpa.destroy(codigo);
+    }
+    public List<Diagnostico> traerDiagnosticoNombre(boolean activo, String nombre) throws PreexistingEntityException, Exception{
+        return diagnosticoJpa.traerDiagnosticoNombre(activo, nombre);
+    }
+    
+   ///////////////// METODOS DE TURNO //////////////////////
+    public void nuevoTurno(Turno unTurno) throws PreexistingEntityException, Exception{
+        turnoJpa.create(unTurno);
+    }
+    public void editarTurno(Turno unTurno) throws PreexistingEntityException, Exception{
+        turnoJpa.edit(unTurno);
+    }
+    public List<Turno> traerTurnos(boolean activo, int codigoAg) throws PreexistingEntityException, Exception{
+        return turnoJpa.traerTurnos(activo, codigoAg);
+    }
+    public void eliminarTurno(int codigo) throws NonexistentEntityException, Exception{
+            turnoJpa.destroy(codigo);
+    }
+//    public List<Turno> traerTurnosNombre(boolean activo, String nombre) throws PreexistingEntityException, Exception{
+//        return turnoJpa.traerTurnosNombre(activo, nombre);
+//    }   
+    public Turno traerTurno(int codigo) throws PreexistingEntityException, Exception{
+        return turnoJpa.findTurno(codigo);
+    }
+    public List<Turno> traerTurnosDelVehiculo(Vehiculo vehiculo, int codigoAgenda) throws PreexistingEntityException, Exception{
+        return turnoJpa.traerTurnosDelVehiculo(vehiculo, codigoAgenda);
+    } 
+    
+    
+    //////////////////////////////METODOS DE SERVICIO//////////////////////////
+    public List<Servicio> traerServicios(boolean activo){
+       return servicioJpa.traerServicios(activo);
+    }
 }

@@ -86,4 +86,10 @@ public class Anomalia implements Serializable {
     public void setUnTipoAnomalia(TipoAnomalia unTipoAnomalia) {
         this.unTipoAnomalia = unTipoAnomalia;
     }
+
+    @Override
+    public String toString() {
+        return unTipoAnomalia.toString();
+    }
+    
 }

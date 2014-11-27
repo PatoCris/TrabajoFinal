@@ -40,7 +40,7 @@ public class Reparacion extends Servicio implements Serializable{
     }
 
     public Reparacion(boolean cubiertoGarantia, int cantidadTotalModulos, TipoReparacion unTipoReparacion, int codigo, String nombre, String descripcion, double costo, double impuesto, boolean activo) {
-        super(codigo, nombre, descripcion, costo, impuesto, activo);
+        super( nombre, descripcion, costo, impuesto, activo);
         this.cubiertoGarantia = cubiertoGarantia;
         this.cantidadTotalModulos = cantidadTotalModulos;
         this.unTipoReparacion = unTipoReparacion;

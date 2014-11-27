@@ -14,15 +14,18 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 /**
  *
- * @author cristian
+ * @author Asus
  */
 public class DiagnosticoJpaController implements Serializable {
-
+    public DiagnosticoJpaController(){
+        emf=Persistence.createEntityManagerFactory("TallerMecanicoPU");
+    }
     public DiagnosticoJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
@@ -135,5 +138,15 @@ public class DiagnosticoJpaController implements Serializable {
             em.close();
         }
     }
+    public List<Diagnostico> traerDiagnostico(boolean activo){
+        String sql ="SELECT object(d) FROM Diagnostico d WHERE d.activo = "+activo;
+        Query query = getEntityManager().createQuery(sql);
+        return (List<Diagnostico>)query.getResultList();
+    }
     
+    public List<Diagnostico> traerDiagnosticoNombre(boolean activo, String nombre){
+        String sql ="SELECT object(d) FROM Diagnostico d WHERE d.activo = "+activo+" AND d.nombre LIKE '%"+nombre+"%'";
+        Query query = getEntityManager().createQuery(sql);
+        return (List<Diagnostico>)query.getResultList();
+    }
 }

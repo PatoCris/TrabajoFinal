@@ -153,5 +153,15 @@ public class InformePiezaPedidoJpaController implements Serializable {
         return (List<InformePiezaPedido>)query.getResultList();   
     }
     
+    public int ultimoInformePiezaPedido(){
+        String sql ="SELECT MAX(ipp.codigo) FROM InformePiezaPedido ipp";
+        Query query = getEntityManager().createQuery(sql);
+        return (int)query.getSingleResult();
+    }
     
+    public List<InformePiezaPedido> traerInformes(boolean activo){
+        String sql ="SELECT object(ipp) FROM InformePiezaPedido ipp WHERE ipp.activo = "+activo;
+        Query query = getEntityManager().createQuery(sql);
+        return (List<InformePiezaPedido>)query.getResultList();
+    }
 }
