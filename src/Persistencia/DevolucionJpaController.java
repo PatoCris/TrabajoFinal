@@ -161,13 +161,19 @@ public class DevolucionJpaController implements Serializable {
     }
     
     public List<Devolucion> traerDevolucionesConDeposito(int deposito){
-        String sql ="SELECT Object(d) FROM Devolucion d where d.codigo NOT IN (SELECT md.codigo FROM  Deposito dp INNER JOIN dp.misDevoluciones md WHERE dp.codigo ="+deposito+")";
+        String sql ="SELECT Object(d) FROM Devolucion d where d.codigo IN (SELECT md.codigo FROM  Deposito dp INNER JOIN dp.misDevoluciones md WHERE dp.codigo ="+deposito+")";
         Query query = getEntityManager().createQuery(sql);
         return (List<Devolucion>)query.getResultList();
     }
-    public List<Devolucion> traerDevolucionesConDeposito(int deposito, Date fecha){
-        String sql ="SELECT Object(d) FROM Devolucion d where d.codigo NOT IN (SELECT md.codigo FROM  Deposito dp INNER JOIN dp.misDevoluciones md WHERE dp.codigo ="+deposito+" AND dp.fecha = "+fecha+")";
+    public List<Devolucion> traerDevolucionesConDeposito(int deposito, String fecha){
+        String sql ="SELECT Object(d) FROM Devolucion d where d.fecha = '"+fecha+"' AND d.codigo IN (SELECT md.codigo FROM  Deposito dp INNER JOIN dp.misDevoluciones md WHERE dp.codigo ="+deposito+")";
         Query query = getEntityManager().createQuery(sql);
         return (List<Devolucion>)query.getResultList();
+    }
+    
+    public int ultimaDevolucion(){
+        String sql ="SELECT MAX(d.codigo) FROM Devolucion d";
+        Query query = getEntityManager().createQuery(sql);
+        return (int)query.getSingleResult();
     }
 }

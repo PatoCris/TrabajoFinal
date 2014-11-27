@@ -9,8 +9,11 @@ package Modelo;
 import Persistencia.ControladoraPersistencia;
 import Persistencia.exceptions.NonexistentEntityException;
 import Persistencia.exceptions.PreexistingEntityException;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
+import vista.UtilVista;
 import vista.frmMenu;
 
 /**
@@ -40,6 +43,7 @@ public class ControladoraPrincipal {
     private JefeDeposito unJefeDeposito = new JefeDeposito();
     private Perito unPerito = new Perito();
     private InformePiezaPedido unInforme = new InformePiezaPedido();
+    private vista.UtilVista util = new UtilVista();
  
     ///////////// CONTROLADORA PERSISTENCIA ////////////////
     private ControladoraPersistencia cp = new ControladoraPersistencia();
@@ -397,21 +401,29 @@ public class ControladoraPrincipal {
     
     //////////////////////// MÉTODOS DE CLIENTE /////////////////////////////
     public void nuevoCliente(int dni, String nombre, String apellido, String direccion, String telefono, String usuario, String clave, long cuil, boolean activo, Localidad localidad) throws Exception{
-        unCliente = new Cliente(dni, nombre, apellido, direccion, telefono, usuario, clave, cuil, activo, localidad);
-        cp.nuevoCliente(unCliente);
+        if(!cp.existeCliente(dni)){
+            unCliente = new Cliente(dni, nombre, apellido, direccion, telefono, usuario, clave, cuil, activo, localidad);
+            cp.nuevoCliente(unCliente);
+        }else{
+            throw new Exception("Ya existe un Cliente con ese dni.");
+        }
     }
     public void editarCliente(int codigo, int dni, String nombre, String apellido, String direccion, String telefono, String usuario, String clave, long cuil, boolean activo, Localidad localidad) throws Exception{
-        unCliente = cp.traerCliente(codigo);
-        unCliente.setDni(dni);
-        unCliente.setNombre(nombre);
-        unCliente.setApellido(apellido);
-        unCliente.setDireccion(direccion);
-        unCliente.setTelefono(telefono);
-        unCliente.setUsuario(usuario);
-        unCliente.setClave(clave);
-        unCliente.setCuil(cuil);
-        unCliente.setLocalidad(localidad);
-        cp.editarCliente(unCliente);
+        if(!cp.existeCliente(dni, codigo)){
+            unCliente = cp.traerCliente(codigo);
+            unCliente.setDni(dni);
+            unCliente.setNombre(nombre);
+            unCliente.setApellido(apellido);
+            unCliente.setDireccion(direccion);
+            unCliente.setTelefono(telefono);
+            unCliente.setUsuario(usuario);
+            unCliente.setClave(clave);
+            unCliente.setCuil(cuil);
+            unCliente.setLocalidad(localidad);
+            cp.editarCliente(unCliente);
+        }else{
+            throw new Exception("Ya existe otro Cliente con ese dni.");
+        }
     }
     public List<Cliente> traerClientes(boolean activo) throws Exception{
         return cp.traerClientes(activo);
@@ -440,9 +452,9 @@ public class ControladoraPrincipal {
         for (i=0; i < tamanio; i++) {
             if(vehiculos.get(i).getCodigo() == vehiculo.getCodigo()){
                 vehiculos.remove(i);
+                tamanio = tamanio - 1;
             }
         }
-        System.out.println(vehiculo.getCodigo());
         cliente.setMisVehiculos(vehiculos);
         cp.editarCliente(cliente);
     }
@@ -520,9 +532,14 @@ public class ControladoraPrincipal {
     }
     
         ///////////// MÉTODOS DE EJEMPLAR ///////////////////
-    public void nuevoEjemplar(java.util.Date fechaIng, PiezaRecambio unaPRecambio, Proveedor unProveedor) throws Exception{
+    public void nuevoEjemplar(java.util.Date fechaIng, PiezaRecambio unaPRecambio, Proveedor unProveedor, int deposito) throws Exception{
         unEjemplar = new Ejemplar(fechaIng, unaPRecambio, unProveedor, true);
         cp.nuevoEjemplar(unEjemplar);
+        Deposito miDeposito = cp.traerDeposito(deposito);
+        int codigoEjemplar = cp.ultimaEjemplar();
+        Ejemplar ejemplar = cp.traerEjemplar(codigoEjemplar);
+        miDeposito.getMisEjemplares().add(ejemplar);
+        cp.editarDeposito(miDeposito);
     }
 
     public void editarEjemplar(int codigo, java.util.Date fechaIng, PiezaRecambio unaPRecambio, Proveedor unProveedor) throws Exception{
@@ -535,13 +552,35 @@ public class ControladoraPrincipal {
     public List<Ejemplar> traerEjemplares(boolean activo) throws Exception{
         return cp.traerEjemplares(activo);
     }
-    public void eliminarEjemplar(int codigo) throws Exception{
-        unEjemplar = cp.traerEjemplar(codigo);
-        unEjemplar.setActivo(false);
+    public void eliminarEjemplar(int codigo, int codigoDeposito) throws Exception{
+        Ejemplar unEjemplar1 = cp.traerEjemplar(codigo);
+        unEjemplar1.setActivo(false);
         cp.editarEjemplar(unEjemplar);
+        Deposito deposito = cp.traerDeposito(codigoDeposito);
+        List<Ejemplar> ejemplares = deposito.getMisEjemplares();
+        int tamanio = ejemplares.size();
+        int i = 0;
+        for (i=0; i < tamanio; i++) {
+            if(ejemplares.get(i).getCodigo() == unEjemplar1.getCodigo()){
+                ejemplares.remove(i);
+                tamanio = tamanio - 1;
+            }
+        }
+        deposito.setMisEjemplares(ejemplares);
+        cp.editarDeposito(deposito);
+        
     }
     public List<Ejemplar> traerEjemplarCodigo(boolean activo, int codigo) throws Exception{
         return cp.traerEjemplarCodigo(activo, codigo);
+    }
+    public List<Ejemplar> traerEjemplaresSinDeposito(boolean activo){
+        return cp.traerEjemplaresSinDeposito(activo);
+    }
+    public List<Ejemplar> traerEjemplaresConDeposito(int deposito, boolean activo){
+        return cp.traerEjemplaresConDeposito(deposito, activo);
+    }
+    public List<Ejemplar> traerEjemplaresConDeposito(int deposito, boolean activo, PiezaRecambio pieza){
+        return cp.traerEjemplaresConDeposito(deposito, activo, pieza);
     }
     
     ////////////////// MÉTODOS DE MECANICO ////////////////////////
@@ -604,25 +643,51 @@ public class ControladoraPrincipal {
         unMecanico.getMisPedidos().remove(pedido);
         cp.editarMecanico(unMecanico);
     }
+    public List<Mecanico> traerMecanicoSinTaller(){
+        return cp.traerMecanicoSinTaller();
+    }
+    public List<Mecanico> traerMecanicoConCliente(int codigoTaller){
+        return cp.traerMecanicoConCliente(codigoTaller);
+    }
+    public void agregarMecanico(int codigoMecanido, int codigoTaller) throws PreexistingEntityException, Exception{
+        Taller taller = cp.traerTaller(codigoTaller);
+        Mecanico mecanico = cp.traerMecanico(codigoMecanido);
+        taller.getMisMecanicos().add(mecanico);
+        cp.editarTaller(taller);
+    }
+    public void quitarMecanico(int codigoMecanido, int codigoTaller) throws PreexistingEntityException, Exception{
+        Taller taller = cp.traerTaller(codigoTaller);
+        List<Mecanico> mecanicos = taller.getMisMecanicos();
+        int tamanio = mecanicos.size();
+        int i = 0;
+        for (i=0; i < tamanio; i++) {
+            if(mecanicos.get(i).getCodigo() == codigoMecanido){
+                mecanicos.remove(i);
+                tamanio = tamanio - 1;
+            }
+        }
+        taller.setMisMecanicos(mecanicos);
+        cp.editarTaller(taller);
+    }
     
     ///////////////// METODOS DE PEDIDO ///////////////////
     public void nuevoPedido(Date fecha, Date hora, String descripcion, int cantidad, boolean autorizado, boolean paraRecambio, boolean activo, JefeDeposito unJefeDeposito, JefeTaller unJefeTaller, Cliente unCliente) throws Exception{
-        unPedido = new Pedido(fecha, hora, descripcion, cantidad, autorizado, paraRecambio,true, unJefeDeposito, unJefeTaller, unCliente);
-        cp.nuevoPedido(unPedido);
+        Pedido unPedido1 = new Pedido(fecha, hora, descripcion, cantidad, autorizado, paraRecambio,true, unJefeDeposito, unJefeTaller, unCliente);
+        cp.nuevoPedido(unPedido1);
     }
     public void editarPedido(int codigo, Date fecha, Date hora, String descripcion, int cantidad, boolean autorizado, boolean paraRecambio, boolean activo, JefeDeposito unJefeDeposito, JefeTaller unJefeTaller, Cliente unCliente) throws Exception{
-        unPedido = cp.traerPedido(codigo);
-        unPedido.setFecha(fecha);
-        unPedido.setHora(hora);
-        unPedido.setDescripcion(descripcion);
-        unPedido.setCantidad(cantidad);
-        unPedido.setParaRecambio(paraRecambio);
-        unPedido.setActivo(activo);
-        unPedido.setUnJefeDeposito(unJefeDeposito);
-        unPedido.setUnJefeTaller(unJefeTaller);
-        unPedido.setUnCliente(unCliente);
+        Pedido unPedido1 = cp.traerPedido(codigo);
+        unPedido1.setFecha(fecha);
+        unPedido1.setHora(hora);
+        unPedido1.setDescripcion(descripcion);
+        unPedido1.setCantidad(cantidad);
+        unPedido1.setParaRecambio(paraRecambio);
+        unPedido1.setActivo(activo);
+        unPedido1.setUnJefeDeposito(unJefeDeposito);
+        unPedido1.setUnJefeTaller(unJefeTaller);
+        unPedido1.setUnCliente(unCliente);
         //faltan todos los set
-        cp.editarPedido(unPedido);
+        cp.editarPedido(unPedido1);
     }
     public List<Pedido> traerPedidos(boolean activo) throws Exception{
         return cp.traerPedidos(activo);
@@ -631,9 +696,9 @@ public class ControladoraPrincipal {
         return cp.traerPedidosCodigo(activo, codigo);
     }
     public void eliminarPedido(int codigo) throws Exception{
-        unPedido = cp.traerPedido(codigo);
-        unPedido.setActivo(false);
-        cp.editarPedido(unPedido);
+        Pedido unPedido1 = cp.traerPedido(codigo);
+        unPedido1.setActivo(false);
+        cp.editarPedido(unPedido1);
     }
     public List<Pedido> traerPedidosSinVinculo(Mecanico unMecanico) throws Exception{
         return cp.traerPedidosSinVinculo(unMecanico);
@@ -648,31 +713,31 @@ public class ControladoraPrincipal {
         if(cp.existeJefeTaller(dni)){
             throw new Exception ("Error: Ya existe un Jefe de taller con ese DNI.");
         }else{
-            unJefeTaller = new JefeTaller(dni, nombre, apellido, telefono, direccion, cuil, activo);
-            cp.nuevoJefeTaller(unJefeTaller);
+            JefeTaller unJefeTaller1 = new JefeTaller(dni, nombre, apellido, telefono, direccion, cuil, activo);
+            cp.nuevoJefeTaller(unJefeTaller1);
         }
     }
     public void editarJefeTaller(int codigo, int dni, String nombre, String apellido, String telefono, String direccion, long cuil, boolean activo) throws Exception{
         if(cp.existeJefeTaller(dni, codigo)){
             throw new Exception ("Error: Ya existe otro Jefe con ese DNI.");
         }else{
-            unJefeTaller = cp.traerJefeTaller(codigo);
-            unJefeTaller.setDni(dni);
-            unJefeTaller.setNombre(nombre);
-            unJefeTaller.setApellido(apellido);
-            unJefeTaller.setTelefono(telefono);
-            unJefeTaller.setDireccion(direccion);
-            unJefeTaller.setCuil(cuil);
-            cp.editarJefeTaller(unJefeTaller);
+            JefeTaller unJefeTaller1 = cp.traerJefeTaller(codigo);
+            unJefeTaller1.setDni(dni);
+            unJefeTaller1.setNombre(nombre);
+            unJefeTaller1.setApellido(apellido);
+            unJefeTaller1.setTelefono(telefono);
+            unJefeTaller1.setDireccion(direccion);
+            unJefeTaller1.setCuil(cuil);
+            cp.editarJefeTaller(unJefeTaller1);
         }    
     }
     public List<JefeTaller> traerJefesTaller(boolean activo) throws Exception{
         return cp.traerJefesTaller(activo);
     }
     public void eliminarJefeTaller(int codigo) throws Exception{
-        unJefeTaller = cp.traerJefeTaller(codigo);
-        unJefeTaller.setActivo(false);
-        cp.editarJefeTaller(unJefeTaller);
+        JefeTaller unJefeTaller1 = cp.traerJefeTaller(codigo);
+        unJefeTaller1.setActivo(false);
+        cp.editarJefeTaller(unJefeTaller1);
     }
     public List<JefeTaller> traerJefesTallerBusqueda(boolean activo, String apellido, int dni) throws Exception{
         return cp.traerJefesTallerBusqueda(activo, apellido, dni);
@@ -683,31 +748,31 @@ public class ControladoraPrincipal {
         if(cp.existeJefeDeposito(dni) != null){
             throw new Exception ("Error: Ya existe un empleado con ese DNI.");
         }else{
-            unJefeDeposito = new JefeDeposito(dni, nombre, apellido, telefono, direccion, cuil, activo);
-            cp.nuevoJefeDeposito(unJefeDeposito);
+            JefeDeposito unJefeDeposito1 = new JefeDeposito(dni, nombre, apellido, telefono, direccion, cuil, activo);
+            cp.nuevoJefeDeposito(unJefeDeposito1);
         }
     }
     public void editarJefeDeposito(int codigo, int dni, String nombre, String apellido, String telefono, String direccion, long cuil, boolean activo) throws Exception{
         if(cp.existeJefeDeposito(dni, codigo)){
             throw new Exception ("Error: Ya existe otro Jefe con ese DNI.");
         }else{
-            unJefeDeposito = cp.traerJefeDeposito(codigo);
-            unJefeDeposito.setDni(dni);
-            unJefeDeposito.setNombre(nombre);
-            unJefeDeposito.setApellido(apellido);
-            unJefeDeposito.setTelefono(telefono);
-            unJefeDeposito.setDireccion(direccion);
-            unJefeDeposito.setCuil(cuil);
-            cp.editarJefeDeposito(unJefeDeposito);
+            JefeDeposito unJefeDeposito1 = cp.traerJefeDeposito(codigo);
+            unJefeDeposito1.setDni(dni);
+            unJefeDeposito1.setNombre(nombre);
+            unJefeDeposito1.setApellido(apellido);
+            unJefeDeposito1.setTelefono(telefono);
+            unJefeDeposito1.setDireccion(direccion);
+            unJefeDeposito1.setCuil(cuil);
+            cp.editarJefeDeposito(unJefeDeposito1);
         }    
     }
     public List<JefeDeposito> traerJefesDeposito(boolean activo) throws Exception{
         return cp.traerJefeDeposito(activo);
     }
     public void eliminarJefeDeposito(int codigo) throws Exception{
-        unJefeDeposito = cp.traerJefeDeposito(codigo);
-        unJefeDeposito.setActivo(false);
-        cp.editarJefeDeposito(unJefeDeposito);
+        JefeDeposito unJefeDeposito1 = cp.traerJefeDeposito(codigo);
+        unJefeDeposito1.setActivo(false);
+        cp.editarJefeDeposito(unJefeDeposito1);
     }
     public List<JefeDeposito> traerJefesDepositoBusqueda(boolean activo, String apellido, int dni) throws Exception{
         return cp.traerJefesDepositoBusqueda(activo, apellido, dni);
@@ -721,31 +786,31 @@ public class ControladoraPrincipal {
         if(cp.existePerito(dni)){
             throw new Exception ("Error: Ya existe un Perito con ese DNI.");
         }else{
-            unPerito = new Perito(dni, nombre, apellido, telefono, direccion, cuil, activo);
-            cp.nuevoPerito(unPerito);
+           Perito unPerito1 = new Perito(dni, nombre, apellido, telefono, direccion, cuil, activo);
+            cp.nuevoPerito(unPerito1);
         }
     }
     public void editarPerito(int codigo, int dni, String nombre, String apellido, String telefono, String direccion, long cuil, boolean activo) throws Exception{
         if(cp.existePerito(dni, codigo)){
             throw new Exception ("Error: Ya existe otro Perito con ese DNI.");
         }else{
-            unPerito = (Perito) cp.traerPerito(codigo);
-            unPerito.setDni(dni);
-            unPerito.setNombre(nombre);
-            unPerito.setApellido(apellido);
-            unPerito.setTelefono(telefono);
-            unPerito.setDireccion(direccion);
-            unPerito.setCuil(cuil);
-            cp.editarPerito(unPerito);
+            Perito unPerito1 = (Perito) cp.traerPerito(codigo);
+            unPerito1.setDni(dni);
+            unPerito1.setNombre(nombre);
+            unPerito1.setApellido(apellido);
+            unPerito1.setTelefono(telefono);
+            unPerito1.setDireccion(direccion);
+            unPerito1.setCuil(cuil);
+            cp.editarPerito(unPerito1);
         }    
     }
     public List<Perito> traerPeritos(boolean activo) throws Exception{
         return cp.traerPeritos(activo);
     }
     public void eliminarPerito(int codigo) throws Exception{
-        unPerito = (Perito) cp.traerPerito(codigo);
-        unPerito.setActivo(false);
-        cp.editarPerito(unPerito);
+        Perito unPerito1 = (Perito) cp.traerPerito(codigo);
+        unPerito1.setActivo(false);
+        cp.editarPerito(unPerito1);
     }
     public List<Perito> traerPeritosBusqueda(boolean activo, String apellido, int dni) throws Exception{
         return cp.traerPeritosBusqueda(activo, apellido, dni);
@@ -756,14 +821,14 @@ public class ControladoraPrincipal {
     }
 
     public void agregarInforme(InformePiezaPedido unInforme, int codigo) throws Exception{
-        unPerito = cp.traerPerito(codigo);
-        unPerito.getMisInformesPPedido().add(unInforme);
-        cp.editarPerito(unPerito);
+        Perito unPerito1 = cp.traerPerito(codigo);
+        unPerito1.getMisInformesPPedido().add(unInforme);
+        cp.editarPerito(unPerito1);
     }
     public void quitarInforme(int miInforme, int codigo) throws Exception{
-        unPerito = cp.traerPerito(codigo);
-        unPerito.getMisInformesPPedido().remove(miInforme);
-        cp.editarPerito(unPerito);
+        Perito unPerito1 = cp.traerPerito(codigo);
+        unPerito1.getMisInformesPPedido().remove(miInforme);
+        cp.editarPerito(unPerito1);
     }
     
     
@@ -792,11 +857,24 @@ public class ControladoraPrincipal {
     public List<Localidad> traerLocalidadesNombre(boolean activo, String nombre) throws Exception{
         return cp.traerLocalidadesNombre(activo, nombre);
     }
+    public List<Localidad> traerLocalidadesSinTaller(int taller) throws PreexistingEntityException, Exception{
+        return cp.traerLocalidadesSinTaller(taller);
+    }
+    public List<Localidad> traerLocalidadesConTaller(int taller) throws PreexistingEntityException, Exception{
+        return cp.traerLocalidadesConTaller(taller);
+    }
     
     ///////////////////////// METODOS DE DEVOLUCION ////////////////////////////////
-    public void nuevaDevolucion(Date fecha, String motivo, boolean activo, PiezaRecambio miPiezaRecambio) throws PreexistingEntityException, Exception{
+    public void nuevaDevolucion(Date fecha, String motivo, boolean activo, PiezaRecambio miPiezaRecambio, int codigoDeposito) throws PreexistingEntityException, Exception{
         Devolucion devolucion = new Devolucion(fecha, motivo, activo, miPiezaRecambio);
         cp.nuevaDevolucion(devolucion);
+        Deposito deposito = cp.traerDeposito(codigoDeposito);
+        int codigoDevolucion = cp.ultimaDevolcion();
+        Devolucion devolucionU = cp.traerDevolucion(codigoDevolucion);
+        deposito.getMisDevoluciones().add(devolucionU);
+        cp.editarDeposito(deposito);
+        
+        
     }
     public void editarDevolucion(int codigo, Date fecha, String motivo, boolean activo, PiezaRecambio miPiezaRecambio) throws PreexistingEntityException, Exception{
         Devolucion devolucion = traerDevolucion(codigo);
@@ -811,8 +889,22 @@ public class ControladoraPrincipal {
     public List<Devolucion> traerDevoluciones(boolean activo) throws PreexistingEntityException, Exception{
         return cp.traerDevoluciones(activo);
     }
-    public void eliminarDevolucion(int codigo) throws NonexistentEntityException, Exception{
-        cp.eliminarDevolucion(codigo);
+    public void eliminarDevolucion(int codigo, int deposito) throws NonexistentEntityException, Exception{
+        Devolucion devolucion = cp.traerDevolucion(codigo);
+        devolucion.setActivo(false);
+        cp.editarDevolucion(devolucion);
+        Deposito miDeposito = cp.traerDeposito(deposito);
+        List<Devolucion> devo = miDeposito.getMisDevoluciones();
+        int tamanio = devo.size();
+        int i = 0;
+        for (i=0; i < tamanio; i++) {
+            if(devo.get(i).getCodigo() == devolucion.getCodigo()){
+                devo.remove(i);
+                tamanio = tamanio - 1;
+            }
+        }
+        cp.editarDeposito(miDeposito);
+        
     }
     public List<Devolucion> traerDevolucionesBusqueda(boolean activo, java.util.Date fecha) throws PreexistingEntityException, Exception{
         return cp.traerDevolucionesBusqueda(activo, fecha);
@@ -823,12 +915,14 @@ public class ControladoraPrincipal {
     public List<Devolucion> traerDevolucionesConDeposito(int deposito) throws PreexistingEntityException, Exception{
         return cp.traerDevolucionesConDeposito(deposito);
     }
-    public List<Devolucion> traerDevolucionesConDeposito(int deposito, Date fecha) throws PreexistingEntityException, Exception{
+    public List<Devolucion> traerDevolucionesConDeposito(int deposito, String fecha) throws PreexistingEntityException, Exception{
         return cp.traerDevolucionesConDeposito(deposito, fecha);
     }
    
-            /////////////////////// METODOS DE TALLER ////////////////////////////////
-        public void nuevoTaller(String nombre, String direccion, String telefono, String correo, Date horaEntrada, Date horaSalida, boolean activo, Deposito unDeposito, JefeTaller unJefeTaller, Localidad unaLocalidad) throws PreexistingEntityException, Exception{
+    /////////////////////// METODOS DE TALLER ////////////////////////////////
+    public void nuevoTaller(String nombre, String direccion, String telefono, String correo, Date horaEntrada, Date horaSalida, boolean activo, JefeTaller unJefeTaller, Localidad unaLocalidad) throws PreexistingEntityException, Exception{
+        int codigoDeposito = this.ultimoDeposito();
+        Deposito unDeposito = this.traerDeposito(codigoDeposito);
         Taller taller = new Taller(nombre, direccion, telefono, correo, horaEntrada, horaSalida, activo, unDeposito, unJefeTaller, unaLocalidad);
         cp.nuevoTaller(taller);
     }
@@ -851,7 +945,9 @@ public class ControladoraPrincipal {
         return cp.traerTalleres(activo);
     }
     public void eliminarTaller(int codigo) throws NonexistentEntityException, Exception{
-            cp.eliminarTaller(codigo);
+        Taller taller = traerTaller(codigo);
+        this.eliminarDeposito(taller.getUnDeposito().getCodigo());
+        cp.eliminarTaller(codigo);
     }
     public List<Taller> traerTallerNombre(boolean activo, String nombre) throws PreexistingEntityException, Exception{
         return cp.traerTallerNombre(activo, nombre);
@@ -859,8 +955,27 @@ public class ControladoraPrincipal {
     public Taller traerTaller(int codigo) throws PreexistingEntityException, Exception{
         return cp.traerTaller(codigo);
     }
+    public void agregarZonaTaller(Localidad localidad, int codigo) throws Exception{
+        Taller taller = this.traerTaller(codigo);
+        taller.getZonasCubiertas().add(localidad);
+        cp.editarTaller(taller);
+    }
+    public void quitarZonaTaller(int localidad, int codigo) throws Exception{
+       Taller taller = this.traerTaller(codigo);
+        List<Localidad> localidades = taller.getZonasCubiertas();
+        int tamanio = localidades.size();
+        int i = 0;
+        for (i=0; i < tamanio; i++) {
+            if(localidades.get(i).getCodigo() == localidad){
+                localidades.remove(i);
+                tamanio = tamanio - 1;
+            }
+        }
+        taller.setZonasCubiertas(localidades);
+        cp.editarTaller(taller);
+    }
     
-            /////////////////////// METODOS DE DEPOSITO ////////////////////////////////
+    /////////////////////// METODOS DE DEPOSITO ////////////////////////////////
     public void nuevoDeposito(String nombre, String correo, String telefono, boolean activo, JefeDeposito unJefeDeposito) throws PreexistingEntityException, Exception{
         Deposito deposito = new Deposito(nombre, correo, telefono, activo, unJefeDeposito);
         cp.nuevoDeposito(deposito);
@@ -875,8 +990,117 @@ public class ControladoraPrincipal {
         cp.editarDeposito(deposito);
     }
     public void eliminarDeposito(int codigo) throws NonexistentEntityException, Exception{
-        cp.eliminarDeposito(codigo);
+        Deposito deposito = cp.traerDeposito(codigo);
+        deposito.setActivo(false);
+        cp.editarDeposito(deposito);
+    }
+    public Deposito traerDeposito(int codigo) throws NonexistentEntityException, Exception{
+        return cp.traerDeposito(codigo);
+    }
+    public int ultimoDeposito() throws NonexistentEntityException, Exception{
+        return cp.ultimoDeposito();
+    }
+    
+     /////////////////////// METODOS DE AGENDA MENSUAL ////////////////////////////////
+    public void nuevaAgendaMensual(String nombre, int anio, int nroMes, boolean activo, int codigoTaller) throws PreexistingEntityException, Exception{
+        AgendaMensual agenda = new AgendaMensual(nombre, anio, nroMes, activo);
+        cp.nuevaAgendaMensual(agenda);
+        int codigoAgenda = cp.ultimoAgendaMensual();
+        AgendaMensual agendaM = cp.traerAgendaMensual(codigoAgenda);
+        Taller taller = cp.traerTaller(codigoTaller);
+        taller.getMisAgendasMensuales().add(agendaM);
+        List<Mecanico> mecanicos = taller.getMisMecanicos();
+        cp.editarTaller(taller);
+        int cantidadMecanicos = taller.getMisMecanicos().size();
+        int diasTotal = this.diasDelMes(nroMes-1, anio);
+        int domingos = CuantosDomingos(nroMes-1);
+        int diasHabiles = diasTotal - domingos;
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(taller.getHoraEntrada());
+        int horaEntradaTaller = calendar.get(Calendar.HOUR_OF_DAY);
+        int i = 0;
+        int j = 0;
+        int k = 0;
 
+        for(i=0; i < diasTotal; i++){
+//            System.out.println("Cantidad de mecanicos: "+cantidadMecanicos);
+            for(j = 0; j < cantidadMecanicos; j++){
+                String fechaInicio = i+1+"/"+nroMes+"/"+anio;
+                Date fechaD = util.ParseFecha(fechaInicio, "Error");
+//                System.out.println("que dia es: "+this.queDiaEs(fechaD));
+                if(this.queDiaEs(fechaD) != 1){
+                    
+                    for(k = 0; k < 8; k++){
+                        Date hInicio = util.hora((horaEntradaTaller+k)+":00:00", nombre);
+                        Date hFin = util.hora((horaEntradaTaller+k+1)+":00:00", nombre);
+                        Modulo modulo = new Modulo(hInicio, hFin, fechaD, k+1, true, true, mecanicos.get(j));
+                        cp.nuevoModulo(modulo);
+                        int codigoultimoModulo = cp.ultimoModulo();
+                        Modulo ultimoModulo = cp.traerModulo(codigoultimoModulo);
+                        this.agregarModuloAgenda(ultimoModulo, codigoAgenda);
+                    }
+                }else{
+                    
+                }
+            }
+        }
+//        System.out.println("Dias total: "+diasTotal);
+//        System.out.println("Dias habiles: "+diasHabiles);
+//        System.out.println("Domingos: "+domingos);
+//        System.out.println("Hora de entrada: "+horaEntradaTaller);
+        
+    }
+    public void editarAgendaMensual(int codigo, String nombre, int anio, int nroMes, boolean activo) throws PreexistingEntityException, Exception{
+        AgendaMensual agendaMensual = cp.traerAgendaMensual(codigo);
+        agendaMensual.setNombre(nombre);
+        agendaMensual.setAnio(anio);
+        agendaMensual.setNroMes(nroMes);  
+        cp.editarAgendaMensual(agendaMensual);
+        
+    }
+    public void eliminarAgendaMensual(int codigoAgenda, int codigoTaller) throws NonexistentEntityException, Exception{
+        AgendaMensual agenda = cp.traerAgendaMensual(codigoAgenda);
+        agenda.setActivo(false);
+        cp.editarAgendaMensual(agenda);
+        Taller taller = this.traerTaller(codigoTaller);
+        List<AgendaMensual> agendas = taller.getMisAgendasMensuales();
+        int tamanio = agendas.size();
+        int i = 0;
+        for (i=0; i < tamanio; i++) {
+            if(agendas.get(i).getCodigo() == codigoAgenda){
+                agendas.remove(i);
+                tamanio = tamanio - 1;
+            }
+        }
+        taller.setMisAgendasMensuales(agendas);
+        cp.editarTaller(taller);
+        
+    }
+    public AgendaMensual traerAgendaMensual(int codigo) throws NonexistentEntityException, Exception{
+        return cp.traerAgendaMensual(codigo);
+    }
+    public int ultimoAgendaMensual() throws NonexistentEntityException, Exception{
+        return cp.ultimoAgendaMensual();
+    }
+    
+    public List<AgendaMensual> traerAgendaMensual(boolean activo) throws NonexistentEntityException, Exception{
+        return cp.traerAgendaMensual(activo);
+    }
+    
+    public List<AgendaMensual> traerAgendaMensualAnio(boolean activo, int anio) throws NonexistentEntityException, Exception{
+        return cp.traerAgendaMensualAnio(activo, anio);
+    }
+    public List<AgendaMensual> traerAgendaMensualSinTaller(){
+        return cp.traerAgendaMensualSinTaller();
+    }
+    
+    public List<AgendaMensual> traerAgendaMensualConTaller(int codigoTaller) throws NonexistentEntityException, Exception{
+        return cp.traerAgendaMensualConTaller(codigoTaller);
+    }
+    public void agregarModuloAgenda(Modulo modulo, int codigoAgenda) throws NonexistentEntityException, Exception{
+        AgendaMensual agenda = cp.traerAgendaMensual(codigoAgenda);
+        agenda.getMisModulos().add(modulo);
+        cp.editarAgendaMensual(agenda);
     }
     
     /////////////////// METODO MAIN ///////////////////////////
@@ -892,5 +1116,73 @@ public class ControladoraPrincipal {
     public List<InformePiezaPedido> traerInformesConVinculo(Perito unPerito) {
         return cp.traerInformesConVinculo(unPerito);
     }
+    public int diasDelMes(int mes, int año){
+        switch(mes){
+            case 0:  // Enero
+            case 2:  // Marzo
+            case 4:  // Mayo
+            case 6:  // Julio
+            case 7:  // Agosto
+            case 9:  // Octubre
+            case 11: // Diciembre
+                return 31;
+            case 3:  // Abril
+            case 5:  // Junio
+            case 8:  // Septiembre
+            case 10: // Noviembre
+                return 30;
+            case 1:  // Febrero
+                if ( ((año%100 == 0) && (año%400 == 0)) ||
+                        ((año%100 != 0) && (año%  4 == 0))   )
+                    return 29;  // Año Bisiesto
+                else
+                    return 28;
+            default:
+                throw new java.lang.IllegalArgumentException("El mes debe estar entre 0 y 11");
+        }
+    }
+    public int CuantosDomingos(int mes) {
+        Calendar cal = GregorianCalendar.getInstance();
+        cal.set(Calendar.DAY_OF_MONTH, 1);
+        //int mes = cal.get(Calendar.MONTH);
+        int diaAContar = 7;
+        int cuenta = 0;
+        String strDia = "Domingos";
+        switch (diaAContar) {
+        case 2:
+        strDia = "Lunes";
+        break;
+        case 3:
+        strDia = "Martes";
+        break;
+        case 4:
+        strDia = "Miércoles";
+        break;
+        case 5:
+        strDia = "Miércoles";
+        break;
+        case 6:
+        strDia = "Viernes";
+        break;
+        case 7:
+        strDia = "Sábados";
+        break;
+    } // end switch
 
+    while (cal.get(Calendar.MONTH) == mes){
+        if (cal.get(Calendar.DAY_OF_WEEK) == diaAContar)
+            cuenta++;
+        // end if
+        cal.add(Calendar.DAY_OF_MONTH, 1);
+    } // end while
+
+//JOptionPane.showMessageDialog(null, "Este mes tiene " + cuenta + " " + strDia);
+    return cuenta;
+    } // end 
+    
+    public int queDiaEs(Date d){
+	GregorianCalendar cal = new GregorianCalendar();
+	cal.setTime(d);
+	return cal.get(Calendar.DAY_OF_WEEK);		
+}
 }

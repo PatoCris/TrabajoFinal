@@ -7,14 +7,15 @@
 package Persistencia;
 
 import Modelo.Localidad;
+import Modelo.Taller;
 import Persistencia.exceptions.NonexistentEntityException;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
@@ -149,6 +150,18 @@ public class LocalidadJpaController implements Serializable {
     
     public List<Localidad> traerLocalidades(boolean activo, String nombre){
         String sql ="SELECT object(l) FROM Localidad l WHERE l.activo = "+activo+" AND l.nombre LIKE '%"+nombre+"%'";
+        Query query = getEntityManager().createQuery(sql);
+        return (List<Localidad>)query.getResultList();
+    }
+    
+    public List<Localidad> traerLocalidadesSinTaller(int taller){
+        String sql ="SELECT Object(l) from Localidad l where l.codigo NOT IN (SELECT mz.codigo FROM  Taller t INNER JOIN t.zonasCubiertas mz WHERE t.codigo ="+taller+")";
+        Query query = getEntityManager().createQuery(sql);
+        return (List<Localidad>)query.getResultList();
+    }
+    
+    public List<Localidad> traerLocalidadesConTaller(int taller){
+        String sql ="SELECT Object(l) from Localidad l where l.codigo IN (SELECT mz.codigo FROM  Taller t INNER JOIN t.zonasCubiertas mz WHERE t.codigo ="+taller+")";
         Query query = getEntityManager().createQuery(sql);
         return (List<Localidad>)query.getResultList();
     }

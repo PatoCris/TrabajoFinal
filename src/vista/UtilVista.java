@@ -6,6 +6,7 @@
 
 package vista;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -113,7 +114,7 @@ public class UtilVista {
     }
     
    public Date ParseHora (String hora, String error)throws Exception{
-   SimpleDateFormat formato = new SimpleDateFormat("hh:mm:ss");
+   SimpleDateFormat formato = new SimpleDateFormat("H:mm");
    Date horaDate = null;
        try {
            horaDate = formato.parse(hora);
@@ -122,11 +123,39 @@ public class UtilVista {
        }
        return horaDate;
    }
-    public static String getHoraActual() {
-        Date ahora = new Date();
-        SimpleDateFormat formateador = new SimpleDateFormat("hh:mm:ss");
+    public String getHora(Date date) throws Exception {
+        try {
+            Date ahora = date;
+        SimpleDateFormat formateador = new SimpleDateFormat("HH:mm:ss");
         return formateador.format(ahora);
+        } catch (Exception e) {
+            throw new Exception(e);
+        }
+        
     }
+    public Date convertirHora(String horaS, String error) throws ParseException, Exception {
+        DateFormat sdf = new SimpleDateFormat("hh:mm:ss");
+        Date date = null;
+        try {
+            date = sdf.parse(horaS);
+        }catch (ParseException ex) {
+            throw new Exception(error);
+        }
+        return date;
+        }
+    public Date hora(String myTime, String error) throws Exception { 
+        //String myTime = "10:30:54"; 
+        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm"); 
+        Date date = null; 
+        try { 
+            date = sdf.parse(myTime); 
+        } catch (ParseException e) { 
+            throw new Exception(error); 
+        } 
+//        String formattedTime = sdf.format(date); 
+//        System.out.println(formattedTime); +" "+e.printStackTrace()
+        return date;
+    } 
 }
 
     

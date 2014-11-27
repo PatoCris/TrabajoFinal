@@ -14,6 +14,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
@@ -23,6 +24,11 @@ import javax.persistence.criteria.Root;
  */
 public class ModuloJpaController implements Serializable {
 
+    public ModuloJpaController() {
+        emf=Persistence.createEntityManagerFactory("TallerMecanicoPU");
+    }
+
+    
     public ModuloJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
@@ -135,5 +141,9 @@ public class ModuloJpaController implements Serializable {
             em.close();
         }
     }
-    
+    public int ultimoModulo(){
+        String sql ="SELECT MAX(m.codigo) FROM Modulo m";
+        Query query = getEntityManager().createQuery(sql);
+        return (int)query.getSingleResult();
+    }
 }

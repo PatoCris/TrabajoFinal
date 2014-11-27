@@ -42,10 +42,10 @@ public class Taller implements Serializable {
     @Column(name = "correo")
     private String correo;
     @Column(name = "hora_entrada")
-    @Temporal(javax.persistence.TemporalType.DATE)
+    @Temporal(javax.persistence.TemporalType.TIME)
     private java.util.Date horaEntrada;
     @Column(name = "hora_salida")
-    @Temporal(javax.persistence.TemporalType.DATE)
+    @Temporal(javax.persistence.TemporalType.TIME)
     private Date horaSalida;
     @Column(name = "activo")
     private boolean activo;
@@ -67,9 +67,6 @@ public class Taller implements Serializable {
     
     @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
     private List<AgendaMensual> misAgendasMensuales = new LinkedList<>();
-    
-    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-    private List<Sector> misSectores = new LinkedList<>();
     
     @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
     private List<Perito> misPeritos = new LinkedList<>();
@@ -187,16 +184,32 @@ public class Taller implements Serializable {
         return misAgendasMensuales;
     }
 
-    public List<Sector> getMisSectores() {
-        return misSectores;
-    }
-
     public List<Perito> getMisPeritos() {
         return misPeritos;
     }
 
     public List<Localidad> getZonasCubiertas() {
         return zonasCubiertas;
+    }
+
+    public List<Mecanico> getMisMecanicos() {
+        return misMecanicos;
+    }
+
+    public void setMisMecanicos(List<Mecanico> misMecanicos) {
+        this.misMecanicos = misMecanicos;
+    }
+
+    public void setMisAgendasMensuales(List<AgendaMensual> misAgendasMensuales) {
+        this.misAgendasMensuales = misAgendasMensuales;
+    }
+
+    public void setMisPeritos(List<Perito> misPeritos) {
+        this.misPeritos = misPeritos;
+    }
+
+    public void setZonasCubiertas(List<Localidad> zonasCubiertas) {
+        this.zonasCubiertas = zonasCubiertas;
     }
         
 }

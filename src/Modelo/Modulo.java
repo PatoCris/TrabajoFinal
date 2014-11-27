@@ -31,18 +31,16 @@ public class Modulo implements Serializable {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int codigo;
     @Column(name = "hora_inicio")
-    @Temporal(javax.persistence.TemporalType.DATE)
+    @Temporal(javax.persistence.TemporalType.TIME)
     private Date horaInicio;
     @Column(name = "hora_fin")
-    @Temporal(javax.persistence.TemporalType.DATE)
+    @Temporal(javax.persistence.TemporalType.TIME)
     private Date horaFin;
     @Column(name = "fecha")
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date fecha;
     @Column(name = "nro_modulo")
     private int nroModulo;
-    @Column(name = "nro_semana")
-    private int nroSemana;
     @Column(name = "libre")
     private boolean libre;
     @Column(name = "activo")
@@ -54,13 +52,11 @@ public class Modulo implements Serializable {
     public Modulo() {
     }
 
-    public Modulo(int codigo, Date horaInicio, Date horaFin, Date fecha, int nroModulo, int nroSemana, boolean libre, boolean activo, Mecanico unMecanico) {
-        this.codigo = codigo;
+    public Modulo(Date horaInicio, Date horaFin, Date fecha, int nroModulo, boolean libre, boolean activo, Mecanico unMecanico) {
         this.horaInicio = horaInicio;
         this.horaFin = horaFin;
         this.fecha = fecha;
         this.nroModulo = nroModulo;
-        this.nroSemana = nroSemana;
         this.libre = libre;
         this.activo = activo;
         this.unMecanico = unMecanico;
@@ -104,14 +100,6 @@ public class Modulo implements Serializable {
 
     public void setNroModulo(int nroModulo) {
         this.nroModulo = nroModulo;
-    }
-
-    public int getNroSemana() {
-        return nroSemana;
-    }
-
-    public void setNroSemana(int nroSemana) {
-        this.nroSemana = nroSemana;
     }
 
     public boolean isLibre() {

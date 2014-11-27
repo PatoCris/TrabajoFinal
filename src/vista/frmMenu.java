@@ -207,6 +207,11 @@ public class frmMenu extends javax.swing.JFrame {
         jMenu5.setText("Taller");
 
         jMenuItem11.setText("Gestión Taller");
+        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem11ActionPerformed(evt);
+            }
+        });
         jMenu5.add(jMenuItem11);
 
         jMenuItem12.setText("Gestión Sector");
@@ -536,14 +541,14 @@ public class frmMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_mnuGestionProveedoresActionPerformed
 
     private void mnuEjemplaresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuEjemplaresActionPerformed
-        GestionEjemplar miGestionEjemplar;
-        try {
-            miGestionEjemplar = new GestionEjemplar(cv);
-            miGestionEjemplar.setVisible(true);
-            jdpPanelPrincipal.add(miGestionEjemplar);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
-        }
+//        GestionEjemplar miGestionEjemplar;
+//        try {
+//            miGestionEjemplar = new GestionEjemplar(cv);
+//            miGestionEjemplar.setVisible(true);
+//            jdpPanelPrincipal.add(miGestionEjemplar);
+//        } catch (Exception e) {
+//            JOptionPane.showMessageDialog(null, e.getMessage());
+//        }
     }//GEN-LAST:event_mnuEjemplaresActionPerformed
 
     private void mnuMecanicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuMecanicoActionPerformed
@@ -565,7 +570,7 @@ public class frmMenu extends javax.swing.JFrame {
             miGJD.setVisible(true);
             jdpPanelPrincipal.add(miGJD);
         } catch (Exception e) {
-            JOptionPane.showConfirmDialog(null, e.getMessage());
+            JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }//GEN-LAST:event_mnuJefeDepositoActionPerformed
 
@@ -576,7 +581,7 @@ public class frmMenu extends javax.swing.JFrame {
             miGJT.setVisible(true);
             jdpPanelPrincipal.add(miGJT);
         } catch (Exception e) {
-            JOptionPane.showConfirmDialog(null, e.getMessage());
+            JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }//GEN-LAST:event_mnuJefeTallerActionPerformed
 
@@ -587,7 +592,7 @@ public class frmMenu extends javax.swing.JFrame {
             miGPedido.setVisible(true);
             jdpPanelPrincipal.add(miGPedido);
         } catch (Exception e) {
-            JOptionPane.showConfirmDialog(null, e.getMessage());
+            JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }//GEN-LAST:event_mnuPedidosActionPerformed
 
@@ -601,6 +606,17 @@ public class frmMenu extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }//GEN-LAST:event_mnuVincularClientesVehiculosActionPerformed
+
+    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
+        GestionTaller gestionTaller;
+        try {
+            gestionTaller = new GestionTaller(cv);
+            gestionTaller.setVisible(true);
+            jdpPanelPrincipal.add(gestionTaller);
+        } catch (Exception e) {
+           JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }//GEN-LAST:event_jMenuItem11ActionPerformed
 
 
     /**
