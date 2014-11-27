@@ -714,9 +714,14 @@ public class ControladoraPrincipal {
         unPedido.setUnVehiculo(unVehiculo);
         cp.editarPedido(unPedido);
     }
+
     
 //    public void nuevoPedido(Date fecha, Date hora, String descripcion, int cantidad, boolean autorizado, boolean paraRecambio, boolean activo, JefeDeposito unJefeDeposito, JefeTaller unJefeTaller, Cliente unCliente, PiezaRecambio unaPieza, Vehiculo unVehiculo) throws Exception{
 //        Pedido unPedido1 = new Pedido(fecha, hora, descripcion, cantidad, autorizado, paraRecambio,true, unJefeDeposito, unJefeTaller, unCliente,unaPieza, unVehiculo);
+
+//    public void nuevoPedido(Date fecha, Date hora, String descripcion, int cantidad, boolean autorizado, boolean paraRecambio, boolean activo, JefeDeposito unJefeDeposito, JefeTaller unJefeTaller, Cliente unCliente) throws Exception{
+//        Pedido unPedido1 = new Pedido(fecha, hora, descripcion, cantidad, autorizado, paraRecambio,true, unJefeDeposito, unJefeTaller, unCliente);
+
 //        cp.nuevoPedido(unPedido1);
 //    }
 //    public void editarPedido(int codigo, Date fecha, Date hora, String descripcion, int cantidad, boolean autorizado, boolean paraRecambio, boolean activo, JefeDeposito unJefeDeposito, JefeTaller unJefeTaller, Cliente unCliente) throws Exception{
@@ -1315,9 +1320,32 @@ public class ControladoraPrincipal {
     
     
     ///////////////// METODOS DE TURNO ////////////////////////
-    public void nuevoTurno(java.util.Date fecha, java.util.Date hora, Trazabilidad unaTrazabilidad, Servicio unServicio, Vehiculo unVehiculo, Cliente unCliente, boolean activo) throws Exception {
+    public void nuevoTurno(java.util.Date fecha, java.util.Date hora, Trazabilidad unaTrazabilidad, Servicio unServicio, Vehiculo unVehiculo, Cliente unCliente, boolean activo, int codigoAgenda) throws Exception {
         unTurno = new Turno(fecha, hora, unaTrazabilidad, unServicio, unVehiculo, unCliente, true);
         cp.nuevoTurno(unTurno);
+        AgendaMensual agenda = cp.traerAgendaMensual(codigoAgenda);
+        int codigoTltimoTurno = cp.ultimoTurno();
+        Turno ultimoTurno = cp.traerTurno(codigoTltimoTurno);
+        agenda.getMisTurnos().add(ultimoTurno);
+        cp.editarAgendaMensual(agenda);
+        Diagnostico diagnostico = (Diagnostico) unServicio;
+        int cantidadModulos = diagnostico.getUnTipoDiagnostico().getCatidadModulos();
+        List<Modulo> modulos = cp.traerModulosLibres(true, codigoAgenda, cantidadModulos);
+        int tamanio = modulos.size();
+        System.out.println("modulos: "+tamanio);
+        if(cantidadModulos < tamanio){
+            
+            int i = 0;
+            for(i = 0; i < cantidadModulos; i++){
+                modulos.get(i).setLibre(false);
+                cp.editarModulo(modulos.get(i));
+                ultimoTurno.getMisModulos().add(modulos.get(i));
+                cp.editarTurno(ultimoTurno);
+            }
+        }else{
+            throw new Exception("No hay suficientes modulos para el turno");
+        }
+        
     }
 
     public void editarTurno(int codigo, java.util.Date fecha, java.util.Date hora, Trazabilidad unaTrazabilidad, Servicio unServicio, Vehiculo unVehiculo, Cliente unCliente, boolean activo) throws Exception {

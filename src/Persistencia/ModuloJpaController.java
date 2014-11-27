@@ -6,15 +6,17 @@
 
 package Persistencia;
 
+import Modelo.Diagnostico;
 import Modelo.Modulo;
+import Modelo.Proceso;
 import Persistencia.exceptions.NonexistentEntityException;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
@@ -145,5 +147,11 @@ public class ModuloJpaController implements Serializable {
         String sql ="SELECT MAX(m.codigo) FROM Modulo m";
         Query query = getEntityManager().createQuery(sql);
         return (int)query.getSingleResult();
+    }
+    
+    public List<Modulo> traerModulosLibres(boolean activo, int codigoAg, int cantidadModulos){
+        String sql ="SELECT object(m) FROM Modulo m WHERE m.libre = TRUE AND m.activo = "+activo+" AND m.codigo IN ( SELECT mt.codigo FROM AgendaMensual v INNER jOIN v.misModulos mt WHERE v.codigo="+codigoAg+") ORDER BY m.codigo ASC";
+        Query query = getEntityManager().createQuery(sql);
+        return (List<Modulo>)query.getResultList();
     }
 }

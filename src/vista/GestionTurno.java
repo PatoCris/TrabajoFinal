@@ -41,7 +41,7 @@ public class GestionTurno extends javax.swing.JInternalFrame {
         cargarTablaTurnos(tblTurnos, cv.traerTurnos(true, codigoAg));
         
         try{
-            this.cmbServicio.setModel(util.cargarCombo(cv.traerServicios(true)));
+            this.cmbServicio.setModel(util.cargarCombo(cv.traerDiagnostico(true)));
 
         }catch(Exception ex){
             JOptionPane.showMessageDialog(null, ex.getMessage());
@@ -56,7 +56,7 @@ public class GestionTurno extends javax.swing.JInternalFrame {
         txtHora.setText("");
         lstModulos.setToolTipText("");
         cmbServicio.setToolTipText("SELECCIONAR");
-        cmbTrazabilidad.setToolTipText("SELECCIONAR");
+//        cmbTrazabilidad.setToolTipText("SELECCIONAR");
         cmbVehiculo.setToolTipText("SELECCIONAR");
     }
 
@@ -69,11 +69,11 @@ public class GestionTurno extends javax.swing.JInternalFrame {
         txtHora.setEnabled(false);
         lstModulos.setToolTipText("");
         cmbServicio.setToolTipText("SELECCIONAR");
-        cmbTrazabilidad.setToolTipText("SELECCIONAR");
+//        cmbTrazabilidad.setToolTipText("SELECCIONAR");
         cmbVehiculo.setToolTipText("SELECCIONAR");
         lstModulos.setEnabled(false);
         cmbServicio.setEnabled(false);
-        cmbTrazabilidad.setEnabled(false);
+//        cmbTrazabilidad.setEnabled(false);
         cmbVehiculo.setEnabled(false);
         btnEditar.setEnabled(true);
         btnEliminar.setEnabled(true);
@@ -155,9 +155,7 @@ public class GestionTurno extends javax.swing.JInternalFrame {
         cmbVehiculo = new javax.swing.JComboBox();
         jLabel8 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
         cmbServicio = new javax.swing.JComboBox();
-        cmbTrazabilidad = new javax.swing.JComboBox();
         jScrollPane1 = new javax.swing.JScrollPane();
         lstModulos = new javax.swing.JList();
         btnNuevo = new javax.swing.JButton();
@@ -174,6 +172,7 @@ public class GestionTurno extends javax.swing.JInternalFrame {
         btnEditar = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
+        btnTrazabilidad = new javax.swing.JButton();
 
         setTitle("Gestión de Turnos");
 
@@ -252,7 +251,7 @@ public class GestionTurno extends javax.swing.JInternalFrame {
                 .addComponent(btnBusquedaCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnActualizarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -309,12 +308,11 @@ public class GestionTurno extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 537, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                    .addComponent(jScrollPane2))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -335,9 +333,6 @@ public class GestionTurno extends javax.swing.JInternalFrame {
 
         jLabel10.setFont(new java.awt.Font("Politica", 0, 16)); // NOI18N
         jLabel10.setText("Modulo:");
-
-        jLabel11.setFont(new java.awt.Font("Politica", 0, 16)); // NOI18N
-        jLabel11.setText("Trazabilidad:");
 
         cmbServicio.setNextFocusableComponent(btnGuardar);
 
@@ -366,19 +361,14 @@ public class GestionTurno extends javax.swing.JInternalFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(43, 43, 43)
+                        .addGap(61, 61, 61)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING))
+                                .addComponent(jLabel7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(cmbVehiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cmbTrazabilidad, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(cmbVehiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
                                 .addComponent(jLabel8)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(cmbServicio, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
@@ -393,17 +383,7 @@ public class GestionTurno extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel2)
-                            .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5)
-                            .addComponent(txtHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3)
-                            .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(40, 40, 40)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -419,11 +399,18 @@ public class GestionTurno extends javax.swing.JInternalFrame {
                                 .addComponent(jLabel10)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel11)
-                            .addComponent(cmbTrazabilidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(107, 107, 107))
+                        .addGap(139, 139, 139))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel2)
+                            .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5)
+                            .addComponent(txtHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3)
+                            .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(107, 107, 107))))
         );
 
         btnNuevo.setFont(new java.awt.Font("Politica", 0, 16)); // NOI18N
@@ -582,6 +569,16 @@ public class GestionTurno extends javax.swing.JInternalFrame {
             }
         });
 
+        btnTrazabilidad.setFont(new java.awt.Font("Politica", 0, 16)); // NOI18N
+        btnTrazabilidad.setText("Gestión Trazabilidad");
+        btnTrazabilidad.setEnabled(false);
+        btnTrazabilidad.setNextFocusableComponent(btnNuevo);
+        btnTrazabilidad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTrazabilidadActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -602,6 +599,8 @@ public class GestionTurno extends javax.swing.JInternalFrame {
                             .addGap(10, 10, 10)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addGroup(layout.createSequentialGroup()
+                                    .addComponent(btnTrazabilidad)
+                                    .addGap(18, 18, 18)
                                     .addComponent(btnGuardar)
                                     .addGap(18, 18, 18)
                                     .addComponent(btnCancelar)
@@ -610,7 +609,7 @@ public class GestionTurno extends javax.swing.JInternalFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel1)
                                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(71, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -623,7 +622,8 @@ public class GestionTurno extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuardar)
                     .addComponent(btnCancelar)
-                    .addComponent(btnNuevo))
+                    .addComponent(btnNuevo)
+                    .addComponent(btnTrazabilidad))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -631,7 +631,7 @@ public class GestionTurno extends javax.swing.JInternalFrame {
                     .addComponent(btnSalir)
                     .addComponent(btnEliminar)
                     .addComponent(btnEditar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         pack();
@@ -690,7 +690,7 @@ public class GestionTurno extends javax.swing.JInternalFrame {
         txtHora.setEnabled(true);
         lstModulos.setEnabled(true);
         cmbServicio.setEnabled(true);
-        cmbTrazabilidad.setEnabled(true);
+//        cmbTrazabilidad.setEnabled(true);
         cmbVehiculo.setEnabled(true);
         btnEditar.setEnabled(true);
         btnEliminar.setEnabled(true);
@@ -720,11 +720,11 @@ public class GestionTurno extends javax.swing.JInternalFrame {
             util.verificarCombos(cmbServicio.getSelectedItem().toString(), "Servicio");
             Servicio unServicio = (Servicio) cmbServicio.getSelectedItem();
             
-            util.verificarCombos(cmbTrazabilidad.getSelectedItem().toString(), "Trazabilidad");
-            Trazabilidad unaTraza = (Trazabilidad) cmbTrazabilidad.getSelectedItem();
+//            util.verificarCombos(cmbTrazabilidad.getSelectedItem().toString(), "Trazabilidad");
+//            Trazabilidad unaTraza = (Trazabilidad) cmbTrazabilidad.getSelectedItem();
 
             if(bandera.equals("nuevo")){
-                this.cv.nuevoTurno(fecha, hora, null, unServicio, unVehiculo, unCliente, true);
+                this.cv.nuevoTurno(fecha, hora, null, unServicio, unVehiculo, unCliente, true, codigoAg);
                 bandera = "";
                 estadoInicio();
 
@@ -785,7 +785,7 @@ public class GestionTurno extends javax.swing.JInternalFrame {
             Servicio unSer = (Servicio)cmbServicio.getSelectedItem();
 //            lstModulos.getModel(util.cargarLista(this.cv.traerModulosDelServicio(unSer)));
             
-            cmbTrazabilidad.getModel().setSelectedItem(tblTurnos.getValueAt(tblTurnos.getSelectedRow(), 6));
+//            cmbTrazabilidad.getModel().setSelectedItem(tblTurnos.getValueAt(tblTurnos.getSelectedRow(), 6));
         }
     }//GEN-LAST:event_tblTurnosMouseClicked
 
@@ -798,7 +798,7 @@ public class GestionTurno extends javax.swing.JInternalFrame {
             txtFecha.setEnabled(true);
             txtHora.setEnabled(true);
             cmbServicio.setEnabled(true);
-            cmbTrazabilidad.setEnabled(true);
+//            cmbTrazabilidad.setEnabled(true);
             lstModulos.setEnabled(true);
             cmbVehiculo.setEnabled(true);
             btnEditar.setEnabled(false);
@@ -833,6 +833,10 @@ public class GestionTurno extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
+    private void btnTrazabilidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTrazabilidadActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnTrazabilidadActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizar;
@@ -845,12 +849,11 @@ public class GestionTurno extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnSalir;
+    private javax.swing.JButton btnTrazabilidad;
     private javax.swing.JComboBox cmbServicio;
-    private javax.swing.JComboBox cmbTrazabilidad;
     private javax.swing.JComboBox cmbVehiculo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;

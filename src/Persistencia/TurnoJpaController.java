@@ -152,5 +152,10 @@ public class TurnoJpaController implements Serializable {
         Query query = getEntityManager().createQuery(sql);
         return (List<Turno>)query.getResultList();
     }
+    public int ultimaTuno(){
+        String sql ="SELECT MAX(t.codigo) FROM Turno t";
+        Query query = getEntityManager().createQuery(sql);
+        return (int)query.getSingleResult();
+    }
     
 }
