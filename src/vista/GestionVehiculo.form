@@ -644,7 +644,7 @@
               <Format format="##/##/####" subtype="-1" type="5"/>
             </Property>
             <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-              <ComponentRef name="cmbModelo"/>
+              <ComponentRef name="txtNroChasis"/>
             </Property>
           </Properties>
         </Component>
@@ -688,6 +688,9 @@
           <Properties>
             <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor" preCode="try {" postCode="} catch (java.text.ParseException ex) {&#xa;ex.printStackTrace();&#xa;}">
               <Format format="UUU-###" subtype="-1" type="5"/>
+            </Property>
+            <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+              <ComponentRef name="txtNroMotor"/>
             </Property>
           </Properties>
         </Component>

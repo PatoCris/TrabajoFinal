@@ -337,7 +337,7 @@ public class GestionVehiculo extends javax.swing.JInternalFrame {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        txtFecha.setNextFocusableComponent(cmbModelo);
+        txtFecha.setNextFocusableComponent(txtNroChasis);
 
         txtKilometrajeG.setNextFocusableComponent(txtAnio);
         txtKilometrajeG.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -364,6 +364,7 @@ public class GestionVehiculo extends javax.swing.JInternalFrame {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        txtDominio.setNextFocusableComponent(txtNroMotor);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
