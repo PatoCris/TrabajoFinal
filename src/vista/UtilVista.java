@@ -118,25 +118,72 @@ public class UtilVista {
         }
     }
 
-    public Date ParseHora(String hora, String error) throws Exception {
-        SimpleDateFormat formato = new SimpleDateFormat("hh:mm:ss");
-        Date horaDate = null;
+    
+   public Date ParseHora (String hora, String error)throws Exception{
+   SimpleDateFormat formato = new SimpleDateFormat("H:mm");
+   Date horaDate = null;
+       try {
+           horaDate = formato.parse(hora);
+       } catch (ParseException ex) {
+           throw new Exception(error);
+       }
+       return horaDate;
+   }
+    public String getHora(Date date) throws Exception {
         try {
-            horaDate = formato.parse(hora);
-        } catch (ParseException ex) {
-            throw new Exception(error);
+            Date ahora = date;
+        SimpleDateFormat formateador = new SimpleDateFormat("HH:mm:ss");
+        return formateador.format(ahora);
+        } catch (Exception e) {
+            throw new Exception(e);
         }
-        return horaDate;
+        
     }
-
     public Date convertirHora(String horaS, String error) throws ParseException, Exception {
         DateFormat sdf = new SimpleDateFormat("hh:mm:ss");
         Date date = null;
         try {
-        date = sdf.parse(horaS);
+            date = sdf.parse(horaS);
         }catch (ParseException ex) {
             throw new Exception(error);
         }
         return date;
-    }
+        }
+    public Date hora(String myTime, String error) throws Exception { 
+        //String myTime = "10:30:54"; 
+        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm"); 
+        Date date = null; 
+        try { 
+            date = sdf.parse(myTime); 
+        } catch (ParseException e) { 
+            throw new Exception(error); 
+        } 
+//        String formattedTime = sdf.format(date); 
+//        System.out.println(formattedTime); +" "+e.printStackTrace()
+        return date;
+    } 
+
+
+
+//    public Date ParseHora(String hora, String error) throws Exception {
+//        SimpleDateFormat formato = new SimpleDateFormat("hh:mm:ss");
+//        Date horaDate = null;
+//        try {
+//            horaDate = formato.parse(hora);
+//        } catch (ParseException ex) {
+//            throw new Exception(error);
+//        }
+//        return horaDate;
+//    }
+//
+//    public Date convertirHora(String horaS, String error) throws ParseException, Exception {
+//        DateFormat sdf = new SimpleDateFormat("hh:mm:ss");
+//        Date date = null;
+//        try {
+//        date = sdf.parse(horaS);
+//        }catch (ParseException ex) {
+//            throw new Exception(error);
+//        }
+//        return date;
+//    }
 }

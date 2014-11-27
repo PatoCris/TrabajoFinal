@@ -14,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -33,8 +34,10 @@ public class Detalle implements Serializable {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int codigo;
     @Column(name = "fecha")
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date fecha;
     @Column(name = "hora")
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date hora;
     @Column(name = "activo")
     private boolean activo;

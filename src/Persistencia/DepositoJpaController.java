@@ -23,11 +23,11 @@ import javax.persistence.criteria.Root;
  * @author cristian
  */
 public class DepositoJpaController implements Serializable {
-
+    
     public DepositoJpaController() {
         emf=Persistence.createEntityManagerFactory("TallerMecanicoPU");
     }
-
+    
     public DepositoJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
@@ -141,4 +141,10 @@ public class DepositoJpaController implements Serializable {
         }
     }
     
+    public int ultimoDeposito(){
+        String sql ="SELECT MAX(d.codigo) FROM Deposito d";
+        Query query = getEntityManager().createQuery(sql);
+        return (int)query.getSingleResult();
+    }
+        
 }

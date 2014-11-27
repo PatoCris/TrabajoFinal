@@ -3,8 +3,10 @@ package Modelo;
 
 import java.io.Serializable;
 import java.util.*;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -37,9 +39,9 @@ public class AgendaMensual implements Serializable {
     @Column(name = "activo")
     private boolean activo;
    
-    @OneToMany
+    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
     private List<Turno> misTurnos= new LinkedList<>();
-    @OneToMany
+    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
     private List<Modulo> misModulos = new LinkedList<>();
 
     //Metodos
@@ -47,8 +49,7 @@ public class AgendaMensual implements Serializable {
     public AgendaMensual() {
     }
 
-    public AgendaMensual(int codigo, String nombre, int anio, int nroMes, boolean activo) {
-        this.codigo = codigo;
+    public AgendaMensual(String nombre, int anio, int nroMes, boolean activo) {
         this.nombre = nombre;
         this.anio = anio;
         this.nroMes = nroMes;

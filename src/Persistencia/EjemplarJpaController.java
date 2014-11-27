@@ -7,14 +7,15 @@
 package Persistencia;
 
 import Modelo.Ejemplar;
+import Modelo.PiezaRecambio;
 import Persistencia.exceptions.NonexistentEntityException;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
@@ -150,5 +151,27 @@ public class EjemplarJpaController implements Serializable {
         String sql ="SELECT object(e) FROM Ejemplar e WHERE e.activo = "+activo+" AND e.codigo ="+codigo;
         Query query = getEntityManager().createQuery(sql);
         return (List<Ejemplar>)query.getResultList();
+    }
+        public List<Ejemplar> traerEjemplaresSinDeposito(boolean activo){
+        String sql ="SELECT Object(e) FROM Ejemplar e where e.activo = "+activo+" AND e.codigo NOT IN (SELECT me.codigo FROM  Deposito d INNER JOIN d.misEjemplares me)";
+        Query query = getEntityManager().createQuery(sql);
+        return (List<Ejemplar>)query.getResultList();
+    }
+    
+    public List<Ejemplar> traerEjemplaresConDeposito(int deposito, boolean activo){
+        String sql ="SELECT Object(e) FROM Ejemplar e where e.activo = "+activo+" AND e.codigo IN (SELECT me.codigo FROM  Deposito d INNER JOIN d.misEjemplares me WHERE d.codigo ="+deposito+")";
+        Query query = getEntityManager().createQuery(sql);
+        return (List<Ejemplar>)query.getResultList();
+    }
+    public List<Ejemplar> traerEjemplaresConDeposito(int deposito, boolean activo, PiezaRecambio pieza){
+        String sql ="SELECT Object(e) FROM Ejemplar e where e.activo = "+activo+" AND e.unaPiezaRecambio.codigo = "+pieza.getCodigo()+" AND e.codigo IN (SELECT me.codigo FROM  Deposito d INNER JOIN d.misEjemplares me WHERE d.codigo ="+deposito+")";
+        Query query = getEntityManager().createQuery(sql);
+        return (List<Ejemplar>)query.getResultList();
+    }
+    
+    public int ultimoEjemplar(){
+        String sql ="SELECT MAX(e.codigo) FROM Ejemplar e";
+        Query query = getEntityManager().createQuery(sql);
+        return (int)query.getSingleResult();
     }
 }

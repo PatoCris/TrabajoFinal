@@ -7,6 +7,7 @@
 package Persistencia;
 
 import Modelo.Accesorio;
+import Modelo.AgendaMensual;
 import Modelo.Anomalia;
 import Modelo.Cliente;
 import Modelo.Deposito;
@@ -17,16 +18,14 @@ import Modelo.Empleado;
 import Modelo.Equipamiento;
 import Modelo.Especialidad;
 import Modelo.Estado;
-
 import Modelo.InformePiezaPedido;
 import Modelo.JefeDeposito;
 import Modelo.JefeTaller;
-
 import Modelo.Localidad;
-
 import Modelo.Marca;
 import Modelo.Mecanico;
 import Modelo.Modelo;
+import Modelo.Modulo;
 import Modelo.Pedido;
 import Modelo.Perito;
 import Modelo.PiezaRecambio;
@@ -78,12 +77,17 @@ public class ControladoraPersistencia {
     private DevolucionJpaController devolucionJpa = new DevolucionJpaController();
     private TallerJpaController tallerJpa = new TallerJpaController();
     private DepositoJpaController depositoJpa = new DepositoJpaController();
+
     private TipoDiagnosticoJpaController tipoDiagnosticoJpa = new TipoDiagnosticoJpaController();
     private ProcesoJpaController procesoJpa = new ProcesoJpaController();
     private DiagnosticoJpaController diagnosticoJpa = new DiagnosticoJpaController();
     private TurnoJpaController turnoJpa = new TurnoJpaController();
     private ServicioJpaController servicioJpa = new ServicioJpaController();
             
+
+    private AgendaMensualJpaController agendaMensualJpa = new AgendaMensualJpaController();
+    private ModuloJpaController moduloJpa = new ModuloJpaController();
+
 
     
     ///////////////// METODOS DE ACCESORIO //////////////////////
@@ -401,6 +405,12 @@ public class ControladoraPersistencia {
     public void borrarClienteVehiculo(int codigoCliente, int codigoVehiculo) throws PreexistingEntityException, Exception{
         clienteJpa.borrarClienteVehiculo(codigoCliente, codigoVehiculo);
     }
+    public boolean existeCliente(int dni) throws PreexistingEntityException, Exception{
+        return clienteJpa.exiteCliente(dni);
+    }
+    public boolean existeCliente(int dni, int codigo) throws PreexistingEntityException, Exception{
+        return clienteJpa.exiteCliente(dni, codigo);
+    }
 
     
     ///////////////////////// METODOS DE PIEZA RECAMBIO ///////////////////////////////
@@ -469,6 +479,19 @@ public class ControladoraPersistencia {
         return ejemplarJpa.findEjemplar(codigo);
     }
 
+    public List<Ejemplar> traerEjemplaresSinDeposito(boolean activo){
+        return ejemplarJpa.traerEjemplaresSinDeposito(activo);
+    }
+    public List<Ejemplar> traerEjemplaresConDeposito(int deposito, boolean activo){
+        return ejemplarJpa.traerEjemplaresConDeposito(deposito, activo);
+    }
+    public List<Ejemplar> traerEjemplaresConDeposito(int deposito, boolean activo, PiezaRecambio pieza){
+        return ejemplarJpa.traerEjemplaresConDeposito(deposito, activo, pieza);
+    }
+    public int ultimaEjemplar(){
+        return ejemplarJpa.ultimoEjemplar();
+    }
+
     
     ////////////////////// METODOS DE MECANICO //////////////////////
     public void nuevoMecanico(Mecanico unMecanico)throws PreexistingEntityException, Exception{
@@ -494,6 +517,12 @@ public class ControladoraPersistencia {
     }
     public boolean existeMecanico(int dni, int codigo) throws NonexistentEntityException, Exception{
         return mecanicoJpa.existeMecanico(dni, codigo);
+    }
+    public List<Mecanico> traerMecanicoSinTaller(){
+        return mecanicoJpa.traerMecanicoSinTaller();
+    }
+    public List<Mecanico> traerMecanicoConCliente(int codigoTaller){
+        return mecanicoJpa.traerMecanicoConCliente(codigoTaller);
     }
     
         ///////////////////////// METODOS PEDIDOS ////////////////////////////////
@@ -646,6 +675,13 @@ public class ControladoraPersistencia {
     public List<Localidad> traerLocalidadesNombre(boolean activo, String nombre) throws PreexistingEntityException, Exception{
         return localidadJpa.traerLocalidades(activo, nombre);
     }
+    public List<Localidad> traerLocalidadesSinTaller(int taller) throws PreexistingEntityException, Exception{
+        return localidadJpa.traerLocalidadesSinTaller(taller);
+    }
+    public List<Localidad> traerLocalidadesConTaller(int taller) throws PreexistingEntityException, Exception{
+        return localidadJpa.traerLocalidadesConTaller(taller);
+    }
+    
     
     ///////////////////////// METODOS DE DEVOLUCION ////////////////////////////////
     public void nuevaDevolucion(Devolucion devolucion) throws PreexistingEntityException, Exception{
@@ -672,8 +708,11 @@ public class ControladoraPersistencia {
     public List<Devolucion> traerDevolucionesConDeposito(int deposito) throws PreexistingEntityException, Exception{
         return devolucionJpa.traerDevolucionesConDeposito(deposito);
     }
-    public List<Devolucion> traerDevolucionesConDeposito(int deposito, Date fecha) throws PreexistingEntityException, Exception{
+    public List<Devolucion> traerDevolucionesConDeposito(int deposito, String fecha) throws PreexistingEntityException, Exception{
         return devolucionJpa.traerDevolucionesConDeposito(deposito, fecha);
+    }
+    public int ultimaDevolcion() throws PreexistingEntityException, Exception{
+        return devolucionJpa.ultimaDevolucion();
     }
     
         /////////////////////// METODOS DE TALLER ////////////////////////////////
@@ -687,7 +726,9 @@ public class ControladoraPersistencia {
         return tallerJpa.traerTalleres(activo);
     }
     public void eliminarTaller(int codigo) throws NonexistentEntityException, Exception{
-            tallerJpa.destroy(codigo);
+            Taller taller = traerTaller(codigo);
+            taller.setActivo(false);
+            tallerJpa.edit(taller);
     }
     public List<Taller> traerTallerNombre(boolean activo, String nombre) throws PreexistingEntityException, Exception{
         return tallerJpa.traerTalleresNombre(activo, nombre);
@@ -696,7 +737,7 @@ public class ControladoraPersistencia {
         return tallerJpa.findTaller(codigo);
     }
     
-            /////////////////////// METODOS DE DEPOSITO ////////////////////////////////
+    /////////////////////// METODOS DE DEPOSITO ////////////////////////////////
     public void nuevoDeposito(Deposito deposito) throws PreexistingEntityException, Exception{
         depositoJpa.create(deposito);
     }
@@ -704,10 +745,60 @@ public class ControladoraPersistencia {
         depositoJpa.edit(deposito);
     }
     public void eliminarDeposito(int codigo) throws NonexistentEntityException, Exception{
-        depositoJpa.destroy(codigo);
+        Deposito deposito = traerDeposito(codigo);
+        deposito.setActivo(false);
+        depositoJpa.edit(deposito);
     }
     public Deposito traerDeposito(int codigo) throws NonexistentEntityException, Exception{
         return depositoJpa.findDeposito(codigo);
+    }
+    public int ultimoDeposito() throws NonexistentEntityException, Exception{
+        return depositoJpa.ultimoDeposito();
+    }
+    
+    /////////////////////// METODOS DE DEPOSITO ////////////////////////////////
+    public void nuevaAgendaMensual(AgendaMensual agendaMensual) throws PreexistingEntityException, Exception{
+        agendaMensualJpa.create(agendaMensual);
+    }
+    public void editarAgendaMensual(AgendaMensual agendaMensual) throws PreexistingEntityException, Exception{
+        agendaMensualJpa.edit(agendaMensual);
+    }
+    public void eliminarAgendaMensual(int codigo) throws NonexistentEntityException, Exception{
+        agendaMensualJpa.destroy(codigo);
+    }
+    public AgendaMensual traerAgendaMensual(int codigo) throws NonexistentEntityException, Exception{
+        return agendaMensualJpa.findAgendaMensual(codigo);
+    }
+    public int ultimoAgendaMensual() throws NonexistentEntityException, Exception{
+        return agendaMensualJpa.ultimoAgendaMensual();
+    }
+    
+    public List<AgendaMensual> traerAgendaMensual(boolean activo) throws NonexistentEntityException, Exception{
+        return agendaMensualJpa.traerAgendaMensual(activo);
+    }
+    
+    public List<AgendaMensual> traerAgendaMensualAnio(boolean activo, int anio) throws NonexistentEntityException, Exception{
+        return agendaMensualJpa.traerAgendaMensualAnio(activo, anio);
+    }
+    public List<AgendaMensual> traerAgendaMensualSinTaller(){
+        return agendaMensualJpa.traerAgendaMensualSinTaller();
+    }
+    
+    public List<AgendaMensual> traerAgendaMensualConTaller(int codigoTaller) throws NonexistentEntityException, Exception{
+        return agendaMensualJpa.traerAgendaMensualConTaller(codigoTaller);
+    }
+    
+    //////////////////////////////////// METODOS DE MODULO ///////////////////////////////////////////
+    public void nuevoModulo(Modulo modulo) throws NonexistentEntityException, Exception{
+        moduloJpa.create(modulo);
+    }
+    
+    public int ultimoModulo() throws NonexistentEntityException, Exception{
+        return moduloJpa.ultimoModulo();
+    }
+    
+    public Modulo traerModulo(int codigo) throws NonexistentEntityException, Exception{
+        return moduloJpa.findModulo(codigo);
     }
 
     ///////////////////////// TIPO DIAGNOSTICO ////////////////////////////////

@@ -158,7 +158,11 @@ public class ClienteJpaController implements Serializable {
     public boolean exiteCliente(int dni){
         boolean retorno = true;
         try{
+
             String sql = "SELECT Object(c) FROM Cliente c WHERE c.dni = "+dni;
+
+            
+
             Query query = getEntityManager().createQuery(sql);
             query.getSingleResult();
         }catch(Exception ex){
@@ -169,7 +173,7 @@ public class ClienteJpaController implements Serializable {
     public boolean exiteCliente(int dni, int codigo) {
         boolean existe = true;
         try {
-            String consulta = "SELECT object(c) FROM Cliente c WHERE c.dni = " + dni + " and c.codigo <> " + codigo;
+            String consulta = "SELECT object(c) FROM Cliente c WHERE c.activo = TRUE AND c.dni = " + dni + " AND c.codigo <> " + codigo;
             Query query = this.getEntityManager().createQuery(consulta);
             query.getSingleResult();//si lanza excepcion el Cliente no existe
         } catch (Exception e) {
@@ -177,6 +181,7 @@ public class ClienteJpaController implements Serializable {
         }
         return existe;
     }
+    
     public void borrarClienteVehiculo(int codigoCliente, int codigoVehiculo){
         String sql ="DELETE FROM Cliente c INNER JOIN c.misVehiculos mv";
         Query query = getEntityManager().createQuery(sql);

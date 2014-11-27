@@ -10,8 +10,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
+
+
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -25,6 +28,10 @@ import javax.persistence.Table;
  *
  * @author Asus
  */
+
+
+//@MappedSuperclass
+
 @Entity
 @Table(name="servicios")
 @Inheritance(strategy=InheritanceType.JOINED)

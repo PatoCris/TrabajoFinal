@@ -6,6 +6,7 @@
 package vista;
 
 import Modelo.Accesorio;
+import Modelo.AgendaMensual;
 import Modelo.Anomalia;
 import Modelo.Cliente;
 import Modelo.ControladoraPrincipal;
@@ -456,8 +457,8 @@ class ControladoraVista {
     }
     
     ///////////////// METODOS DE EJEMPLAR //////////////////////////
-    public void nuevoEjemplar(java.util.Date fecha, PiezaRecambio unaPRecambio, Proveedor unProveedor) throws Exception {
-        cp.nuevoEjemplar(fecha, unaPRecambio, unProveedor);
+    public void nuevoEjemplar(java.util.Date fecha, PiezaRecambio unaPRecambio, Proveedor unProveedor, int deposito) throws Exception {
+        cp.nuevoEjemplar(fecha, unaPRecambio, unProveedor, deposito);
     }
 
     public void editarEjemplar(int codigo, java.util.Date fecha, PiezaRecambio unaPRecambio, Proveedor unProveedor) throws Exception {
@@ -468,12 +469,21 @@ class ControladoraVista {
         return cp.traerEjemplares(activo);
     }
 
-    public void elminarEjemplar(int codigo) throws Exception {
-        cp.eliminarEjemplar(codigo);
+    public void elminarEjemplar(int codigo, int codigoDeposito) throws Exception {
+        cp.eliminarEjemplar(codigo, codigoDeposito);
     }
 
     public List<Ejemplar> traerEjemplarCodigo(boolean activo, int codigo) throws Exception {
         return cp.traerEjemplarCodigo(activo, codigo);
+    }
+    public List<Ejemplar> traerEjemplaresSinDeposito(boolean activo){
+        return cp.traerEjemplaresSinDeposito(activo);
+    }
+    public List<Ejemplar> traerEjemplaresConDeposito(int deposito, boolean activo){
+        return cp.traerEjemplaresConDeposito(deposito, activo);
+    }
+    public List<Ejemplar> traerEjemplaresConDeposito(int deposito, boolean activo, PiezaRecambio pieza){
+        return cp.traerEjemplaresConDeposito(deposito, activo, pieza);
     }
 
 ///////////////////// METODOS DE MECANICO ////////////////////////
@@ -499,6 +509,12 @@ class ControladoraVista {
     
     public Mecanico traerMecanico(int codigo) throws Exception {
         return cp.traerMecanico(codigo);
+    }
+    public List<Mecanico> traerMecanicoSinTaller(){
+        return cp.traerMecanicoSinTaller();
+    }
+    public List<Mecanico> traerMecanicoConCliente(int codigoTaller){
+        return cp.traerMecanicoConCliente(codigoTaller);
     }
 
     public void agregarEspecialidad(Especialidad unaEspecialidad, int codigo) throws Exception{
@@ -560,10 +576,16 @@ class ControladoraVista {
     public List<Localidad> traerLocalidadesNombre(boolean activo, String nombre) throws Exception{
         return cp.traerLocalidadesNombre(activo, nombre);
     }
+    public List<Localidad> traerLocalidadesSinTaller(int taller) throws PreexistingEntityException, Exception{
+        return cp.traerLocalidadesSinTaller(taller);
+    }
+    public List<Localidad> traerLocalidadesConTaller(int taller) throws PreexistingEntityException, Exception{
+        return cp.traerLocalidadesConTaller(taller);
+    }
     
     ///////////////////////// METODOS DE DEVOLUCION ////////////////////////////////
-    public void nuevaDevolucion(Date fecha, String motivo, boolean activo, PiezaRecambio miPiezaRecambio) throws PreexistingEntityException, Exception{
-        cp.nuevaDevolucion(fecha, motivo, activo, miPiezaRecambio);
+    public void nuevaDevolucion(Date fecha, String motivo, boolean activo, PiezaRecambio miPiezaRecambio, int codigoDeposito) throws PreexistingEntityException, Exception{
+        cp.nuevaDevolucion(fecha, motivo, activo, miPiezaRecambio, codigoDeposito);
     }
     public void editarDevolucion(int codigo, Date fecha, String motivo, boolean activo, PiezaRecambio miPiezaRecambio) throws PreexistingEntityException, Exception{
         cp.editarDevolucion(codigo, fecha, motivo, activo, miPiezaRecambio);
@@ -574,8 +596,8 @@ class ControladoraVista {
     public List<Devolucion> traerDevoluciones(boolean activo) throws PreexistingEntityException, Exception{
         return cp.traerDevoluciones(activo);
     }
-    public void eliminarDevolucion(int codigo) throws NonexistentEntityException, Exception{
-        cp.eliminarDevolucion(codigo);
+    public void eliminarDevolucion(int codigo, int deposito) throws NonexistentEntityException, Exception{
+        cp.eliminarDevolucion(codigo, deposito);
     }
     public List<Devolucion> traerDevolucionesBusqueda(boolean activo, java.util.Date fecha) throws PreexistingEntityException, Exception{
         return cp.traerDevolucionesBusqueda(activo, fecha);
@@ -586,18 +608,17 @@ class ControladoraVista {
     public List<Devolucion> traerDevolucionConDeposito(int deposito) throws PreexistingEntityException, Exception{
         return cp.traerDevolucionesConDeposito(deposito);
     }
-    public List<Devolucion> traerDevolucionConDeposito(int deposito, Date fecha) throws PreexistingEntityException, Exception{
+    public List<Devolucion> traerDevolucionConDeposito(int deposito, String fecha) throws PreexistingEntityException, Exception{
         return cp.traerDevolucionesConDeposito(deposito, fecha);
     }
     
                 /////////////////////// METODOS DE TALLER ////////////////////////////////
-    public void nuevoTaller(String nombre, String direccion, String telefono, String correo, Date horaEntrada, Date horaSalida, boolean activo, Deposito unDeposito, JefeTaller unJefeTaller, Localidad unaLocalidad) throws PreexistingEntityException, Exception{
-        cp.nuevoTaller(nombre, direccion, telefono, correo, horaEntrada, horaSalida, activo, unDeposito, unJefeTaller, unaLocalidad);
+    public void nuevoTaller(String nombre, String direccion, String telefono, String correo, Date horaEntrada, Date horaSalida, boolean activo, JefeTaller unJefeTaller, Localidad unaLocalidad) throws PreexistingEntityException, Exception{
+        cp.nuevoTaller(nombre, direccion, telefono, correo, horaEntrada, horaSalida, activo, unJefeTaller, unaLocalidad);
     }
     public void editarTaller(int codigo, String nombre, String direccion, String telefono, String correo, Date horaEntrada, Date horaSalida, boolean activo, Deposito unDeposito, JefeTaller unJefeTaller, Localidad unaLocalidad) throws PreexistingEntityException, Exception{
         cp.editarTaller(codigo, nombre, direccion, telefono, correo, horaEntrada, horaSalida, activo, unDeposito, unJefeTaller, unaLocalidad);
     }
-  
     public List<Taller> traerTalleres(boolean activo) throws PreexistingEntityException, Exception{
         return cp.traerTalleres(activo);
     }
@@ -609,6 +630,18 @@ class ControladoraVista {
     }   
     public Taller traerTaller(int codigo) throws PreexistingEntityException, Exception{
         return cp.traerTaller(codigo);
+    }
+    public void agregarZonaTaller(Localidad localidad, int codigo) throws Exception{
+        cp.agregarZonaTaller(localidad, codigo);
+    }
+    public void quitarZonaTaller(int localidad, int codigo) throws Exception{
+        cp.quitarZonaTaller(localidad, codigo);
+    }
+    public void agregarMecanico(int codigoMecanido, int codigoTaller) throws PreexistingEntityException, Exception{
+        cp.agregarMecanico(codigoMecanido, codigoTaller);
+    }
+    public void quitarMecanico(int codigoMecanido, int codigoTaller) throws PreexistingEntityException, Exception{
+        cp.quitarMecanico(codigoMecanido, codigoTaller);
     }
     
 
@@ -704,6 +737,7 @@ class ControladoraVista {
     public List<InformePiezaPedido> traerInformesConVinculo(Perito unPerito) {
         return cp.traerInformesConVinculo(unPerito);
     }
+
     public InformePiezaPedido recuperarUltimoInforme() throws Exception{
         return cp.recuperarUltimoInforme();
     }
@@ -713,6 +747,10 @@ class ControladoraVista {
                 
 
             /////////////////////// METODOS DE DEPOSITO ////////////////////////////////
+
+
+    /////////////////////// METODOS DE DEPOSITO ////////////////////////////////
+
     public void nuevoDeposito(String nombre, String correo, String telefono, boolean activo, JefeDeposito unJefeDeposito) throws PreexistingEntityException, Exception{
         cp.nuevoDeposito(nombre, correo, telefono, activo, unJefeDeposito);
     }
@@ -722,6 +760,7 @@ class ControladoraVista {
     public void eliminarDeposito(int codigo) throws NonexistentEntityException, Exception{
         cp.eliminarDeposito(codigo);
     }
+
 
 ///////////////// METODOS DE TIPO DIAGNOSTICO ////////////////////////
     public void nuevoTipoDiagnostico(String nombre, String descrpcion, boolean activo) throws Exception {
@@ -849,5 +888,43 @@ class ControladoraVista {
     //////////////////////////////METODOS DE SERVICIO//////////////////////////
     public List<Servicio> traerServicios(boolean activo){
         return cp.traerServicios(activo);
+    }
+    public Deposito traerDeposito(int codigo) throws NonexistentEntityException, Exception{
+        return cp.traerDeposito(codigo);
+    }
+    public int ultimoDeposito() throws NonexistentEntityException, Exception{
+        return cp.ultimoDeposito();
+    }
+    
+    /////////////////////// METODOS DE AGENDA MENSUAL ////////////////////////////////
+    public void nuevaAgendaMensual(String nombre, int anio, int nroMes, boolean activo, int codigoTaller) throws PreexistingEntityException, Exception{
+        cp.nuevaAgendaMensual(nombre, anio, nroMes, activo, codigoTaller);
+    }
+    public void editarAgendaMensual(int codigo, String nombre, int anio, int nroMes, boolean activo) throws PreexistingEntityException, Exception{
+        cp.editarAgendaMensual(codigo, nombre, anio, nroMes, activo);
+    }
+    public void eliminarAgendaMensual(int codigo, int codigoTaller) throws NonexistentEntityException, Exception{
+        cp.eliminarAgendaMensual(codigo, codigoTaller);
+    }
+    public AgendaMensual traerAgendaMensual(int codigo) throws NonexistentEntityException, Exception{
+        return cp.traerAgendaMensual(codigo);
+    }
+    public int ultimoAgendaMensual() throws NonexistentEntityException, Exception{
+        return cp.ultimoAgendaMensual();
+    }
+    
+    public List<AgendaMensual> traerAgendaMensual(boolean activo) throws NonexistentEntityException, Exception{
+        return cp.traerAgendaMensual(activo);
+    }
+    
+    public List<AgendaMensual> traerAgendaMensualAnio(boolean activo, int anio) throws NonexistentEntityException, Exception{
+        return cp.traerAgendaMensualAnio(activo, anio);
+    }
+    public List<AgendaMensual> traerAgendaMensualSinTaller() throws NonexistentEntityException, Exception{
+        return cp.traerAgendaMensualSinTaller();
+    }
+    
+    public List<AgendaMensual> traerAgendaMensualConTaller(int codigoTaller) throws NonexistentEntityException, Exception{
+        return cp.traerAgendaMensualConTaller(codigoTaller);
     }
 }

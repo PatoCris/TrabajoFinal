@@ -14,6 +14,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
@@ -22,6 +23,10 @@ import javax.persistence.criteria.Root;
  * @author cristian
  */
 public class AgendaMensualJpaController implements Serializable {
+
+    public AgendaMensualJpaController() {
+        emf=Persistence.createEntityManagerFactory("TallerMecanicoPU");
+    }
 
     public AgendaMensualJpaController(EntityManagerFactory emf) {
         this.emf = emf;
@@ -135,5 +140,31 @@ public class AgendaMensualJpaController implements Serializable {
             em.close();
         }
     }
+    public List<AgendaMensual> traerAgendaMensual(boolean activo){
+        String sql ="SELECT object(am) FROM AgendaMensual am WHERE am.activo = "+activo;
+        Query query = getEntityManager().createQuery(sql);
+        return (List<AgendaMensual>)query.getResultList();
+    }
     
+    public List<AgendaMensual> traerAgendaMensualAnio(boolean activo, int anio){
+        String sql ="SELECT object(am) FROM AgendaMensual am WHERE am.activo = "+activo+" AND am.anio = "+anio;
+        Query query = getEntityManager().createQuery(sql);
+        return (List<AgendaMensual>)query.getResultList();
+    }
+    public List<AgendaMensual> traerAgendaMensualSinTaller(){
+        String sql ="SELECT Object(am) from AgendaMensual am where am.codigo NOT IN (SELECT mam.codigo FROM  Taller t INNER JOIN t.misAgendasMensuales mam)";
+        Query query = getEntityManager().createQuery(sql);
+        return (List<AgendaMensual>)query.getResultList();
+    }
+    
+    public List<AgendaMensual> traerAgendaMensualConTaller(int codigoTaller){
+        String sql ="SELECT Object(am) from AgendaMensual am where am.codigo IN (SELECT mam.codigo FROM  Taller t INNER JOIN t.misAgendasMensuales mam WHERE t.codigo ="+codigoTaller+")";
+        Query query = getEntityManager().createQuery(sql);
+        return (List<AgendaMensual>)query.getResultList();
+    }
+    public int ultimoAgendaMensual(){
+        String sql ="SELECT MAX(am.codigo) FROM AgendaMensual am";
+        Query query = getEntityManager().createQuery(sql);
+        return (int)query.getSingleResult();
+    }
 }

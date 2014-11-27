@@ -179,4 +179,16 @@ public class MecanicoJpaController implements Serializable {
         }
         return existe;
     }
+    public List<Mecanico> traerMecanicoSinTaller(){
+        String sql ="SELECT Object(m) from Mecanico m where m.codigo NOT IN (SELECT mm.codigo FROM  Taller t INNER JOIN t.misMecanicos mm)";
+        Query query = getEntityManager().createQuery(sql);
+        return (List<Mecanico>)query.getResultList();
+    }
+    
+    public List<Mecanico> traerMecanicoConCliente(int codigoTaller){
+        String sql ="SELECT Object(m) from Mecanico m where m.codigo IN (SELECT mm.codigo FROM  Taller t INNER JOIN t.misMecanicos mm WHERE t.codigo ="+codigoTaller+")";
+        Query query = getEntityManager().createQuery(sql);
+        return (List<Mecanico>)query.getResultList();
+    }
+    
 }

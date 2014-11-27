@@ -8,6 +8,7 @@ package vista;
 
 import Modelo.Devolucion;
 import Modelo.PiezaRecambio;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -33,7 +34,7 @@ public class GestionDevolucion extends javax.swing.JInternalFrame {
     public GestionDevolucion(ControladoraVista controladoraVista, int deposito) throws Exception {
         initComponents();
         cv = controladoraVista;
-        int codigoDeposito = deposito;
+        codigoDeposito = deposito;
         util = new UtilVista();
         cmbPieza.setModel(util.cargarCombo(cv.traerPiezaRecambios(true)));
         cargarTabla(tblDevoluciones, cv.traerDevolucionConDeposito(codigoDeposito));
@@ -49,8 +50,8 @@ public void estadoInicio(){
         bandera = "";
         btnCancelar.setEnabled(false);
         btnGuardar.setEnabled(false);
-        txtFecha.setText("");
-        txtMotivo.setText("");
+        txtFecha.setEnabled(false);
+        txtMotivo.setEnabled(false);
         btnEditar.setEnabled(true);
         btnEliminar.setEnabled(true);
         btnNuevo.setEnabled(true);
@@ -71,7 +72,9 @@ public void estadoInicio(){
         if (cantidad > 0) {
             for (Devolucion devolucion : lista) {
                 fila[0] = devolucion.getCodigo();
-                fila[1] = devolucion.getFecha();
+                SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+                String fechaDate = formato.format(devolucion.getFecha());
+                fila[1] = fechaDate;
                 fila[2] = devolucion.getMotivo();
                 fila[3] = devolucion.getMiPiezaRecambio();
 
@@ -418,7 +421,7 @@ public void estadoInicio(){
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-try {
+        try {
             Date fechaD = null;
             String fecha = txtFecha.getText();
             String motivo = txtMotivo.getText();
@@ -431,7 +434,7 @@ try {
             PiezaRecambio pieza = (PiezaRecambio)cmbPieza.getSelectedItem();
             
             if(bandera.equals("nuevo")){
-                this.cv.nuevaDevolucion(fechaD, motivo, true, pieza);
+                this.cv.nuevaDevolucion(fechaD, motivo, true, pieza, codigoDeposito);
                 bandera = "";
                 estadoInicio();
             }else{
@@ -471,19 +474,18 @@ try {
 
     private void btnBusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBusquedaActionPerformed
         if((!txtFechaBusqueda.getText().isEmpty())){
-            Date fechaD = null;
-            String fechaBusqueda = txtFechaBusqueda.getText();
+            
             try {
+                Date fechaD = null;
+                String fechaBusqueda = txtFechaBusqueda.getText();
+                SimpleDateFormat formato = new SimpleDateFormat("yyyy/MM/dd");
                 fechaD = util.ParseFecha(fechaBusqueda, "Error: La fecha de Busqueda ingresa no es válida. Formato: 'dd-MM-yyyy'");
+                String fBusqueda = formato.format(fechaD);
+                cargarTabla(tblDevoluciones, cv.traerDevolucionConDeposito(codigoDeposito, fBusqueda));
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, ex.getMessage());
             }
 
-            try {
-                cargarTabla(tblDevoluciones, cv.traerDevolucionConDeposito(codigoDeposito, fechaD));
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(null, ex.getMessage());
-            }
         }else{
             JOptionPane.showMessageDialog(null, "Los campos de busqueda están vacios.");
         }
@@ -524,7 +526,7 @@ try {
                 int seleccion = JOptionPane.showConfirmDialog(null, "¿Está seguro desea eliminar la Devolución?", "Input", JOptionPane.YES_NO_OPTION);
                 if (seleccion == JOptionPane.YES_OPTION) {
                     int codigo = Integer.valueOf(tblDevoluciones.getValueAt(tblDevoluciones.getSelectedRow(), 0).toString());
-                    cv.eliminarCliente(codigo);
+                    cv.eliminarDevolucion(codigo, codigoDeposito);
                     cargarTabla(tblDevoluciones, cv.traerDevolucionConDeposito(codigoDeposito));
                 }
             }else{
