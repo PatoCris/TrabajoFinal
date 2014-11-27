@@ -144,31 +144,31 @@ public void estadoInicio(){
 
         jLabel2.setFont(new java.awt.Font("Politica", 0, 16)); // NOI18N
         jLabel2.setText("Código:");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(28, 23, -1, -1));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Politica", 0, 16)); // NOI18N
         jLabel3.setText("D.N.I:");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(41, 50, -1, -1));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Politica", 0, 16)); // NOI18N
         jLabel4.setText("Nombre:");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 84, -1, -1));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 60, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Politica", 0, 16)); // NOI18N
         jLabel5.setText("Apellido:");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 111, -1, -1));
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 60, -1, -1));
 
         jLabel6.setFont(new java.awt.Font("Politica", 0, 16)); // NOI18N
         jLabel6.setText("Teléfono:");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 140, -1, -1));
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 60, -1, -1));
 
         jLabel7.setFont(new java.awt.Font("Politica", 0, 16)); // NOI18N
         jLabel7.setText("Dirección:");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 60, -1, -1));
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 100, -1, -1));
 
         jLabel8.setFont(new java.awt.Font("Politica", 0, 16)); // NOI18N
         jLabel8.setText("CUIL:");
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 30, -1, -1));
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 100, -1, -1));
 
         txtCodigo.setEditable(false);
         txtCodigo.setToolTipText("");
@@ -181,19 +181,24 @@ public void estadoInicio(){
                 txtDniKeyTyped(evt);
             }
         });
-        jPanel1.add(txtDni, new org.netbeans.lib.awtextra.AbsoluteConstraints(72, 53, 106, -1));
+        jPanel1.add(txtDni, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 60, 106, -1));
 
         txtNombre.setToolTipText("");
-        jPanel1.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(72, 87, 141, -1));
+        jPanel1.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 60, 230, -1));
 
         txtApellido.setToolTipText("");
-        jPanel1.add(txtApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(72, 114, 141, -1));
+        jPanel1.add(txtApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 60, 170, -1));
 
         txtTelefono.setToolTipText("");
-        jPanel1.add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(73, 143, 140, -1));
+        txtTelefono.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTelefonoKeyTyped(evt);
+            }
+        });
+        jPanel1.add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 60, 140, -1));
 
         txtDireccion.setToolTipText("");
-        jPanel1.add(txtDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 60, 250, -1));
+        jPanel1.add(txtDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 100, 230, -1));
 
         txtCuil.setToolTipText("");
         txtCuil.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -201,17 +206,17 @@ public void estadoInicio(){
                 txtCuilKeyTyped(evt);
             }
         });
-        jPanel1.add(txtCuil, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 30, 140, -1));
+        jPanel1.add(txtCuil, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 100, 140, -1));
 
         jLabel10.setFont(new java.awt.Font("Politica", 0, 16)); // NOI18N
         jLabel10.setText("Localidad:");
-        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 150, -1, -1));
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, -1, -1));
 
         jLabel11.setFont(new java.awt.Font("Politica", 0, 16)); // NOI18N
         jLabel11.setText("Usuario:");
-        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 90, -1, -1));
-        jPanel1.add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 90, 161, -1));
-        jPanel1.add(txtClave, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 120, 161, -1));
+        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 100, -1, -1));
+        jPanel1.add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 100, 161, -1));
+        jPanel1.add(txtClave, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 100, 161, -1));
 
         btnGuardar.setFont(new java.awt.Font("Politica", 0, 16)); // NOI18N
         btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/save.png"))); // NOI18N
@@ -245,10 +250,11 @@ public void estadoInicio(){
 
         jLabel13.setFont(new java.awt.Font("Politica", 0, 16)); // NOI18N
         jLabel13.setText("Contraseña:");
-        jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 120, -1, -1));
+        jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 100, -1, -1));
 
         cmbLocalidad.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel1.add(cmbLocalidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 150, 160, -1));
+        cmbLocalidad.setNextFocusableComponent(btnGuardar);
+        jPanel1.add(cmbLocalidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 140, 160, -1));
 
         jLabel1.setFont(new java.awt.Font("Politica", 1, 24)); // NOI18N
         jLabel1.setText("GESTIÓN DE CLIENTES");
@@ -430,7 +436,7 @@ public void estadoInicio(){
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(47, 47, 47))
@@ -608,6 +614,11 @@ public void estadoInicio(){
             cmbLocalidad.getModel().setSelectedItem((Localidad)tblClientes.getValueAt(tblClientes.getSelectedRow(), 9));
         }
     }//GEN-LAST:event_tblClientesMouseClicked
+
+    private void txtTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoKeyTyped
+        char c = evt.getKeyChar();
+        if(c<'0' || c>'9' ) evt.consume();
+    }//GEN-LAST:event_txtTelefonoKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

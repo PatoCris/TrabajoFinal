@@ -58,14 +58,8 @@ public class frmMenu extends javax.swing.JFrame {
         mnuModelo = new javax.swing.JMenuItem();
         mnuGestionEquipamiento = new javax.swing.JMenuItem();
         mnuGestionSegmento = new javax.swing.JMenuItem();
-        jMenu4 = new javax.swing.JMenu();
-        jMenuItem7 = new javax.swing.JMenuItem();
-        jMenuItem8 = new javax.swing.JMenuItem();
-        jMenuItem9 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         jMenuItem11 = new javax.swing.JMenuItem();
-        jMenuItem12 = new javax.swing.JMenuItem();
-        jMenuItem13 = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
         mnuEspecialidades = new javax.swing.JMenuItem();
         mnuEmpleados = new javax.swing.JMenuItem();
@@ -76,7 +70,6 @@ public class frmMenu extends javax.swing.JFrame {
         mnuDeposito = new javax.swing.JMenu();
         mnuGestionAccesorios = new javax.swing.JMenuItem();
         mnuPiezaRecambio = new javax.swing.JMenuItem();
-        mnuEjemplares = new javax.swing.JMenuItem();
         mnuPedidos = new javax.swing.JMenuItem();
         mnuServicio = new javax.swing.JMenu();
         mnuTipoReparacion = new javax.swing.JMenuItem();
@@ -192,19 +185,6 @@ public class frmMenu extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu3);
 
-        jMenu4.setText("Agenda Mensual");
-
-        jMenuItem7.setText("Gestión Agenda");
-        jMenu4.add(jMenuItem7);
-
-        jMenuItem8.setText("Gestión Módulos");
-        jMenu4.add(jMenuItem8);
-
-        jMenuItem9.setText("Gestión Turno");
-        jMenu4.add(jMenuItem9);
-
-        jMenuBar1.add(jMenu4);
-
         jMenu5.setText("Taller");
 
         jMenuItem11.setText("Gestión Taller");
@@ -214,12 +194,6 @@ public class frmMenu extends javax.swing.JFrame {
             }
         });
         jMenu5.add(jMenuItem11);
-
-        jMenuItem12.setText("Gestión Sector");
-        jMenu5.add(jMenuItem12);
-
-        jMenuItem13.setText("Gestión Depósito");
-        jMenu5.add(jMenuItem13);
 
         jMenuBar1.add(jMenu5);
 
@@ -292,14 +266,6 @@ public class frmMenu extends javax.swing.JFrame {
             }
         });
         mnuDeposito.add(mnuPiezaRecambio);
-
-        mnuEjemplares.setText("Gestión Ejemplares");
-        mnuEjemplares.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnuEjemplaresActionPerformed(evt);
-            }
-        });
-        mnuDeposito.add(mnuEjemplares);
 
         mnuPedidos.setText("Gestion Pedidos");
         mnuPedidos.addActionListener(new java.awt.event.ActionListener() {
@@ -561,17 +527,6 @@ public class frmMenu extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_mnuGestionProveedoresActionPerformed
 
-    private void mnuEjemplaresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuEjemplaresActionPerformed
-//        GestionEjemplar miGestionEjemplar;
-//        try {
-//            miGestionEjemplar = new GestionEjemplar(cv);
-//            miGestionEjemplar.setVisible(true);
-//            jdpPanelPrincipal.add(miGestionEjemplar);
-//        } catch (Exception e) {
-//            JOptionPane.showMessageDialog(null, e.getMessage());
-//        }
-    }//GEN-LAST:event_mnuEjemplaresActionPerformed
-
     private void mnuMecanicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuMecanicoActionPerformed
         GestionMecanico miGMecanico;
         try {
@@ -703,27 +658,20 @@ public class frmMenu extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem11;
-    private javax.swing.JMenuItem jMenuItem12;
-    private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JMenuItem jMenuItem7;
-    private javax.swing.JMenuItem jMenuItem8;
-    private javax.swing.JMenuItem jMenuItem9;
     public static javax.swing.JDesktopPane jdpPanelPrincipal;
     private javax.swing.JMenuItem mnuAcercaDe;
     private javax.swing.JMenuItem mnuAnomalias;
     private javax.swing.JMenu mnuDeposito;
     private javax.swing.JMenuItem mnuDiagnosticos;
-    private javax.swing.JMenuItem mnuEjemplares;
     private javax.swing.JMenuItem mnuEmpleados;
     private javax.swing.JMenuItem mnuEspecialidades;
     private javax.swing.JMenuItem mnuGestionAccesorios;

@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package vista;
 
 import Modelo.Anomalia;
@@ -22,10 +21,13 @@ import javax.swing.table.DefaultTableModel;
  * @author Asus
  */
 public class GestionDiagnostico extends javax.swing.JInternalFrame {
+
     private ControladoraVista cv;
     private UtilVista util;
     private String bandera;
     private DefaultTableModel miTabla;
+    private boolean vinculos;
+
     /**
      * Creates new form GestionDiagnostico
      */
@@ -36,9 +38,10 @@ public class GestionDiagnostico extends javax.swing.JInternalFrame {
         cargarTabla(tblDiagnostico, cv.traerDiagnostico(true));
         cmbTipoDiagnostico.setModel(util.cargarCombo(cv.traerTipoDiagnostico(true)));
         estadoInicio();
+        vinculos = false;
     }
-    
-     public void limpiar() {
+
+    public void limpiar() {
         txtCodigo.setText("");
         txtNombre.setText("");
         tarDescripcion.setText("");
@@ -58,6 +61,7 @@ public class GestionDiagnostico extends javax.swing.JInternalFrame {
         btnEditar.setEnabled(true);
         btnEliminar.setEnabled(true);
         btnNuevo.setEnabled(true);
+        txtCodigo.setEditable(false);
         txtCosto.setEnabled(false);
         txtImpuesto.setEnabled(false);
         cmbTipoDiagnostico.setEnabled(false);
@@ -513,7 +517,7 @@ public class GestionDiagnostico extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-       try {
+        try {
             String nombre = txtNombre.getText();
             util.verificarNombre(nombre);
             String costoS = txtCosto.getText();
@@ -521,8 +525,8 @@ public class GestionDiagnostico extends javax.swing.JInternalFrame {
             String impuestoS = txtImpuesto.getText();
             util.verificarString(impuestoS, "Impuesto");
             String descripcion = tarDescripcion.getText();
-            TipoDiagnostico unTipo = (TipoDiagnostico)cmbTipoDiagnostico.getSelectedItem();
-            
+            TipoDiagnostico unTipo = (TipoDiagnostico) cmbTipoDiagnostico.getSelectedItem();
+
             double costo = Double.valueOf(costoS);
             double impuesto = Double.valueOf(impuestoS);
             if (bandera.equals("nuevo")) {
@@ -536,11 +540,11 @@ public class GestionDiagnostico extends javax.swing.JInternalFrame {
                     estadoInicio();
                 }
             }
-            cargarTabla(tblDiagnostico, cv.traerDiagnostico(true)); 
+            cargarTabla(tblDiagnostico, cv.traerDiagnostico(true));
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
-                              
+
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -553,6 +557,7 @@ public class GestionDiagnostico extends javax.swing.JInternalFrame {
         btnGuardar.setEnabled(true);
         txtNombre.setEnabled(true);
         tarDescripcion.setEnabled(true);
+        txtCodigo.setEnabled(false);
         txtCosto.setEnabled(true);
         txtImpuesto.setEnabled(true);
         cmbTipoDiagnostico.setEnabled(true);
@@ -570,14 +575,14 @@ public class GestionDiagnostico extends javax.swing.JInternalFrame {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         try {
-            if(tblDiagnostico.getSelectedRow() != -1){
+            if (tblDiagnostico.getSelectedRow() != -1) {
                 int seleccion = JOptionPane.showConfirmDialog(null, "¿Está seguro desea eliminar el diagnóstico?", "Input", JOptionPane.YES_NO_OPTION);
                 if (seleccion == JOptionPane.YES_OPTION) {
                     int codigo = Integer.valueOf(tblDiagnostico.getValueAt(tblDiagnostico.getSelectedRow(), 0).toString());
                     cv.elminarDiagnostico(codigo);
                     cargarTabla(tblDiagnostico, cv.traerDiagnostico(true));
                 }
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(null, "Seleccione un Diagnóstico de la lista.");
             }
         } catch (Exception e) {
@@ -604,14 +609,14 @@ public class GestionDiagnostico extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnBusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBusquedaActionPerformed
-        if(!txtBusqueda.getText().isEmpty()){
+        if (!txtBusqueda.getText().isEmpty()) {
             String busqueda = txtBusqueda.getText();
             try {
                 cargarTabla(tblDiagnostico, cv.traerDiagnosticoNombre(true, busqueda));
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, ex.getMessage());
             }
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "El campo de busqueda está vacio.");
         }
     }//GEN-LAST:event_btnBusquedaActionPerformed
@@ -626,7 +631,7 @@ public class GestionDiagnostico extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void tblDiagnosticoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDiagnosticoMouseClicked
-        if(tblDiagnostico.getSelectedRow() != -1){
+        if (tblDiagnostico.getSelectedRow() != -1) {
             txtCodigo.setText(tblDiagnostico.getValueAt(tblDiagnostico.getSelectedRow(), 0).toString());
             txtNombre.setText(tblDiagnostico.getValueAt(tblDiagnostico.getSelectedRow(), 1).toString());
             tarDescripcion.setText(tblDiagnostico.getValueAt(tblDiagnostico.getSelectedRow(), 2).toString());
@@ -634,7 +639,7 @@ public class GestionDiagnostico extends javax.swing.JInternalFrame {
             txtImpuesto.setText(tblDiagnostico.getValueAt(tblDiagnostico.getSelectedRow(), 4).toString());
             TipoDiagnostico tipo = (TipoDiagnostico) tblDiagnostico.getValueAt(tblDiagnostico.getSelectedRow(), 5);
             cmbTipoDiagnostico.getModel().setSelectedItem(tipo);
-            
+
             try {
                 int codigo = Integer.valueOf(tblDiagnostico.getValueAt(tblDiagnostico.getSelectedRow(), 0).toString());
                 Diagnostico unDiagnostico;
@@ -644,8 +649,7 @@ public class GestionDiagnostico extends javax.swing.JInternalFrame {
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, ex.getMessage());
             }
-            
-        
+
         }
     }//GEN-LAST:event_tblDiagnosticoMouseClicked
 
@@ -655,7 +659,7 @@ public class GestionDiagnostico extends javax.swing.JInternalFrame {
                 try {
                     int codigo = Integer.valueOf(tblDiagnostico.getValueAt(tblDiagnostico.getSelectedRow(), 0).toString());
                     Diagnostico unDiagnostico = cv.traerDiagnostico(codigo);
-                    Anomalia miAnomalia = (Anomalia)lstAnomaliasDiag.getSelectedValue();
+                    Anomalia miAnomalia = (Anomalia) lstAnomaliasDiag.getSelectedValue();
                     cv.quitarAnomaliaDeDiagnostico(miAnomalia.getCodigo(), codigo);
                     List<Anomalia> anomaliasSinV = cv.traerAnomaliasSinVinculoConDiagnostico(unDiagnostico);
                     List<Anomalia> misAnomalias = cv.traerAnomaliasVinculadoDiagnostico(unDiagnostico);
@@ -699,23 +703,27 @@ public class GestionDiagnostico extends javax.swing.JInternalFrame {
 
     private void btnVinculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVinculosActionPerformed
         if (tblDiagnostico.getSelectedRow() != -1) {
-            lstAnomalias.setEnabled(true);
-            lstAnomaliasDiag.setEnabled(true);
-            btnAgregarAnomalia.setEnabled(true);
-            btnQuitarAnomalia.setEnabled(true);
-            int codigo = Integer.valueOf(tblDiagnostico.getValueAt(tblDiagnostico.getSelectedRow(), 0).toString());
-            Diagnostico unDiagnostico;
-            try {
-               
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(null, ex.getMessage());
+            if (!vinculos) {
+                lstAnomalias.setEnabled(true);
+                lstAnomaliasDiag.setEnabled(true);
+                btnAgregarAnomalia.setEnabled(true);
+                btnQuitarAnomalia.setEnabled(true);
+                int codigo = Integer.valueOf(tblDiagnostico.getValueAt(tblDiagnostico.getSelectedRow(), 0).toString());
+
+                vinculos = true;
+            } else {
+                lstAnomalias.setEnabled(false);
+                lstAnomaliasDiag.setEnabled(false);
+                btnAgregarAnomalia.setEnabled(false);
+                btnQuitarAnomalia.setEnabled(false);
+                vinculos = false;
             }
-            
+
         }
     }//GEN-LAST:event_btnVinculosActionPerformed
 
     private void txtImpuestoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtImpuestoKeyTyped
-       char c = evt.getKeyChar();
+        char c = evt.getKeyChar();
         if (c < '0' || c > '9' || txtImpuesto.getText().length() > 2) {
             evt.consume();
         }

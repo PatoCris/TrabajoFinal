@@ -98,8 +98,8 @@ public class GestionProveedor extends javax.swing.JInternalFrame {
         jLabel7 = new javax.swing.JLabel();
         cmbRazonSocial = new javax.swing.JComboBox();
         txtDireccion = new javax.swing.JTextField();
-        txtTelefono = new javax.swing.JTextField();
         txtCuit = new javax.swing.JTextField();
+        txtTelefono = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         txtBusqueda = new javax.swing.JTextField();
@@ -169,17 +169,17 @@ public class GestionProveedor extends javax.swing.JInternalFrame {
         jLabel7.setFont(new java.awt.Font("Politica", 0, 16)); // NOI18N
         jLabel7.setText("CUIT:");
 
-        cmbRazonSocial.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "[SELECCIONAR]", "S.A.", "S.R.L", "S.dH", "S.C.S", "Cooperativa" }));
-
-        txtTelefono.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtTelefonoKeyTyped(evt);
-            }
-        });
+        cmbRazonSocial.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "[SELECCIONAR]", "S.A.", "S.R.L", "S.dH", "S.C.S", "Cooperativa", "Otra" }));
 
         txtCuit.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtCuitKeyTyped(evt);
+            }
+        });
+
+        txtTelefono.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTelefonoKeyTyped(evt);
             }
         });
 
@@ -205,8 +205,8 @@ public class GestionProveedor extends javax.swing.JInternalFrame {
                             .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cmbRazonSocial, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(txtCuit, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
-                                .addComponent(txtTelefono, javax.swing.GroupLayout.Alignment.LEADING)))
+                                .addComponent(txtTelefono, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txtCuit, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)))
                         .addGap(0, 189, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -230,7 +230,7 @@ public class GestionProveedor extends javax.swing.JInternalFrame {
                     .addComponent(txtDireccion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
@@ -408,7 +408,7 @@ public class GestionProveedor extends javax.swing.JInternalFrame {
                             .addComponent(btnGuardar)
                             .addComponent(btnCancelar)
                             .addComponent(btnNuevo))
-                        .addGap(0, 67, Short.MAX_VALUE))
+                        .addGap(0, 69, Short.MAX_VALUE))
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -434,9 +434,10 @@ public class GestionProveedor extends javax.swing.JInternalFrame {
             String telefono = txtTelefono.getText();
             String cuit = (txtCuit.getText());
             util.verificarNombre(nombre);
-            util.verificarCuit(cuit);
             util.verificarCombos(cmbRazonSocial.getSelectedItem().toString(), "Razón Social");
             util.verificarString(telefono, "Teléfono");
+            util.verificarCuit(cuit);
+            
             long cuitn = Long.valueOf(txtCuit.getText());
             if (bandera.equals("nuevo")) {
                 this.cv.nuevoProveedor(nombre, rs, direccion, telefono, cuitn);
@@ -552,7 +553,7 @@ public class GestionProveedor extends javax.swing.JInternalFrame {
 
     private void txtTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoKeyTyped
         char c = evt.getKeyChar();
-        if(c<'0' || c>'9' || txtCuit.getText().length() > 10) evt.consume();
+        if(c<'0' || c>'9' ) evt.consume();
     }//GEN-LAST:event_txtTelefonoKeyTyped
 
 

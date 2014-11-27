@@ -209,6 +209,7 @@ public class GestionPedido extends javax.swing.JInternalFrame {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        txtFecha.setNextFocusableComponent(txtHora);
 
         jLabel5.setFont(new java.awt.Font("Politica", 0, 16)); // NOI18N
         jLabel5.setText("Hora:");
@@ -218,7 +219,9 @@ public class GestionPedido extends javax.swing.JInternalFrame {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        txtHora.setNextFocusableComponent(txtCantidad);
 
+        txtCantidad.setNextFocusableComponent(chkParaRecambio);
         txtCantidad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtCantidadActionPerformed(evt);
@@ -235,9 +238,11 @@ public class GestionPedido extends javax.swing.JInternalFrame {
 
         chkParaRecambio.setFont(new java.awt.Font("Politica", 0, 16)); // NOI18N
         chkParaRecambio.setText("Para Recambio");
+        chkParaRecambio.setNextFocusableComponent(chkAutorizado);
 
         chkAutorizado.setFont(new java.awt.Font("Politica", 0, 16)); // NOI18N
         chkAutorizado.setText("Autorizado");
+        chkAutorizado.setNextFocusableComponent(tblClientes);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Búsqueda de Cliente", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Politica", 0, 16))); // NOI18N
 
@@ -326,6 +331,7 @@ public class GestionPedido extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
+        tblClientes.setNextFocusableComponent(cmbVehiculo);
         tblClientes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblClientesMouseClicked(evt);
@@ -355,6 +361,8 @@ public class GestionPedido extends javax.swing.JInternalFrame {
         jLabel7.setFont(new java.awt.Font("Politica", 0, 16)); // NOI18N
         jLabel7.setText("Vehiculo:");
 
+        cmbVehiculo.setNextFocusableComponent(cmbJTaller);
+
         jLabel8.setFont(new java.awt.Font("Politica", 0, 16)); // NOI18N
         jLabel8.setText("Jefe de Taller:");
 
@@ -363,6 +371,12 @@ public class GestionPedido extends javax.swing.JInternalFrame {
 
         jLabel11.setFont(new java.awt.Font("Politica", 0, 16)); // NOI18N
         jLabel11.setText("Pieza de Recambio:");
+
+        cmbJTaller.setNextFocusableComponent(cmbJDeposito);
+
+        cmbJDeposito.setNextFocusableComponent(cmbPieza);
+
+        cmbPieza.setNextFocusableComponent(btnGuardar);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -464,6 +478,7 @@ public class GestionPedido extends javax.swing.JInternalFrame {
         btnGuardar.setFont(new java.awt.Font("Politica", 0, 16)); // NOI18N
         btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/save.png"))); // NOI18N
         btnGuardar.setText("Guardar");
+        btnGuardar.setNextFocusableComponent(btnNuevo);
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGuardarActionPerformed(evt);
@@ -914,6 +929,7 @@ public class GestionPedido extends javax.swing.JInternalFrame {
             miGestionInfo = new GestionInforme(cv, codigo);
             miGestionInfo.setVisible(true);
             frmMenu.jdpPanelPrincipal.add(miGestionInfo);
+            this.setIcon(true);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }

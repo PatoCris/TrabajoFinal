@@ -58,5 +58,10 @@ public class Diagnostico extends Servicio implements Serializable{
         this.unTipoDiagnostico = unTipoDiagnostico;
     }
 
+    @Override
+    public String toString() {
+        return getNombre();
+    }
+
     
 }

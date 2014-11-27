@@ -714,25 +714,26 @@ public class ControladoraPrincipal {
         unPedido.setUnVehiculo(unVehiculo);
         cp.editarPedido(unPedido);
     }
-    public void nuevoPedido(Date fecha, Date hora, String descripcion, int cantidad, boolean autorizado, boolean paraRecambio, boolean activo, JefeDeposito unJefeDeposito, JefeTaller unJefeTaller, Cliente unCliente) throws Exception{
-        Pedido unPedido1 = new Pedido(fecha, hora, descripcion, cantidad, autorizado, paraRecambio,true, unJefeDeposito, unJefeTaller, unCliente);
-        cp.nuevoPedido(unPedido1);
-    }
-    public void editarPedido(int codigo, Date fecha, Date hora, String descripcion, int cantidad, boolean autorizado, boolean paraRecambio, boolean activo, JefeDeposito unJefeDeposito, JefeTaller unJefeTaller, Cliente unCliente) throws Exception{
-        Pedido unPedido1 = cp.traerPedido(codigo);
-        unPedido1.setFecha(fecha);
-        unPedido1.setHora(hora);
-        unPedido1.setDescripcion(descripcion);
-        unPedido1.setCantidad(cantidad);
-        unPedido1.setParaRecambio(paraRecambio);
-        unPedido1.setActivo(activo);
-        unPedido1.setUnJefeDeposito(unJefeDeposito);
-        unPedido1.setUnJefeTaller(unJefeTaller);
-        unPedido1.setUnCliente(unCliente);
-        //faltan todos los set
-        cp.editarPedido(unPedido1);
-
-    }
+    
+//    public void nuevoPedido(Date fecha, Date hora, String descripcion, int cantidad, boolean autorizado, boolean paraRecambio, boolean activo, JefeDeposito unJefeDeposito, JefeTaller unJefeTaller, Cliente unCliente, PiezaRecambio unaPieza, Vehiculo unVehiculo) throws Exception{
+//        Pedido unPedido1 = new Pedido(fecha, hora, descripcion, cantidad, autorizado, paraRecambio,true, unJefeDeposito, unJefeTaller, unCliente,unaPieza, unVehiculo);
+//        cp.nuevoPedido(unPedido1);
+//    }
+//    public void editarPedido(int codigo, Date fecha, Date hora, String descripcion, int cantidad, boolean autorizado, boolean paraRecambio, boolean activo, JefeDeposito unJefeDeposito, JefeTaller unJefeTaller, Cliente unCliente) throws Exception{
+//        Pedido unPedido1 = cp.traerPedido(codigo);
+//        unPedido1.setFecha(fecha);
+//        unPedido1.setHora(hora);
+//        unPedido1.setDescripcion(descripcion);
+//        unPedido1.setCantidad(cantidad);
+//        unPedido1.setParaRecambio(paraRecambio);
+//        unPedido1.setActivo(activo);
+//        unPedido1.setUnJefeDeposito(unJefeDeposito);
+//        unPedido1.setUnJefeTaller(unJefeTaller);
+//        unPedido1.setUnCliente(unCliente);
+//        //faltan todos los set
+//        cp.editarPedido(unPedido1);
+//
+//    }
     public List<Pedido> traerPedidos(boolean activo) throws Exception{
         return cp.traerPedidos(activo);
     }

@@ -55,7 +55,7 @@ public class GestionTipoDiagnostico extends javax.swing.JInternalFrame {
     }
 
     public void cargarTabla(JTable laTabla, List<TipoDiagnostico> lista) throws Exception {
-        miTabla = new DefaultTableModel();
+        miTabla = new DefaultTableModel( );
         String cabecera[] = {"Código", "Nombre", "Descripción", "Cant. Modulos"};
         miTabla.setColumnIdentifiers(cabecera);
         Object fila[] = new Object[miTabla.getColumnCount()];
@@ -496,6 +496,7 @@ public class GestionTipoDiagnostico extends javax.swing.JInternalFrame {
             btnEditar.setEnabled(false);
             btnNuevo.setEnabled(false);
             btnEliminar.setEnabled(false);
+            txtCantModulos.setEnabled(false);
         } else {
             JOptionPane.showMessageDialog(null, "Seleccione un Tipo de Diagnóstico para editar.");
         }
@@ -536,6 +537,7 @@ public class GestionTipoDiagnostico extends javax.swing.JInternalFrame {
             GestionProceso miGProceso = new GestionProceso(cv, codigo);
             miGProceso.setVisible(true);
             frmMenu.jdpPanelPrincipal.add(miGProceso);
+            this.setIcon(true);
             }catch(Exception ex){
                 JOptionPane.showMessageDialog(null, ex.getMessage());
             }
