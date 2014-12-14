@@ -152,7 +152,7 @@ public class EjemplarJpaController implements Serializable {
         Query query = getEntityManager().createQuery(sql);
         return (List<Ejemplar>)query.getResultList();
     }
-        public List<Ejemplar> traerEjemplaresSinDeposito(boolean activo){
+    public List<Ejemplar> traerEjemplaresSinDeposito(boolean activo){
         String sql ="SELECT Object(e) FROM Ejemplar e where e.activo = "+activo+" AND e.codigo NOT IN (SELECT me.codigo FROM  Deposito d INNER JOIN d.misEjemplares me)";
         Query query = getEntityManager().createQuery(sql);
         return (List<Ejemplar>)query.getResultList();
@@ -173,5 +173,17 @@ public class EjemplarJpaController implements Serializable {
         String sql ="SELECT MAX(e.codigo) FROM Ejemplar e";
         Query query = getEntityManager().createQuery(sql);
         return (int)query.getSingleResult();
+    }
+    
+    public List<Ejemplar> traerEjemplaresSinDetalle(boolean activo){
+        String sql ="SELECT Object(e) FROM Ejemplar e where e.activo = "+activo+" AND e.codigo NOT IN (SELECT me.codigo FROM  Detalle d INNER JOIN d.misEjemplares me)";
+        Query query = getEntityManager().createQuery(sql);
+        return (List<Ejemplar>)query.getResultList();
+    }
+    
+    public List<Ejemplar> traerEjemplaresConDetalle(int detalle, boolean activo){
+        String sql ="SELECT Object(e) FROM Ejemplar e where e.activo = "+activo+" AND e.codigo IN (SELECT me.codigo FROM  Detalle d INNER JOIN d.misEjemplares me WHERE d.codigo ="+detalle+")";
+        Query query = getEntityManager().createQuery(sql);
+        return (List<Ejemplar>)query.getResultList();
     }
 }

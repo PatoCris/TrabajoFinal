@@ -92,6 +92,11 @@ public class Ejemplar implements Serializable {
     public void setUnProveedor(Proveedor unProveedor) {
         this.unProveedor = unProveedor;
     }
+
+    @Override
+    public String toString() {
+        return codigo + " - " + unaPiezaRecambio.getNombre();
+    }
     
     
 }

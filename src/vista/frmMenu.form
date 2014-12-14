@@ -70,16 +70,6 @@
                 <Property name="text" type="java.lang.String" value="Gesti&#xf3;n Estado"/>
               </Properties>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem4">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Gesti&#xf3;n Prueba Rodaje"/>
-              </Properties>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem10">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Gesti&#xf3;n Garant&#xed;a"/>
-              </Properties>
-            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mnuMarca">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Gesti&#xf3;n Marca"/>
@@ -222,7 +212,7 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="mnuTipoReparacion">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Gesti&#xf3;n Tipos de Reparaci&#xf3;n"/>
+                <Property name="text" type="java.lang.String" value="Grupos de Repuesto"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mnuTipoReparacionActionPerformed"/>
@@ -238,7 +228,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mnuTipoDiagnostico">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Gesti&#xf3;n Tipo de Diagn&#xf3;stico"/>
+                <Property name="text" type="java.lang.String" value="Gesti&#xf3;n Tipo de Servicios"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mnuTipoDiagnosticoActionPerformed"/>
@@ -254,16 +244,11 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mnuDiagnosticos">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Gesti&#xf3;n de Diagn&#xf3;sticos"/>
+                <Property name="text" type="java.lang.String" value="Gesti&#xf3;n de Servicios"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mnuDiagnosticosActionPerformed"/>
               </Events>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="mnuReparaciones">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Gesti&#xf3;n de Reparaciones"/>
-              </Properties>
             </MenuItem>
           </SubComponents>
         </Menu>

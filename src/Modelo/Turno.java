@@ -4,13 +4,14 @@ package Modelo;
 
 import java.io.Serializable;
 import java.util.*;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -39,13 +40,16 @@ public class Turno implements Serializable {
     @Column(name = "hora")
     @Temporal(javax.persistence.TemporalType.TIME)
     private java.util.Date hora;
+    @Column(name = "fechaFin")
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private java.util.Date fechaFin;
+    @Column(name = "horaFin")
+    @Temporal(javax.persistence.TemporalType.TIME)
+    private java.util.Date horaFin;
     @Column(name = "activo")
     private boolean activo;
-    @OneToMany
+    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
     private List<Modulo> misModulos = new LinkedList<>();
-    @JoinColumn(name="una_trazabilidad")
-    @OneToOne
-    private Trazabilidad unaTrazabilidad;
     @JoinColumn(name="un_servicio")
     @OneToOne
     private Servicio unServicio;
@@ -55,18 +59,18 @@ public class Turno implements Serializable {
     @JoinColumn(name="un_cliente")
     @OneToOne
     private Cliente unCliente;
+    
+     @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+    private List<Detalle> misDetalles = new LinkedList<>();
 
     public Turno() {
     }
 
-    public Turno( java.util.Date fecha, java.util.Date hora, Trazabilidad unaTrazabilidad, Servicio unServicio, Vehiculo unVehiculo, Cliente unCliente, boolean activo) {
-        this.fecha = fecha;
-        this.hora = hora;
-        this.unaTrazabilidad = unaTrazabilidad;
+    public Turno(boolean activo, Servicio unServicio, Vehiculo unVehiculo, Cliente unCliente) {
+        this.activo = activo;
         this.unServicio = unServicio;
         this.unVehiculo = unVehiculo;
         this.unCliente = unCliente;
-        this.activo = activo;
     }
 
     public int getCodigo() {
@@ -101,14 +105,6 @@ public class Turno implements Serializable {
         this.activo = activo;
     }
 
-    public Trazabilidad getUnaTrazabilidad() {
-        return unaTrazabilidad;
-    }
-
-    public void setUnaTrazabilidad(Trazabilidad unaTrazabilidad) {
-        this.unaTrazabilidad = unaTrazabilidad;
-    }
-
     public Servicio getUnServicio() {
         return unServicio;
     }
@@ -139,6 +135,30 @@ public class Turno implements Serializable {
 
     public void setMisModulos(List<Modulo> misModulos) {
         this.misModulos = misModulos;
+    }
+
+    public Date getFechaFin() {
+        return fechaFin;
+    }
+
+    public void setFechaFin(Date fechaFin) {
+        this.fechaFin = fechaFin;
+    }
+
+    public Date getHoraFin() {
+        return horaFin;
+    }
+
+    public void setHoraFin(Date horaFin) {
+        this.horaFin = horaFin;
+    }
+
+    public List<Detalle> getMisDetalles() {
+        return misDetalles;
+    }
+
+    public void setMisDetalles(List<Detalle> misDetalles) {
+        this.misDetalles = misDetalles;
     }
 
     

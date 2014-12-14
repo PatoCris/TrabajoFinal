@@ -165,4 +165,5 @@ public class AccesorioJpaController implements Serializable {
         Query query = getEntityManager().createQuery(sql);
         return (List<Accesorio>)query.getResultList();
     }
+
 }

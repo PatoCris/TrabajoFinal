@@ -3,7 +3,7 @@
 <Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JInternalFrameFormInfo">
   <Properties>
     <Property name="resizable" type="boolean" value="true"/>
-    <Property name="title" type="java.lang.String" value="Gesti&#xf3;n de Tipos de Reparaci&#xf3;n"/>
+    <Property name="title" type="java.lang.String" value="Grupo de Repuestos"/>
     <Property name="name" type="java.lang.String" value="frmGestionTipoReparacion" noResource="true"/>
   </Properties>
   <SyntheticProperties>
@@ -87,7 +87,7 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Politica" size="24" style="1"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="GESTI&#xd3;N DE TIPOS DE REPARACIONES"/>
+        <Property name="text" type="java.lang.String" value="GRUPO DE REPUESTOS"/>
       </Properties>
     </Component>
     <Container class="javax.swing.JPanel" name="jPanel1">

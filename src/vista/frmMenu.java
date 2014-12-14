@@ -52,8 +52,6 @@ public class frmMenu extends javax.swing.JFrame {
         jMenu3 = new javax.swing.JMenu();
         mnuVehiculo = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
-        jMenuItem10 = new javax.swing.JMenuItem();
         mnuMarca = new javax.swing.JMenuItem();
         mnuModelo = new javax.swing.JMenuItem();
         mnuGestionEquipamiento = new javax.swing.JMenuItem();
@@ -77,7 +75,6 @@ public class frmMenu extends javax.swing.JFrame {
         mnuTipoDiagnostico = new javax.swing.JMenuItem();
         mnuAnomalias = new javax.swing.JMenuItem();
         mnuDiagnosticos = new javax.swing.JMenuItem();
-        mnuReparaciones = new javax.swing.JMenuItem();
         mnuProveedores = new javax.swing.JMenu();
         mnuGestionProveedores = new javax.swing.JMenuItem();
 
@@ -144,12 +141,6 @@ public class frmMenu extends javax.swing.JFrame {
 
         jMenuItem3.setText("Gestión Estado");
         jMenu3.add(jMenuItem3);
-
-        jMenuItem4.setText("Gestión Prueba Rodaje");
-        jMenu3.add(jMenuItem4);
-
-        jMenuItem10.setText("Gestión Garantía");
-        jMenu3.add(jMenuItem10);
 
         mnuMarca.setText("Gestión Marca");
         mnuMarca.addActionListener(new java.awt.event.ActionListener() {
@@ -279,7 +270,7 @@ public class frmMenu extends javax.swing.JFrame {
 
         mnuServicio.setText("Servicios");
 
-        mnuTipoReparacion.setText("Gestión Tipos de Reparación");
+        mnuTipoReparacion.setText("Grupos de Repuesto");
         mnuTipoReparacion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnuTipoReparacionActionPerformed(evt);
@@ -295,7 +286,7 @@ public class frmMenu extends javax.swing.JFrame {
         });
         mnuServicio.add(mnuTipoAnomalia);
 
-        mnuTipoDiagnostico.setText("Gestión Tipo de Diagnóstico");
+        mnuTipoDiagnostico.setText("Gestión Tipo de Servicios");
         mnuTipoDiagnostico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnuTipoDiagnosticoActionPerformed(evt);
@@ -311,16 +302,13 @@ public class frmMenu extends javax.swing.JFrame {
         });
         mnuServicio.add(mnuAnomalias);
 
-        mnuDiagnosticos.setText("Gestión de Diagnósticos");
+        mnuDiagnosticos.setText("Gestión de Servicios");
         mnuDiagnosticos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnuDiagnosticosActionPerformed(evt);
             }
         });
         mnuServicio.add(mnuDiagnosticos);
-
-        mnuReparaciones.setText("Gestión de Reparaciones");
-        mnuServicio.add(mnuReparaciones);
 
         jMenuBar1.add(mnuServicio);
 
@@ -662,10 +650,8 @@ public class frmMenu extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem6;
     public static javax.swing.JDesktopPane jdpPanelPrincipal;
     private javax.swing.JMenuItem mnuAcercaDe;
@@ -688,7 +674,6 @@ public class frmMenu extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnuPerito;
     private javax.swing.JMenuItem mnuPiezaRecambio;
     private javax.swing.JMenu mnuProveedores;
-    private javax.swing.JMenuItem mnuReparaciones;
     private javax.swing.JMenu mnuServicio;
     private javax.swing.JMenuItem mnuTipoAnomalia;
     private javax.swing.JMenuItem mnuTipoDiagnostico;

@@ -48,8 +48,8 @@ public class GestionDiagnostico extends javax.swing.JInternalFrame {
         txtCosto.setText("");
         txtImpuesto.setText("");
         cmbTipoDiagnostico.setToolTipText("[SELECCIONAR]");
-        lstAnomaliasDiag.setModel(util.cargarLista(null));
-        lstAnomalias.setModel(util.cargarLista(null));
+//        lstAnomaliasDiag.setModel(util.cargarLista(null));
+//        lstAnomalias.setModel(util.cargarLista(null));
     }
 
     public void estadoInicio() {
@@ -65,9 +65,9 @@ public class GestionDiagnostico extends javax.swing.JInternalFrame {
         txtCosto.setEnabled(false);
         txtImpuesto.setEnabled(false);
         cmbTipoDiagnostico.setEnabled(false);
-        lstAnomaliasDiag.setEnabled(false);
-        lstAnomaliasDiag.setModel(util.cargarLista(null));
-        lstAnomalias.setModel(util.cargarLista(null));
+//        lstAnomaliasDiag.setEnabled(false);
+//        lstAnomaliasDiag.setModel(util.cargarLista(null));
+//        lstAnomalias.setModel(util.cargarLista(null));
         limpiar();
     }
 
@@ -103,10 +103,7 @@ public class GestionDiagnostico extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
         cmbTipoDiagnostico = new javax.swing.JComboBox();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        lstAnomaliasDiag = new javax.swing.JList();
         jLabel3 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -118,11 +115,6 @@ public class GestionDiagnostico extends javax.swing.JInternalFrame {
         txtNombre = new javax.swing.JTextField();
         txtCosto = new javax.swing.JTextField();
         txtImpuesto = new javax.swing.JTextField();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        lstAnomalias = new javax.swing.JList();
-        jLabel11 = new javax.swing.JLabel();
-        btnQuitarAnomalia = new javax.swing.JButton();
-        btnAgregarAnomalia = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         btnNuevo = new javax.swing.JButton();
@@ -137,23 +129,17 @@ public class GestionDiagnostico extends javax.swing.JInternalFrame {
         btnActualizar = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         tblDiagnostico = new javax.swing.JTable();
-        btnVinculos = new javax.swing.JToggleButton();
 
-        setTitle("Gestión de Diagnósticos");
+        setTitle("Gestión de Servicios");
         setName("frmDiagnostico"); // NOI18N
 
         jLabel1.setFont(new java.awt.Font("Politica", 1, 24)); // NOI18N
-        jLabel1.setText("GESTIÓN DE DIAGNÓSTICOS");
+        jLabel1.setText("GESTIÓN DE SERVICIOS");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
         jLabel2.setFont(new java.awt.Font("Politica", 0, 16)); // NOI18N
-        jLabel2.setText("Tipo de Diagnóstico:");
-
-        jLabel6.setFont(new java.awt.Font("Politica", 0, 16)); // NOI18N
-        jLabel6.setText("Anomalías del Diagnóstico:");
-
-        jScrollPane1.setViewportView(lstAnomaliasDiag);
+        jLabel2.setText("Tipo de Servicio:");
 
         jLabel3.setFont(new java.awt.Font("Politica", 0, 16)); // NOI18N
         jLabel3.setText("Código:");
@@ -186,72 +172,35 @@ public class GestionDiagnostico extends javax.swing.JInternalFrame {
             }
         });
 
-        jScrollPane4.setViewportView(lstAnomalias);
-
-        jLabel11.setFont(new java.awt.Font("Politica", 0, 16)); // NOI18N
-        jLabel11.setText("Anomalías:");
-
-        btnQuitarAnomalia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/agregar.png"))); // NOI18N
-        btnQuitarAnomalia.setEnabled(false);
-        btnQuitarAnomalia.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnQuitarAnomaliaActionPerformed(evt);
-            }
-        });
-
-        btnAgregarAnomalia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/desagregar.fw.png"))); // NOI18N
-        btnAgregarAnomalia.setEnabled(false);
-        btnAgregarAnomalia.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAgregarAnomaliaActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(47, 47, 47)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(47, 47, 47)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(cmbTipoDiagnostico, 0, 229, Short.MAX_VALUE)
-                                .addComponent(txtNombre)
-                                .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(txtImpuesto, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE)
-                                .addComponent(txtCosto, javax.swing.GroupLayout.Alignment.LEADING))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(46, 46, 46)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnQuitarAnomalia, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                        .addComponent(btnAgregarAnomalia, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(1, 1, 1)))))
-                        .addGap(17, 17, 17)
-                        .addComponent(jLabel11)))
-                .addGap(0, 119, Short.MAX_VALUE))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(cmbTipoDiagnostico, 0, 229, Short.MAX_VALUE)
+                        .addComponent(txtNombre)
+                        .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(txtImpuesto, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE)
+                        .addComponent(txtCosto, javax.swing.GroupLayout.Alignment.LEADING)))
+                .addGap(0, 136, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(79, 79, 79)
-                .addComponent(jScrollPane2)
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel9)
+                        .addGap(0, 415, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -277,26 +226,11 @@ public class GestionDiagnostico extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
                     .addComponent(cmbTipoDiagnostico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(23, 23, 23)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel9)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel11))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnQuitarAnomalia)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnAgregarAnomalia)
-                        .addGap(43, 43, 43))))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         btnGuardar.setFont(new java.awt.Font("Politica", 0, 16)); // NOI18N
@@ -451,14 +385,6 @@ public class GestionDiagnostico extends javax.swing.JInternalFrame {
                 .addContainerGap())
         );
 
-        btnVinculos.setFont(new java.awt.Font("Politica", 0, 16)); // NOI18N
-        btnVinculos.setText("Gestionar Vinculos");
-        btnVinculos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVinculosActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -483,8 +409,6 @@ public class GestionDiagnostico extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnNuevo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnVinculos)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnEditar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnEliminar)
@@ -501,15 +425,14 @@ public class GestionDiagnostico extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuardar)
                     .addComponent(btnCancelar)
                     .addComponent(btnNuevo)
                     .addComponent(btnSalir)
                     .addComponent(btnEliminar)
-                    .addComponent(btnEditar)
-                    .addComponent(btnVinculos))
+                    .addComponent(btnEditar))
                 .addContainerGap())
         );
 
@@ -564,8 +487,8 @@ public class GestionDiagnostico extends javax.swing.JInternalFrame {
         btnEditar.setEnabled(false);
         btnEliminar.setEnabled(false);
         btnNuevo.setEnabled(false);
-        lstAnomaliasDiag.setModel(util.cargarLista(null));
-        lstAnomalias.setModel(util.cargarLista(null));
+//        lstAnomaliasDiag.setModel(util.cargarLista(null));
+//        lstAnomalias.setModel(util.cargarLista(null));
         limpiar();
     }//GEN-LAST:event_btnNuevoActionPerformed
 
@@ -644,83 +567,14 @@ public class GestionDiagnostico extends javax.swing.JInternalFrame {
                 int codigo = Integer.valueOf(tblDiagnostico.getValueAt(tblDiagnostico.getSelectedRow(), 0).toString());
                 Diagnostico unDiagnostico;
                 unDiagnostico = cv.traerDiagnostico(codigo);
-                lstAnomalias.setModel(util.cargarLista(this.cv.traerAnomaliasSinVinculoConDiagnostico(unDiagnostico)));
-                lstAnomaliasDiag.setModel(util.cargarLista(this.cv.traerAnomaliasVinculadoDiagnostico(unDiagnostico)));
+//                lstAnomalias.setModel(util.cargarLista(this.cv.traerAnomaliasSinVinculoConDiagnostico(unDiagnostico)));
+//                lstAnomaliasDiag.setModel(util.cargarLista(this.cv.traerAnomaliasVinculadoDiagnostico(unDiagnostico)));
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, ex.getMessage());
             }
 
         }
     }//GEN-LAST:event_tblDiagnosticoMouseClicked
-
-    private void btnQuitarAnomaliaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuitarAnomaliaActionPerformed
-        if (tblDiagnostico.getSelectedRow() != -1) {
-            if (lstAnomaliasDiag.getSelectedValue() != null) {
-                try {
-                    int codigo = Integer.valueOf(tblDiagnostico.getValueAt(tblDiagnostico.getSelectedRow(), 0).toString());
-                    Diagnostico unDiagnostico = cv.traerDiagnostico(codigo);
-                    Anomalia miAnomalia = (Anomalia) lstAnomaliasDiag.getSelectedValue();
-                    cv.quitarAnomaliaDeDiagnostico(miAnomalia.getCodigo(), codigo);
-                    List<Anomalia> anomaliasSinV = cv.traerAnomaliasSinVinculoConDiagnostico(unDiagnostico);
-                    List<Anomalia> misAnomalias = cv.traerAnomaliasVinculadoDiagnostico(unDiagnostico);
-                    DefaultListModel danomaliasConV = util.cargarLista(misAnomalias);
-                    DefaultListModel danomaliasSinV = util.cargarLista(anomaliasSinV);
-                    lstAnomaliasDiag.setModel(danomaliasConV);
-                    lstAnomalias.setModel(danomaliasSinV);
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, ex.getMessage());
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "Error: Seleccione un elemento de la lista de Anomalias del Diagnostico para quitar.");
-            }
-        }
-    }//GEN-LAST:event_btnQuitarAnomaliaActionPerformed
-
-    private void btnAgregarAnomaliaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarAnomaliaActionPerformed
-        if (tblDiagnostico.getSelectedRow() != -1) {
-            if (lstAnomalias.getSelectedValue() != null) {
-                try {
-                    int codigo = Integer.valueOf(tblDiagnostico.getValueAt(tblDiagnostico.getSelectedRow(), 0).toString());
-                    Diagnostico unDiagnostico = cv.traerDiagnostico(codigo);
-                    Anomalia unaAnomalia = (Anomalia) lstAnomalias.getSelectedValue();
-                    cv.agregarAnomaliaADiagnostico(unaAnomalia, unDiagnostico);
-
-                    List<Anomalia> anomaliasSinV = cv.traerAnomaliasSinVinculoConDiagnostico(unDiagnostico);
-                    List<Anomalia> misAnomalias = cv.traerAnomaliasVinculadoDiagnostico(unDiagnostico);
-                    DefaultListModel danomalias = util.cargarLista(misAnomalias);
-                    DefaultListModel danomaliasSinV = util.cargarLista(anomaliasSinV);
-                    lstAnomaliasDiag.setModel(danomalias);
-                    lstAnomalias.setModel(danomaliasSinV);
-
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, ex.getMessage());
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "Error: Seleccione un elemento de la lista de Anomalías para agregar.");
-            }
-        }
-    }//GEN-LAST:event_btnAgregarAnomaliaActionPerformed
-
-    private void btnVinculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVinculosActionPerformed
-        if (tblDiagnostico.getSelectedRow() != -1) {
-            if (!vinculos) {
-                lstAnomalias.setEnabled(true);
-                lstAnomaliasDiag.setEnabled(true);
-                btnAgregarAnomalia.setEnabled(true);
-                btnQuitarAnomalia.setEnabled(true);
-                int codigo = Integer.valueOf(tblDiagnostico.getValueAt(tblDiagnostico.getSelectedRow(), 0).toString());
-
-                vinculos = true;
-            } else {
-                lstAnomalias.setEnabled(false);
-                lstAnomaliasDiag.setEnabled(false);
-                btnAgregarAnomalia.setEnabled(false);
-                btnQuitarAnomalia.setEnabled(false);
-                vinculos = false;
-            }
-
-        }
-    }//GEN-LAST:event_btnVinculosActionPerformed
 
     private void txtImpuestoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtImpuestoKeyTyped
         char c = evt.getKeyChar();
@@ -739,36 +593,27 @@ public class GestionDiagnostico extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizar;
-    private javax.swing.JButton btnAgregarAnomalia;
     private javax.swing.JButton btnBusqueda;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnNuevo;
-    private javax.swing.JButton btnQuitarAnomalia;
     private javax.swing.JButton btnSalir;
-    private javax.swing.JToggleButton btnVinculos;
     private javax.swing.JComboBox cmbTipoDiagnostico;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JList lstAnomalias;
-    private javax.swing.JList lstAnomaliasDiag;
     private javax.swing.JTextArea tarDescripcion;
     private javax.swing.JTable tblDiagnostico;
     private javax.swing.JTextField txtBusqueda;

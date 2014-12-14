@@ -97,11 +97,11 @@ public void limpiar(){
         btnNuevo = new javax.swing.JButton();
 
         setResizable(true);
-        setTitle("Gestión de Tipos de Reparación");
+        setTitle("Grupo de Repuestos");
         setName("frmGestionTipoReparacion"); // NOI18N
 
         jLabel1.setFont(new java.awt.Font("Politica", 1, 24)); // NOI18N
-        jLabel1.setText("GESTIÓN DE TIPOS DE REPARACIONES");
+        jLabel1.setText("GRUPO DE REPUESTOS");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
