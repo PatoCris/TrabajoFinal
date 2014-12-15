@@ -609,6 +609,31 @@ public class ControladoraPrincipal {
     public List<Ejemplar> traerEjemplaresConDeposito(int deposito, boolean activo, PiezaRecambio pieza){
         return cp.traerEjemplaresConDeposito(deposito, activo, pieza);
     }
+    public List<Ejemplar> traerEjemplaresSinDetalle(boolean activo){
+        return cp.traerEjemplaresSinDetalle(activo);
+    }
+    public List<Ejemplar> traerEjemplaresConDetalle(boolean activo, int detalle){
+        return cp.traerEjemplaresConDetalle(activo, detalle);
+    }
+    public void agregarEjemplarDetalle(Detalle detalle, Ejemplar ejemplar) throws Exception{
+        detalle.getMisEjemplares().add(ejemplar);
+        cp.editarDetalle(detalle);
+        //Se deberia quitar el ejemplar del deposito, ya que fue usado en el vehiculo y ya no existe ficicamente en el taller.
+    }
+    public void quitarEjemplarDetalle(Detalle detalle, Ejemplar ejemplar) throws Exception{
+        List<Ejemplar> ejemplares = detalle.getMisEjemplares();
+        int tamanio = ejemplares.size();
+        int i = 0;
+        for (i=0; i < tamanio; i++) {
+            if(ejemplares.get(i).getCodigo() == ejemplar.getCodigo()){
+                ejemplares.remove(i);
+                tamanio = tamanio - 1;
+            }
+        }
+        detalle.setMisEjemplares(ejemplares);
+        cp.editarDetalle(detalle);
+    }
+    
     
     ////////////////// MÉTODOS DE MECANICO ////////////////////////
     public void nuevoMecanico (int dni, String nombre, String apellido, String telefono, String direccion, long cuil, boolean activo) throws Exception{
@@ -1325,8 +1350,8 @@ public class ControladoraPrincipal {
     
     
     ///////////////// METODOS DE TURNO ////////////////////////
-    public void nuevoTurno(java.util.Date fecha, java.util.Date hora, Trazabilidad unaTrazabilidad, Servicio unServicio, Vehiculo unVehiculo, Cliente unCliente, boolean activo, int codigoAgenda) throws Exception {
-        unTurno = new Turno(fecha, hora, unaTrazabilidad, unServicio, unVehiculo, unCliente, true);
+    public void nuevoTurno(Servicio unServicio, Vehiculo unVehiculo, Cliente unCliente, boolean activo, int codigoAgenda) throws Exception {
+        unTurno = new Turno(activo, unServicio, unVehiculo, unCliente);
         cp.nuevoTurno(unTurno);
         AgendaMensual agenda = cp.traerAgendaMensual(codigoAgenda);
         int codigoTltimoTurno = cp.ultimoTurno();
@@ -1339,24 +1364,27 @@ public class ControladoraPrincipal {
         int tamanio = modulos.size();
         System.out.println("modulos: "+tamanio);
         if(cantidadModulos < tamanio){
-            
             int i = 0;
+            ultimoTurno.setHora(modulos.get(i).getHoraInicio());
+            ultimoTurno.setFecha(modulos.get(i).getFecha());
             for(i = 0; i < cantidadModulos; i++){
                 modulos.get(i).setLibre(false);
                 cp.editarModulo(modulos.get(i));
                 ultimoTurno.getMisModulos().add(modulos.get(i));
                 cp.editarTurno(ultimoTurno);
             }
+            ultimoTurno.setHoraFin(modulos.get(i).getHoraFin());
+            ultimoTurno.setFechaFin(modulos.get(i).getFecha());
+            cp.editarTurno(ultimoTurno);
         }else{
             throw new Exception("No hay suficientes modulos para el turno");
         }
         
     }
 
-    public void editarTurno(int codigo, java.util.Date fecha, java.util.Date hora, Trazabilidad unaTrazabilidad, Servicio unServicio, Vehiculo unVehiculo, Cliente unCliente, boolean activo) throws Exception {
-        unTurno.setFecha(fecha);
-        unTurno.setHora(hora);
-        unTurno.setUnaTrazabilidad(unaTrazabilidad);
+    public void editarTurno(int codigo, java.util.Date fecha, java.util.Date hora, Servicio unServicio, Vehiculo unVehiculo, Cliente unCliente, boolean activo) throws Exception {
+//        unTurno.setFecha(fecha);
+//        unTurno.setHora(hora);
         unTurno.setUnServicio(unServicio);
         unTurno.setUnVehiculo(unVehiculo);
         unTurno.setUnCliente(unCliente);
@@ -1367,6 +1395,52 @@ public class ControladoraPrincipal {
     public List<Turno> traerTurnos(boolean activo, int codigoAg) throws Exception {
         return cp.traerTurnos(activo, codigoAg);
     }
+    public List<Modulo> traerModulosTuno(boolean activo, int codigoTurno){
+        return cp.traerModulosTuno(activo, codigoTurno);
+    }
+    
+    
+            /////////////////////////  DETALLE ////////////////////////////////
+    public void nuevoDetalle(Date fecha, Date hora, boolean activo, String descripcion, Estado unEstado, Proceso proceso, Turno turno) throws PreexistingEntityException, Exception{
+        Detalle detalle = new Detalle(fecha, hora, activo, descripcion, unEstado, proceso);
+        cp.nuevoDetalle(detalle);
+        Detalle ultimoDetalle = this.ultimoDetalle();
+        turno.getMisDetalles().add(ultimoDetalle);
+        cp.editarTurno(turno);
+    }
+    public void editarDetalle(int codigo, Date fecha, Date hora, boolean activo, String descripcion, Estado unEstado, Proceso proceso) throws PreexistingEntityException, Exception{
+        Detalle detalle = cp.traerDetalle(codigo);
+        detalle.setFecha(fecha);
+        detalle.setHora(hora);
+        detalle.setDescripcion(descripcion);
+        detalle.setUnEstado(unEstado);
+        detalle.setUnProceso(proceso);
+        cp.editarDetalle(detalle);
+    }
+    public Detalle traerDetalle(int codigo) throws PreexistingEntityException, Exception{
+        return cp.traerDetalle(codigo);
+    }
+    public void elinimarDetalle(int codigo) throws PreexistingEntityException, Exception{
+        Detalle detalle = cp.traerDetalle(codigo);
+        detalle.setActivo(false);
+        cp.editarDetalle(detalle);
+    }
+    
+    public List<Detalle> traerDetallesTurno(boolean activo, int codigoTurno) throws PreexistingEntityException, Exception{
+        return cp.traerDetallesTurno(activo, codigoTurno);
+    }
+    public void agregarEjemplarDetalle(int codigoDetalle, Ejemplar ejemplar) throws Exception{
+        Detalle detalle = cp.traerDetalle(codigoDetalle);
+        detalle.getMisEjemplares().add(ejemplar);
+        cp.editarDetalle(detalle);
+    }
+        public Detalle ultimoDetalle() throws PreexistingEntityException, Exception{
+        int codigo = cp.ultimoDetalle();
+        Detalle detalle = cp.traerDetalle(codigo);
+        return detalle;
+    }
+    
+    
     public int diasDelMes(int mes, int año){
         switch(mes){
             case 0:  // Enero
@@ -1434,7 +1508,7 @@ public class ControladoraPrincipal {
         unTurno.setActivo(false);
         cp.editarTurno(unTurno);
     }
-    public Turno traerTurno(int codigo) throws Exception{
+    public Turno traerTurno(int codigo) throws PreexistingEntityException, Exception{
         return cp.traerTurno(codigo);
     }
     public List<Turno> traerTurnosDelVehiculo(String dominio, int codigoAg) throws Exception{

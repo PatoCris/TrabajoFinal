@@ -154,4 +154,11 @@ public class ModuloJpaController implements Serializable {
         Query query = getEntityManager().createQuery(sql);
         return (List<Modulo>)query.getResultList();
     }
+    public List<Modulo> traerModulosTuno(boolean activo, int codigoTurno){
+        String sql ="SELECT object(m) FROM Modulo m WHERE m.libre = FALSE AND m.activo = "+activo+" AND m.codigo IN ( SELECT mt.codigo FROM Turno t INNER jOIN t.misModulos mt WHERE t.codigo="+codigoTurno+") ORDER BY m.codigo ASC";
+        Query query = getEntityManager().createQuery(sql);
+        return (List<Modulo>)query.getResultList();
+    }
+    
+
 }

@@ -13,9 +13,9 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
@@ -28,6 +28,7 @@ public class TurnoJpaController implements Serializable {
     public TurnoJpaController(){
         emf=Persistence.createEntityManagerFactory("TallerMecanicoPU");
     }
+    
     public TurnoJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
@@ -140,7 +141,6 @@ public class TurnoJpaController implements Serializable {
             em.close();
         }
     }
-    
     public List<Turno> traerTurnos(boolean activo, int codigoAg){
         String sql ="SELECT object(t) FROM Turno t WHERE t.activo = "+activo+" AND t.codigo IN ( SELECT mt.codigo FROM AgendaMensual v INNER jOIN v.misTurnos mt WHERE v.codigo="+codigoAg+")";
         Query query = getEntityManager().createQuery(sql);
@@ -157,5 +157,4 @@ public class TurnoJpaController implements Serializable {
         Query query = getEntityManager().createQuery(sql);
         return (int)query.getSingleResult();
     }
-    
 }

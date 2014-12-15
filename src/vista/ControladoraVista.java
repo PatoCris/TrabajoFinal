@@ -11,6 +11,7 @@ import Modelo.Anomalia;
 import Modelo.Cliente;
 import Modelo.ControladoraPrincipal;
 import Modelo.Deposito;
+import Modelo.Detalle;
 import Modelo.Devolucion;
 import Modelo.Diagnostico;
 import Modelo.Ejemplar;
@@ -26,6 +27,7 @@ import Modelo.Localidad;
 import Modelo.Marca;
 import Modelo.Mecanico;
 import Modelo.Modelo;
+import Modelo.Modulo;
 import Modelo.Pedido;
 import Modelo.Perito;
 import Modelo.PiezaRecambio;
@@ -305,7 +307,7 @@ class ControladoraVista {
         cp.editarEstado(codigo, nombre, descripcion);
     }
 
-    public List<Estado> trerEstados(boolean activo) throws Exception {
+    public List<Estado> traerEstados(boolean activo) throws Exception {
         return cp.traerEstado(activo);
     }
 
@@ -485,6 +487,18 @@ class ControladoraVista {
     }
     public List<Ejemplar> traerEjemplaresConDeposito(int deposito, boolean activo, PiezaRecambio pieza){
         return cp.traerEjemplaresConDeposito(deposito, activo, pieza);
+    }
+    public List<Ejemplar> traerEjemplaresSinDetalle(boolean activo){
+        return cp.traerEjemplaresSinDetalle(activo);
+    }
+    public List<Ejemplar> traerEjemplaresConDetalle(boolean activo, int detalle){
+        return cp.traerEjemplaresConDetalle(activo, detalle);
+    }
+    public void agregarEjemplarDetalle(Detalle detalle, Ejemplar ejemplar) throws Exception{
+        cp.agregarEjemplarDetalle(detalle, ejemplar);
+    }
+    public void quitarEjemplarDetalle(Detalle detalle, Ejemplar ejemplar) throws Exception{
+        cp.quitarEjemplarDetalle(detalle, ejemplar);
     }
 
 ///////////////////// METODOS DE MECANICO ////////////////////////
@@ -859,12 +873,12 @@ class ControladoraVista {
     }
     
     ///////////////// METODOS DE TURNO ////////////////////////
-    public void nuevoTurno(java.util.Date fecha, java.util.Date hora, Trazabilidad unaTrazabilidad, Servicio unServicio, Vehiculo unVehiculo, Cliente unCliente, boolean activo, int codigoAgenda) throws Exception {
-        cp.nuevoTurno(fecha, hora, unaTrazabilidad, unServicio, unVehiculo, unCliente, true, codigoAgenda);
+    public void nuevoTurno(Servicio unServicio, Vehiculo unVehiculo, Cliente unCliente, boolean activo, int codigoAgenda) throws Exception {
+        cp.nuevoTurno(unServicio, unVehiculo, unCliente, true, codigoAgenda);
     }
 
-    public void editarTurno(int codigo, java.util.Date fecha, java.util.Date hora, Trazabilidad unaTrazabilidad, Servicio unServicio, Vehiculo unVehiculo, Cliente unCliente, boolean activo) throws Exception {
-        cp.editarTurno(codigo, fecha, hora, unaTrazabilidad, unServicio, unVehiculo, unCliente, true);
+    public void editarTurno(int codigo, java.util.Date fecha, java.util.Date hora, Servicio unServicio, Vehiculo unVehiculo, Cliente unCliente, boolean activo) throws Exception {
+        cp.editarTurno(codigo, fecha, hora, unServicio, unVehiculo, unCliente, true);
     }
 
     public List<Turno> traerTurnos(boolean activo, int codigoAg) throws Exception {
@@ -874,7 +888,7 @@ class ControladoraVista {
     public void eliminarTurno(int codigo) throws Exception {
         cp.eliminarTurno(codigo);
     }
-    public Turno traerTurno(int codigo) throws Exception{
+    public Turno traerTurno(int codigo) throws PreexistingEntityException, Exception{
         return cp.traerTurno(codigo);
     }
 
@@ -883,6 +897,9 @@ class ControladoraVista {
 //    }
     public List<Turno> traerTurnosDelVehiculo(String busqueda, int codigoAg) throws Exception{
         return cp.traerTurnosDelVehiculo(busqueda, codigoAg);
+    }
+    public List<Modulo> traerModulosTuno(boolean activo, int codigoTurno){
+        return cp.traerModulosTuno(activo, codigoTurno);
     }
     
     
@@ -929,6 +946,7 @@ class ControladoraVista {
         return cp.traerAgendaMensualConTaller(codigoTaller);
     }
     
+
     ///////////////// METODOS DE ESTADO DE VEHICULO ////////////////////////
     public void nuevoEstadoVehiculo(java.util.Date fecha, java.util.Date hora, String detalle, long kilometraje, boolean carroceria, boolean motor, boolean electricidad, boolean electronica, boolean luminaria, boolean neumatico, boolean amortiguacion, Vehiculo unVehiculo, EstadoVehiculo miEstadoIngreso, boolean activo) throws Exception {
         cp.nuevoEstadoVehiculo(fecha, hora, detalle, kilometraje, carroceria, motor, electricidad, electronica, luminaria, neumatico, amortiguacion, unVehiculo, miEstadoIngreso, true);
@@ -951,5 +969,21 @@ class ControladoraVista {
     }
     public boolean esElPrimerEstado(Vehiculo unVehiculo) throws Exception{
         return cp.esElPrimerEstado(unVehiculo);
+    }
+                /////////////////////////  DETALLE ////////////////////////////////
+    public void nuevoDetalle(Date fecha, Date hora, boolean activo, String descripcion, Estado unEstado, Proceso unProceso, Turno turno) throws PreexistingEntityException, Exception{
+        cp.nuevoDetalle(fecha, hora, activo, descripcion, unEstado, unProceso, turno);
+    }
+    public void editarDetalle(int codigo, Date fecha, Date hora, boolean activo, String descripcion, Estado unEstado, Proceso unProceso) throws PreexistingEntityException, Exception{
+        cp.editarDetalle(codigo, fecha, hora, activo, descripcion, unEstado, unProceso);
+    }
+    public Detalle traerDetalle(int codigo) throws PreexistingEntityException, Exception{
+        return cp.traerDetalle(codigo);
+    }
+    public void eliminarDetalle(int codigo) throws PreexistingEntityException, Exception{
+        cp.elinimarDetalle(codigo);
+    }
+    public List<Detalle> traerDetallesTurno(boolean activo, int codigoTurno) throws PreexistingEntityException, Exception{
+        return cp.traerDetallesTurno(activo, codigoTurno);
     }
 }

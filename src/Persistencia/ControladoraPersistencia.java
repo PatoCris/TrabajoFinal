@@ -11,6 +11,7 @@ import Modelo.AgendaMensual;
 import Modelo.Anomalia;
 import Modelo.Cliente;
 import Modelo.Deposito;
+import Modelo.Detalle;
 import Modelo.Devolucion;
 import Modelo.Diagnostico;
 import Modelo.Ejemplar;
@@ -88,7 +89,11 @@ public class ControladoraPersistencia {
 
     private AgendaMensualJpaController agendaMensualJpa = new AgendaMensualJpaController();
     private ModuloJpaController moduloJpa = new ModuloJpaController();
+
     private EstadoVehiculoJpaController estadoVJpa = new EstadoVehiculoJpaController();
+
+    private DetalleJpaController detalleJpa = new DetalleJpaController();
+
 
 
     
@@ -493,6 +498,13 @@ public class ControladoraPersistencia {
     public int ultimaEjemplar(){
         return ejemplarJpa.ultimoEjemplar();
     }
+    public List<Ejemplar> traerEjemplaresSinDetalle(boolean activo){
+        return ejemplarJpa.traerEjemplaresSinDetalle(activo);
+    }
+    
+    public List<Ejemplar> traerEjemplaresConDetalle(boolean activo, int detalle){
+        return ejemplarJpa.traerEjemplaresConDetalle(detalle, activo);
+    }
 
     
     ////////////////////// METODOS DE MECANICO //////////////////////
@@ -807,6 +819,9 @@ public class ControladoraPersistencia {
     public List<Modulo> traerModulosLibres(boolean activo, int codigoAg, int cantidadModulos){
         return moduloJpa.traerModulosLibres(activo, codigoAg, cantidadModulos);
     }
+    public List<Modulo> traerModulosTuno(boolean activo, int codigoTurno){
+        return moduloJpa.traerModulosTuno(activo, codigoTurno);
+    }
 
     ///////////////////////// TIPO DIAGNOSTICO ////////////////////////////////
     public void nuevoTipoDiagnostico(TipoDiagnostico unTipoDiagnostico) throws PreexistingEntityException, Exception{
@@ -922,4 +937,23 @@ public class ControladoraPersistencia {
     public List<Servicio> traerServicios(boolean activo){
        return servicioJpa.traerServicios(activo);
     }
+    
+        /////////////////////////  DETALLE ////////////////////////////////
+    public void nuevoDetalle(Detalle detalle) throws PreexistingEntityException, Exception{
+        detalleJpa.create(detalle);
+    }
+    public void editarDetalle(Detalle detalle) throws PreexistingEntityException, Exception{
+        detalleJpa.edit(detalle);
+    }
+    public Detalle traerDetalle(int codigo) throws PreexistingEntityException, Exception{
+        return detalleJpa.findDetalle(codigo);
+    }
+    public List<Detalle> traerDetallesTurno(boolean activo, int codigoTurno) throws PreexistingEntityException, Exception{
+        return detalleJpa.traerDetallesTurno(activo, codigoTurno);
+    }
+    
+    public int ultimoDetalle(){
+        return detalleJpa.ultimoDetalle();
+    }
+
 }

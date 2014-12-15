@@ -82,5 +82,10 @@ public class Estado implements Serializable {
         }
         return unEstado;
     }
+
+    @Override
+    public String toString() {
+        return nombre;
+    }
     
 }

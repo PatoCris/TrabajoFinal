@@ -29,7 +29,7 @@ public class GestionEstado extends javax.swing.JInternalFrame {
         initComponents();
         cv = controladoraVista;
         util = new UtilVista();
-        cargarTabla(tblEstados, cv.trerEstados(true));
+        cargarTabla(tblEstados, cv.traerEstados(true));
         estadoInicio();
     }
 
@@ -272,7 +272,6 @@ public class GestionEstado extends javax.swing.JInternalFrame {
         btnCancelar.setFont(new java.awt.Font("Politica", 0, 16)); // NOI18N
         btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/cancel.png"))); // NOI18N
         btnCancelar.setText("Cancelar");
-        btnCancelar.setEnabled(false);
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
@@ -282,7 +281,6 @@ public class GestionEstado extends javax.swing.JInternalFrame {
         btnGuardar.setFont(new java.awt.Font("Politica", 0, 16)); // NOI18N
         btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/save.png"))); // NOI18N
         btnGuardar.setText("Guardar");
-        btnGuardar.setEnabled(false);
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGuardarActionPerformed(evt);
@@ -351,18 +349,18 @@ public class GestionEstado extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnSalir)
                             .addComponent(btnEliminar)
                             .addComponent(btnEditar))
-                        .addGap(0, 30, Short.MAX_VALUE))
+                        .addGap(0, 16, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(btnGuardar)
@@ -370,7 +368,7 @@ public class GestionEstado extends javax.swing.JInternalFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(1, 1, 1)))
-                        .addContainerGap(91, Short.MAX_VALUE))))
+                        .addContainerGap(14, Short.MAX_VALUE))))
         );
 
         pack();
@@ -391,7 +389,7 @@ public class GestionEstado extends javax.swing.JInternalFrame {
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
          try {
-            cargarTabla(tblEstados, cv.trerEstados(true));
+            cargarTabla(tblEstados, cv.traerEstados(true));
             txtBusqueda.setText("");
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
@@ -438,7 +436,7 @@ public class GestionEstado extends javax.swing.JInternalFrame {
                     estadoInicio();
                 }
             }
-            cargarTabla(tblEstados, cv.trerEstados(true)); //ACTUALIZAMOS LA TABLA
+            cargarTabla(tblEstados, cv.traerEstados(true)); //ACTUALIZAMOS LA TABLA
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
@@ -466,7 +464,7 @@ public class GestionEstado extends javax.swing.JInternalFrame {
                 if (seleccion == JOptionPane.YES_OPTION) {
                     int codigo = Integer.valueOf(tblEstados.getValueAt(tblEstados.getSelectedRow(), 0).toString());
                     cv.eliminarEstado(codigo);
-                    cargarTabla(tblEstados, cv.trerEstados(true));
+                    cargarTabla(tblEstados, cv.traerEstados(true));
                 }
                 }else{
                     JOptionPane.showMessageDialog(null, "Seleccione un Estado de la lista.");

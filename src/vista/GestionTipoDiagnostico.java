@@ -103,11 +103,11 @@ public class GestionTipoDiagnostico extends javax.swing.JInternalFrame {
         btnSalir = new javax.swing.JButton();
         btnCargarProcesos = new javax.swing.JButton();
 
-        setTitle("Gestión de Tipos de Diagnósticos");
+        setTitle("Gestión de Tipos de Servicios");
         setName("frmTipoDiagnostico"); // NOI18N
 
         jLabel1.setFont(new java.awt.Font("Politica", 1, 24)); // NOI18N
-        jLabel1.setText("GESTIÓN DE TIPOS DE DIAGNÓSTICOS");
+        jLabel1.setText("GESTIÓN DE TIPOS DE SERVICIOS");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 

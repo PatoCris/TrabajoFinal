@@ -1060,7 +1060,7 @@ public void estadoInicio(){
     private void btnMecanicosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMecanicosActionPerformed
         if(tblTalleres.getSelectedRow() != -1){  
             try {
-                int codigo = Integer.valueOf(txtCodigoDeposito.getText());
+                int codigo = Integer.valueOf(txtCodigo.getText());
                 VincularTallerMecanico vtm = new VincularTallerMecanico(cv, codigo);
                 vtm.setVisible(true);
                 frmMenu.jdpPanelPrincipal.add(vtm);
@@ -1074,7 +1074,7 @@ public void estadoInicio(){
     private void btnAgendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgendaActionPerformed
         if(tblTalleres.getSelectedRow() != -1){  
             try {
-                int codigo = Integer.valueOf(txtCodigoDeposito.getText());
+                int codigo = Integer.valueOf(txtCodigo.getText());
                 GestionAgenda ga = new GestionAgenda(cv, codigo);
                 ga.setVisible(true);
                 frmMenu.jdpPanelPrincipal.add(ga);

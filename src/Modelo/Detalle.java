@@ -3,14 +3,13 @@ package Modelo;
 
 import java.io.Serializable;
 import java.util.*;
-import java.util.logging.Logger;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -33,30 +32,43 @@ public class Detalle implements Serializable {
     @Column(name = "codigo")
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int codigo;
+    
     @Column(name = "fecha")
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date fecha;
+    
     @Column(name = "hora")
-    @Temporal(javax.persistence.TemporalType.DATE)
+    @Temporal(javax.persistence.TemporalType.TIME)
     private Date hora;
+    
     @Column(name = "activo")
     private boolean activo;
-    @JoinColumn(name="un_estado")
+    
+    @Column(name = "descripcion")
+    private String descripcion;
+
     @OneToOne
     private Estado unEstado;
-    @OneToMany
+    
+    @OneToOne
+    private Proceso unProceso;
+    
+    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
     private List<Ejemplar> misEjemplares= new LinkedList<>();
     
     public Detalle(){
     }
 
-    public Detalle(int codigo, Date fecha, Date hora, boolean activo, Estado unEstado) {
-        this.codigo = codigo;
+    public Detalle(Date fecha, Date hora, boolean activo, String descripcion, Estado unEstado, Proceso unProceso) {
         this.fecha = fecha;
         this.hora = hora;
         this.activo = activo;
+        this.descripcion = descripcion;
         this.unEstado = unEstado;
+        this.unProceso = unProceso;
     }
+
+
 
     public int getCodigo() {
         return codigo;
@@ -101,5 +113,24 @@ public class Detalle implements Serializable {
     public List<Ejemplar> getMisEjemplares() {
         return misEjemplares;
     }
-    
+
+    public Proceso getUnProceso() {
+        return unProceso;
+    }
+
+    public void setUnProceso(Proceso unProceso) {
+        this.unProceso = unProceso;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public void setMisEjemplares(List<Ejemplar> misEjemplares) {
+        this.misEjemplares = misEjemplares;
+    }
 }
