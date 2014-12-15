@@ -48,6 +48,7 @@ public class ControladoraPrincipal {
     private Proceso unProceso = new Proceso();
     private Diagnostico unDiagnostico = new Diagnostico();
     private Turno unTurno = new Turno();
+    private EstadoVehiculo unEstVehiculo = new EstadoVehiculo();
             
 
     private vista.UtilVista util = new UtilVista();
@@ -413,7 +414,11 @@ public class ControladoraPrincipal {
     public List<Vehiculo> traerVehiculosConCliente(Cliente cliente) throws PreexistingEntityException, Exception{
         return cp.traerVehiculosConCliente(cliente);
     }
-    
+    public void agregarEstadoVehiculo(EstadoVehiculo unEstado, int codigo) throws Exception{
+        Vehiculo vehiculo = cp.traerVehiculo(codigo);
+        vehiculo.getMisEstados().add(unEstado);
+        cp.editarVehiculo(vehiculo);
+    }
     //////////////////////// MÉTODOS DE CLIENTE /////////////////////////////
     public void nuevoCliente(int dni, String nombre, String apellido, String direccion, String telefono, String usuario, String clave, long cuil, boolean activo, Localidad localidad) throws Exception{
         if(!cp.existeCliente(dni)){
@@ -1449,11 +1454,71 @@ public class ControladoraPrincipal {
             miMenuPrincipal.setVisible(true);
     }
 
+///////////////// METODOS DE ESTADO DE VEHICULO ////////////////////////
+    public void nuevoEstadoVehiculo(java.util.Date fecha, java.util.Date hora, String detalle, long kilometraje, boolean carroceria, boolean motor, boolean electricidad, boolean electronica, boolean luminaria, boolean neumatico, boolean amortiguacion, Vehiculo unVehiculo, EstadoVehiculo miEstadoIngreso, boolean activo) throws Exception {
+        unEstVehiculo = new EstadoVehiculo(fecha, hora, detalle, kilometraje, carroceria, motor, electricidad, electronica, luminaria, neumatico, amortiguacion, unVehiculo, miEstadoIngreso, activo);
+        cp.nuevoEstadoVehiculo(unEstVehiculo);
+        //this.agregarEstadoVehiculo(unEstVehiculo, unVehiculo.getCodigo());
+    }
 
+    public void editarEstadoVehiculo(int codigo, java.util.Date fecha, java.util.Date hora, String detalle, long kilometraje, boolean carroceria, boolean motor, boolean electricidad, boolean electronica, boolean luminaria, boolean neumatico, boolean amortiguacion, Vehiculo unVehiculo, EstadoVehiculo miEstadoIngreso, boolean activo) throws Exception {
+        unEstVehiculo.setFecha(fecha);
+        unEstVehiculo.setHora(hora);
+        unEstVehiculo.setDetalle(detalle);
+        unEstVehiculo.setKilometraje(kilometraje);
+        unEstVehiculo.setCarroceria(carroceria);
+        unEstVehiculo.setMotor(motor);
+        unEstVehiculo.setElectricidad(electricidad);
+        unEstVehiculo.setElectronica(electronica);
+        unEstVehiculo.setLuminaria(luminaria);
+        unEstVehiculo.setNeumatico(neumatico);
+        unEstVehiculo.setAmortiguacion(amortiguacion);
+        unEstVehiculo.setUnVehiculo(unVehiculo);
+        unEstVehiculo.setMiEstadoIngreso(miEstadoIngreso);
+        cp.editarEstadoVehiculo(unEstVehiculo);
+        this.agregarEstadoVehiculo(unEstVehiculo, unVehiculo.getCodigo());
+    }
+
+    public void eliminarEstadoVehiculo(int codigo) throws Exception {
+        cp.eliminarEstadoVehiculo(codigo);
+    }
+    
+    public List<EstadoVehiculo> traerEstDelVehiculo(Vehiculo unVehiculo) throws Exception{
+        return cp.traerEstDelVehiculo(unVehiculo);
+    }
+    
+    public EstadoVehiculo traerEstIngresoDelVehiculo(Vehiculo unVehiculo) throws Exception{
+        EstadoVehiculo miEst = null;
+        int cantidad = 0;
+        cantidad = cp.traerEstDelVehiculo(unVehiculo).size();
+        if(this.esPar(cantidad)== true){
+            miEst = null;
+        }else{
+            miEst =  cp.traerUltimoEstVehiculo(unVehiculo);
+        }
+        
+        return miEst;
+    }
+    
+    public boolean esElPrimerEstado(Vehiculo unVehiculo) throws Exception{
+        boolean retorno = true;
+        if(cp.traerEstDelVehiculo(unVehiculo) != null){
+            retorno = false;
+        }else{
+            retorno = true;
+        }
+        
+        return retorno; 
+    }    
     
     public int queDiaEs(Date d){
 	GregorianCalendar cal = new GregorianCalendar();
 	cal.setTime(d);
 	return cal.get(Calendar.DAY_OF_WEEK);		
 }
+    
+    public boolean esPar(int n)
+   {
+      return ((n % 2) == 0); 
+   }
 }

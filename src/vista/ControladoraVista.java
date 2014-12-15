@@ -18,6 +18,7 @@ import Modelo.Empleado;
 import Modelo.Equipamiento;
 import Modelo.Especialidad;
 import Modelo.Estado;
+import Modelo.EstadoVehiculo;
 import Modelo.InformePiezaPedido;
 import Modelo.JefeDeposito;
 import Modelo.JefeTaller;
@@ -926,5 +927,29 @@ class ControladoraVista {
     
     public List<AgendaMensual> traerAgendaMensualConTaller(int codigoTaller) throws NonexistentEntityException, Exception{
         return cp.traerAgendaMensualConTaller(codigoTaller);
+    }
+    
+    ///////////////// METODOS DE ESTADO DE VEHICULO ////////////////////////
+    public void nuevoEstadoVehiculo(java.util.Date fecha, java.util.Date hora, String detalle, long kilometraje, boolean carroceria, boolean motor, boolean electricidad, boolean electronica, boolean luminaria, boolean neumatico, boolean amortiguacion, Vehiculo unVehiculo, EstadoVehiculo miEstadoIngreso, boolean activo) throws Exception {
+        cp.nuevoEstadoVehiculo(fecha, hora, detalle, kilometraje, carroceria, motor, electricidad, electronica, luminaria, neumatico, amortiguacion, unVehiculo, miEstadoIngreso, true);
+    }
+
+    public void editarEstadoVehiculo(int codigo, java.util.Date fecha, java.util.Date hora, String detalle, long kilometraje, boolean carroceria, boolean motor, boolean electricidad, boolean electronica, boolean luminaria, boolean neumatico, boolean amortiguacion, Vehiculo unVehiculo, EstadoVehiculo miEstadoIngreso, boolean activo) throws Exception {
+        cp.editarEstadoVehiculo(codigo, fecha, hora, detalle, kilometraje, carroceria, motor, electricidad, electronica, luminaria, neumatico, amortiguacion, unVehiculo, miEstadoIngreso, true);
+    }
+
+    public void eliminarEstadoVehiculo(int codigo) throws Exception {
+        cp.eliminarEstadoVehiculo(codigo);
+    }
+    
+    public List<EstadoVehiculo> traerEstDelVehiculo(Vehiculo unVehiculo) throws Exception{
+        return cp.traerEstDelVehiculo(unVehiculo);
+    }
+    
+    public EstadoVehiculo traerEstIngresoDelVehiculo(Vehiculo unVehiculo) throws Exception{
+        return cp.traerEstIngresoDelVehiculo(unVehiculo);
+    }
+    public boolean esElPrimerEstado(Vehiculo unVehiculo) throws Exception{
+        return cp.esElPrimerEstado(unVehiculo);
     }
 }

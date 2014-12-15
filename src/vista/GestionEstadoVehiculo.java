@@ -1,0 +1,963 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package vista;
+
+import Modelo.EstadoVehiculo;
+import Modelo.Vehiculo;
+import java.text.SimpleDateFormat;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
+/**
+ *
+ * @author Asus
+ */
+public class GestionEstadoVehiculo extends javax.swing.JInternalFrame {
+
+    private ControladoraVista cv;
+    private String bandera;
+    private UtilVista util;
+    private DefaultTableModel miTabla;
+    private boolean vinculos;
+
+    /**
+     * Creates new form GestionEstadoVehiculo
+     */
+    public GestionEstadoVehiculo(ControladoraVista controladoraVista) throws Exception {
+        initComponents();
+        cv = controladoraVista;
+        util = new UtilVista();
+        cargarTabla(tblVehiculos, cv.traerVehiculos(true));
+        estadoInicio();
+//        try{
+//            this.cmbEstIngreso.setModel(util.cargarCombo(cv.traerEstIngresoDelVehiculo(unVehiculo)));
+//        }catch(Exception ex){
+//            JOptionPane.showMessageDialog(null, ex.getMessage());
+//        }
+        vinculos = false;
+    }
+
+    public void cargarTabla(JTable laTabla, List<Vehiculo> lista) throws Exception {
+        miTabla = new DefaultTableModel();
+        String cabecera[] = {"Código", "Dominio", "Modelo", "Año"};
+        miTabla.setColumnIdentifiers(cabecera);
+        Object fila[] = new Object[miTabla.getColumnCount()];
+        int cantidad = lista.size();
+        if (cantidad > 0) {
+            for (Vehiculo vehiculo : lista) {
+                fila[0] = vehiculo.getCodigo();
+                fila[1] = vehiculo.getDominio();
+                fila[2] = vehiculo.getUnModelo();
+                fila[3] = vehiculo.getAnio();
+                miTabla.addRow(fila);
+            }
+        }
+        laTabla.setModel(miTabla);
+    }
+
+    public void cargarTablaEst(JTable laTabla, List<EstadoVehiculo> lista) throws Exception {
+        miTabla = new DefaultTableModel();
+        String cabecera[] = {"Código", "Est. Ingreso", "Fecha", "Hora", "Km", "Carrosería", "Motor", "Electricidad", "Electrónica", "Luminaria", "Neumáticos", "Amortiguación"};
+        miTabla.setColumnIdentifiers(cabecera);
+        Object fila[] = new Object[miTabla.getColumnCount()];
+        int cantidad = lista.size();
+        if (cantidad > 0) {
+            for (EstadoVehiculo unEstado : lista) {
+                fila[0] = unEstado.getCodigo();
+                fila[1] = unEstado.getMiEstadoIngreso();
+                SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+                String fechaDate = formato.format(unEstado.getFecha());
+                fila[2] = fechaDate;
+                SimpleDateFormat formatoHs = new SimpleDateFormat("hh:mm:ss");
+                String horaDate = formatoHs.format(unEstado.getHora());
+                fila[3] = horaDate;
+                fila[4] = unEstado.getKilometraje();
+                fila[5] = unEstado.isCarroceria();
+                fila[6] = unEstado.isMotor();
+                fila[7] = unEstado.isElectricidad();
+                fila[8] = unEstado.isElectronica();
+                fila[9] = unEstado.isLuminaria();
+                fila[10] = unEstado.isNeumatico();
+                fila[11] = unEstado.isAmortiguacion();
+                miTabla.addRow(fila);
+            }
+        }
+        laTabla.setModel(miTabla);
+    }
+
+    public void estadoInicio() {
+        txtCodigo.setEnabled(false);
+        txtFecha.setEnabled(false);
+        txtHora.setEnabled(false);
+        cmbEstIngreso.setEnabled(false);
+        chkAmortiguacion.setEnabled(false);
+        chkCarroseria.setEnabled(false);
+        chkElectricidad.setEnabled(false);
+        chkElectronica.setEnabled(false);
+        chkLuminaria.setEnabled(false);
+        chkMotor.setEnabled(false);
+        chkNeumatico.setEnabled(false);
+        btnCancelar.setEnabled(false);
+        btnEditar.setEnabled(false);
+        btnEliminar.setEnabled(false);
+        btnGuardar.setEnabled(false);
+        btnNuevo.setEnabled(false);
+    }
+
+    public void limpiar(){
+        txtCodigo.setText("");
+        txtFecha.setText("");
+        txtHora.setText("");
+        cmbEstIngreso.setToolTipText("[SELECCIONAR]");
+        chkAmortiguacion.setSelected(false);
+        chkCarroseria.setSelected(false);
+        chkElectricidad.setSelected(false);
+        chkElectronica.setSelected(false);
+        chkLuminaria.setSelected(false);
+        chkMotor.setSelected(false);
+        chkNeumatico.setSelected(false);
+    }
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jLabel1 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        txtCodigo = new javax.swing.JTextField();
+        cmbEstIngreso = new javax.swing.JComboBox();
+        txtFecha = new javax.swing.JFormattedTextField();
+        txtHora = new javax.swing.JFormattedTextField();
+        txtKm = new javax.swing.JTextField();
+        chkCarroseria = new javax.swing.JCheckBox();
+        chkMotor = new javax.swing.JCheckBox();
+        chkElectricidad = new javax.swing.JCheckBox();
+        chkElectronica = new javax.swing.JCheckBox();
+        chkLuminaria = new javax.swing.JCheckBox();
+        chkNeumatico = new javax.swing.JCheckBox();
+        chkAmortiguacion = new javax.swing.JCheckBox();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtDetalle = new javax.swing.JTextArea();
+        jPanel2 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
+        btnBusqueda = new javax.swing.JButton();
+        jLabel15 = new javax.swing.JLabel();
+        btnActualizar = new javax.swing.JButton();
+        txtBusqueda = new javax.swing.JFormattedTextField();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tblVehiculos = new javax.swing.JTable();
+        btnSalir = new javax.swing.JButton();
+        btnGuardar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
+        btnNuevo = new javax.swing.JButton();
+        btnEditar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
+        jPanel5 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblEstados = new javax.swing.JTable();
+
+        setTitle("Gestión de Estado de Vehiculos");
+
+        jLabel1.setFont(new java.awt.Font("Politica", 1, 24)); // NOI18N
+        jLabel1.setText("GESTIÓN DE ESTADO DEL VEHICULO");
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+
+        jLabel2.setFont(new java.awt.Font("Politica", 0, 16)); // NOI18N
+        jLabel2.setText("Código:");
+
+        jLabel3.setFont(new java.awt.Font("Politica", 0, 16)); // NOI18N
+        jLabel3.setText("Fecha:");
+
+        jLabel4.setFont(new java.awt.Font("Politica", 0, 16)); // NOI18N
+        jLabel4.setText("Hora:");
+
+        jLabel5.setFont(new java.awt.Font("Politica", 0, 16)); // NOI18N
+        jLabel5.setText("Kilometraje:");
+
+        jLabel6.setFont(new java.awt.Font("Politica", 0, 16)); // NOI18N
+        jLabel6.setText("Carrosería:");
+
+        jLabel7.setFont(new java.awt.Font("Politica", 0, 16)); // NOI18N
+        jLabel7.setText("Motor:");
+
+        jLabel8.setFont(new java.awt.Font("Politica", 0, 16)); // NOI18N
+        jLabel8.setText("Electricidad:");
+
+        jLabel9.setFont(new java.awt.Font("Politica", 0, 16)); // NOI18N
+        jLabel9.setText("Luminaria:");
+
+        jLabel10.setFont(new java.awt.Font("Politica", 0, 16)); // NOI18N
+        jLabel10.setText("Neumáticos:");
+
+        jLabel11.setFont(new java.awt.Font("Politica", 0, 16)); // NOI18N
+        jLabel11.setText("Amortiguación:");
+
+        jLabel12.setFont(new java.awt.Font("Politica", 0, 16)); // NOI18N
+        jLabel12.setText("Estado Ingreso:");
+
+        jLabel13.setFont(new java.awt.Font("Politica", 0, 16)); // NOI18N
+        jLabel13.setText("Detalle:");
+
+        jLabel14.setFont(new java.awt.Font("Politica", 0, 16)); // NOI18N
+        jLabel14.setText("Electrónica:");
+
+        try {
+            txtFecha.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        try {
+            txtHora.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##:##:##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        txtKm.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtKmActionPerformed(evt);
+            }
+        });
+        txtKm.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtKmKeyTyped(evt);
+            }
+        });
+
+        chkCarroseria.setText("Ok");
+
+        chkMotor.setText("Ok");
+
+        chkElectricidad.setText("Ok");
+
+        chkElectronica.setText("Ok");
+
+        chkLuminaria.setText("Ok");
+
+        chkNeumatico.setText("Ok");
+        chkNeumatico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chkNeumaticoActionPerformed(evt);
+            }
+        });
+
+        chkAmortiguacion.setText("Ok");
+
+        txtDetalle.setColumns(20);
+        txtDetalle.setRows(5);
+        jScrollPane1.setViewportView(txtDetalle);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel6)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(chkCarroseria))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel14)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(chkElectronica)))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel7)
+                                    .addComponent(jLabel9))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(chkMotor)
+                                    .addComponent(chkLuminaria))
+                                .addGap(31, 31, 31)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel8)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(chkElectricidad))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel10)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(chkNeumatico))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addGap(8, 8, 8)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(cmbEstIngreso, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGap(89, 89, 89))
+                                    .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jLabel4)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(txtHora, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jLabel5)))))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(17, 17, 17)
+                                .addComponent(jLabel11)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(chkAmortiguacion))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtKm, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(53, 53, 53))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel13)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 548, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(11, 11, 11))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cmbEstIngreso, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGap(7, 7, 7)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel4)
+                                .addComponent(txtHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel5)
+                                .addComponent(txtKm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGap(16, 16, 16)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel6)
+                                    .addComponent(chkCarroseria))
+                                .addGap(5, 5, 5))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel7)
+                                    .addComponent(chkMotor)
+                                    .addComponent(jLabel8)
+                                    .addComponent(chkElectricidad))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel14)
+                            .addComponent(chkElectronica)
+                            .addComponent(jLabel9)
+                            .addComponent(chkLuminaria)))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel10)
+                        .addComponent(chkNeumatico)
+                        .addComponent(jLabel11)
+                        .addComponent(chkAmortiguacion)))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel13)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Búsqueda del vehículo", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Politica", 1, 16))); // NOI18N
+
+        jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        btnBusqueda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/search.png"))); // NOI18N
+        btnBusqueda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBusquedaActionPerformed(evt);
+            }
+        });
+
+        jLabel15.setFont(new java.awt.Font("Politica", 0, 16)); // NOI18N
+        jLabel15.setText("Dominio:");
+
+        btnActualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/refresh.png"))); // NOI18N
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarActionPerformed(evt);
+            }
+        });
+
+        try {
+            txtBusqueda.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("UUU-###")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel15)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnActualizar)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(btnBusqueda, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel15)
+                            .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        tblVehiculos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Código", "Dominio", "Modelo", "Año"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblVehiculos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblVehiculosMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                tblVehiculosMouseEntered(evt);
+            }
+        });
+        jScrollPane3.setViewportView(tblVehiculos);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 505, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(58, 58, 58))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        btnSalir.setFont(new java.awt.Font("Politica", 0, 16)); // NOI18N
+        btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/close_16.png"))); // NOI18N
+        btnSalir.setText("Salir");
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
+
+        btnGuardar.setFont(new java.awt.Font("Politica", 0, 16)); // NOI18N
+        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/save.png"))); // NOI18N
+        btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
+
+        btnCancelar.setFont(new java.awt.Font("Politica", 0, 16)); // NOI18N
+        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/cancel.png"))); // NOI18N
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+
+        btnNuevo.setFont(new java.awt.Font("Politica", 0, 16)); // NOI18N
+        btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/add-1-icon.png"))); // NOI18N
+        btnNuevo.setText("Nuevo");
+        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoActionPerformed(evt);
+            }
+        });
+
+        btnEditar.setFont(new java.awt.Font("Politica", 0, 16)); // NOI18N
+        btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/pencil_edit.png"))); // NOI18N
+        btnEditar.setText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
+
+        btnEliminar.setFont(new java.awt.Font("Politica", 0, 16)); // NOI18N
+        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Trash.png"))); // NOI18N
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
+
+        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Estados del Vehículo", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Politica", 1, 16))); // NOI18N
+
+        tblEstados.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "Código", "Est. Ingreso", "Fecha", "Hora", "Km", "Carrosería", "Motor", "Electricidad", "Electrónica", "Luminaria", "Neumáticos", "Amotriguación"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblEstados.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblEstadosMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(tblEstados);
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2)
+                .addContainerGap())
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 538, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnGuardar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnCancelar)
+                        .addGap(32, 32, 32))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnEditar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnEliminar)
+                .addGap(18, 18, 18)
+                .addComponent(btnSalir)
+                .addGap(26, 26, 26))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnGuardar)
+                    .addComponent(btnCancelar)
+                    .addComponent(btnNuevo))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnEditar)
+                    .addComponent(btnEliminar)
+                    .addComponent(btnSalir))
+                .addGap(11, 11, 11))
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void txtKmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtKmActionPerformed
+
+    }//GEN-LAST:event_txtKmActionPerformed
+
+    private void chkNeumaticoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkNeumaticoActionPerformed
+
+    }//GEN-LAST:event_chkNeumaticoActionPerformed
+
+    private void btnBusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBusquedaActionPerformed
+        if (!txtBusqueda.getText().isEmpty()) {
+            String busqueda = txtBusqueda.getText();
+            try {
+                cargarTabla(tblVehiculos, cv.traerVehiculoDominio(true, busqueda));
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage());
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "El campo de busqueda está vacio.");
+        }
+    }//GEN-LAST:event_btnBusquedaActionPerformed
+
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+        try {
+            cargarTabla(tblVehiculos, cv.traerVehiculos(true));
+            txtBusqueda.setText("");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }//GEN-LAST:event_btnActualizarActionPerformed
+
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void tblVehiculosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblVehiculosMouseClicked
+        if (tblVehiculos.getSelectedRow() != -1) {
+            btnNuevo.setEnabled(true);
+            try {
+                int codigo = Integer.valueOf(tblVehiculos.getValueAt(tblVehiculos.getSelectedRow(), 0).toString());
+                Vehiculo unVehiculo = cv.traerVehiculo(codigo);
+                if(cv.esElPrimerEstado(unVehiculo) == true || cv.traerEstIngresoDelVehiculo(unVehiculo) == null){
+                    DefaultComboBoxModel miCombo = new DefaultComboBoxModel();
+                    miCombo.addElement("No posee");
+                    cmbEstIngreso.setModel(miCombo);
+                }else{
+                    cmbEstIngreso.setModel(util.cargarComboUnElemento(cv.traerEstIngresoDelVehiculo(unVehiculo)));
+                }
+                cargarTablaEst(tblEstados, cv.traerEstDelVehiculo(unVehiculo));
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage());
+            }
+
+        }
+    }//GEN-LAST:event_tblVehiculosMouseClicked
+
+    private void tblVehiculosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblVehiculosMouseEntered
+
+    }//GEN-LAST:event_tblVehiculosMouseEntered
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        try {
+            java.util.Date fecha = null;
+            java.util.Date hora = null;
+            String fechaString = txtFecha.getText();
+            String horaString = txtHora.getText();
+            fecha = util.ParseFecha(fechaString, "Error: La fecha ingresa no es válida. Formato: 'dd-MM-yyyy'");
+            hora = util.convertirHora(horaString, "Error: La hora ingresada no es válida");
+
+            String kmString = txtKm.getText();
+            util.verificarString(kmString, "Km recorridos");
+            long km = new Long(kmString);
+            String detalle = txtDetalle.getText();
+            boolean carroseria = chkCarroseria.isSelected();
+            boolean motor = chkMotor.isSelected();
+            boolean electricidad = chkElectricidad.isSelected();
+            boolean electronica = chkElectronica.isSelected();
+            boolean luminaria = chkLuminaria.isSelected();
+            boolean neumatico = chkNeumatico.isSelected();
+            boolean amortiguacion = chkAmortiguacion.isSelected();
+            EstadoVehiculo unEstIng;
+            if(cmbEstIngreso.getSelectedItem().toString().equals("No posee")){
+                unEstIng = null;
+            }else{
+                unEstIng = (EstadoVehiculo) cmbEstIngreso.getSelectedItem();
+            }
+            int codigoVe = Integer.valueOf(tblVehiculos.getValueAt(tblVehiculos.getSelectedRow(), 0).toString());
+            Vehiculo unVehiculo = cv.traerVehiculo(codigoVe);
+            
+            if (bandera.equals("nuevo")) {
+                this.cv.nuevoEstadoVehiculo(fecha, hora, detalle, km, carroseria, motor, electricidad, electronica, luminaria, neumatico, amortiguacion, unVehiculo, unEstIng, true);
+                bandera = "";
+                estadoInicio();
+            } else {
+                if (bandera.equals("editar")) {
+                    int codigo = Integer.valueOf(txtCodigo.getText());
+                    this.cv.editarEstadoVehiculo(codigo, fecha, hora, detalle, km, carroseria, motor, electricidad, electronica, luminaria, neumatico, amortiguacion, unVehiculo, unEstIng, true);
+                    estadoInicio();
+                }
+            }
+//            int codigo = Integer.valueOf(txtCodigo.getText());
+            cargarTablaEst(tblEstados, cv.traerEstDelVehiculo(unVehiculo));
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        estadoInicio();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
+        bandera = "nuevo";
+        txtFecha.setEnabled(true);
+        txtHora.setEnabled(true);
+        cmbEstIngreso.setEnabled(true);
+        btnCancelar.setEnabled(true);
+        btnGuardar.setEnabled(true);
+        btnEditar.setEnabled(false);
+        btnEliminar.setEnabled(false);
+        btnNuevo.setEnabled(false);
+        txtKm.setEnabled(true);
+        chkAmortiguacion.setEnabled(true);
+        chkCarroseria.setEnabled(true);
+        chkElectricidad.setEnabled(true);
+        chkElectronica.setEnabled(true);
+        chkLuminaria.setEnabled(true);
+        chkMotor.setEnabled(true);
+        chkNeumatico.setEnabled(true);
+        limpiar();
+    }//GEN-LAST:event_btnNuevoActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        if (tblVehiculos.getSelectedRow() != -1) {
+            bandera = "editar";
+            txtKm.setEnabled(true);
+            txtFecha.setEnabled(true);
+            cmbEstIngreso.setEnabled(true);
+            txtHora.setEnabled(true);
+            chkAmortiguacion.setEnabled(true);
+            chkCarroseria.setEnabled(true);
+            chkElectricidad.setEnabled(true);
+            chkElectronica.setEnabled(true);
+            chkLuminaria.setEnabled(true);
+            chkMotor.setEnabled(true);
+            chkNeumatico.setEnabled(true);
+            ///////////////////////////
+            btnGuardar.setEnabled(true);
+            btnCancelar.setEnabled(true);
+            btnEditar.setEnabled(false);
+            btnNuevo.setEnabled(false);
+            btnEliminar.setEnabled(false);
+        } else {
+            JOptionPane.showMessageDialog(null, "Seleccione un Estado para editar.");
+        }
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        try {
+            if (tblVehiculos.getSelectedRow() != -1) {
+                int seleccion = JOptionPane.showConfirmDialog(null, "¿Está seguro desea eliminar el Estado?", "Input", JOptionPane.YES_NO_OPTION);
+                if (seleccion == JOptionPane.YES_OPTION) {
+                    int codigo = Integer.valueOf(tblEstados.getValueAt(tblEstados.getSelectedRow(), 0).toString());
+                    this.cv.eliminarEstadoVehiculo(codigo);
+                    cargarTabla(tblVehiculos, cv.traerVehiculos(true));
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Seleccione un Estado de la lista.");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void tblEstadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblEstadosMouseClicked
+        if (tblEstados.getSelectedRow() != -1) {
+            txtCodigo.setText(tblEstados.getValueAt(tblEstados.getSelectedRow(), 0).toString());
+            if(tblEstados.getValueAt(tblEstados.getSelectedRow(), 1).toString().equals("")){
+            cmbEstIngreso.getModel().setSelectedItem("No posee");
+            }else{
+            cmbEstIngreso.getModel().setSelectedItem(tblEstados.getValueAt(tblEstados.getSelectedRow(), 1).toString());
+            }
+            txtFecha.setText(tblEstados.getValueAt(tblEstados.getSelectedRow(), 2).toString());
+            txtHora.setText(tblEstados.getValueAt(tblEstados.getSelectedRow(), 3).toString());
+            txtKm.setText(tblEstados.getValueAt(tblEstados.getSelectedRow(), 4).toString());
+            if(tblEstados.getValueAt(tblEstados.getSelectedRow(), 5).toString().equals("true")){
+                    chkCarroseria.setSelected(true);
+                }else{
+                    chkCarroseria.setSelected(false);
+                }
+            if(tblEstados.getValueAt(tblEstados.getSelectedRow(), 6).toString().equals("true")){
+                    chkMotor.setSelected(true);
+                }else{
+                    chkMotor.setSelected(false);
+                }
+            if(tblEstados.getValueAt(tblEstados.getSelectedRow(), 7).toString().equals("true")){
+                    chkElectricidad.setSelected(true);
+                }else{
+                    chkElectricidad.setSelected(false);
+                }
+            if(tblEstados.getValueAt(tblEstados.getSelectedRow(), 8).toString().equals("true")){
+                    chkElectronica.setSelected(true);
+                }else{
+                    chkElectronica.setSelected(false);
+                }
+            if(tblEstados.getValueAt(tblEstados.getSelectedRow(), 9).toString().equals("true")){
+                    chkLuminaria.setSelected(true);
+                }else{
+                    chkLuminaria.setSelected(false);
+                }
+            if(tblEstados.getValueAt(tblEstados.getSelectedRow(), 10).toString().equals("true")){
+                    chkNeumatico.setSelected(true);
+                }else{
+                    chkNeumatico.setSelected(false);
+                }
+            if(tblEstados.getValueAt(tblEstados.getSelectedRow(), 11).toString().equals("true")){
+                    chkAmortiguacion.setSelected(true);
+                }else{
+                    chkAmortiguacion.setSelected(false);
+                }
+        }
+        btnEditar.setEnabled(true);
+    }//GEN-LAST:event_tblEstadosMouseClicked
+
+    private void txtKmKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtKmKeyTyped
+        char c = evt.getKeyChar();
+        if (c < '0' || c > '9') {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtKmKeyTyped
+
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnActualizar;
+    private javax.swing.JButton btnBusqueda;
+    private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnNuevo;
+    private javax.swing.JButton btnSalir;
+    private javax.swing.JCheckBox chkAmortiguacion;
+    private javax.swing.JCheckBox chkCarroseria;
+    private javax.swing.JCheckBox chkElectricidad;
+    private javax.swing.JCheckBox chkElectronica;
+    private javax.swing.JCheckBox chkLuminaria;
+    private javax.swing.JCheckBox chkMotor;
+    private javax.swing.JCheckBox chkNeumatico;
+    private javax.swing.JComboBox cmbEstIngreso;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTable tblEstados;
+    private javax.swing.JTable tblVehiculos;
+    private javax.swing.JFormattedTextField txtBusqueda;
+    private javax.swing.JTextField txtCodigo;
+    private javax.swing.JTextArea txtDetalle;
+    private javax.swing.JFormattedTextField txtFecha;
+    private javax.swing.JFormattedTextField txtHora;
+    private javax.swing.JTextField txtKm;
+    // End of variables declaration//GEN-END:variables
+}

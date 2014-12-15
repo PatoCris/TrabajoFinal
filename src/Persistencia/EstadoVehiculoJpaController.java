@@ -17,6 +17,7 @@ import Persistencia.exceptions.NonexistentEntityException;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 /**
  *
@@ -24,6 +25,9 @@ import javax.persistence.EntityManagerFactory;
  */
 public class EstadoVehiculoJpaController implements Serializable {
 
+    public EstadoVehiculoJpaController(){
+        emf= Persistence.createEntityManagerFactory("TallerMecanicoPU");
+    }
     public EstadoVehiculoJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
@@ -203,5 +207,21 @@ public class EstadoVehiculoJpaController implements Serializable {
             em.close();
         }
     }
+        public List<EstadoVehiculo> traerEstDelVehiculo(Vehiculo unVehiculo){
+        String sql ="SELECT Object(ev) from EstadoVehiculo ev where ev.codigo IN (SELECT mev.codigo FROM  Vehiculo v INNER JOIN v.misEstados mev WHERE v.codigo ="+unVehiculo.getCodigo()+")";
+        Query query = getEntityManager().createQuery(sql);
+        return (List<EstadoVehiculo>)query.getResultList();
+    }
+    public int traerUltimoEstVehiculo(Vehiculo unVehiculo){
+        String sql = "SELECT MAX(ev.codigo) from EstadoVehiculo ev where ev.codigo IN (SELECT mev.codigo FROM  Vehiculo v INNER JOIN v.misEstados mev WHERE v.codigo ="+unVehiculo.getCodigo()+")";
+        Query query = getEntityManager().createQuery(sql);
+        return (int)query.getSingleResult();
+    }
+    public EstadoVehiculo traerEstDelVehiculo(int codigoUltimo){
+        String sql="SELECT object(ev) FROM EstadoVehiculo ev WHERE ev.codigo = "+codigoUltimo;
+        Query query = getEntityManager().createQuery(sql);
+        return (EstadoVehiculo) query.getSingleResult();
+    }
+    
     
 }

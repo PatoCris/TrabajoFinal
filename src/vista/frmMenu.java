@@ -143,6 +143,11 @@ public class frmMenu extends javax.swing.JFrame {
         jMenu3.add(mnuVehiculo);
 
         jMenuItem3.setText("Gestión Estado");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem3);
 
         jMenuItem4.setText("Gestión Prueba Rodaje");
@@ -342,11 +347,11 @@ public class frmMenu extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jdpPanelPrincipal)
+            .addComponent(jdpPanelPrincipal, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jdpPanelPrincipal)
+            .addComponent(jdpPanelPrincipal, javax.swing.GroupLayout.Alignment.TRAILING)
         );
 
         pack();
@@ -616,6 +621,17 @@ public class frmMenu extends javax.swing.JFrame {
            JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }//GEN-LAST:event_jMenuItem11ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        GestionEstadoVehiculo miGEV;
+        try {
+            miGEV = new GestionEstadoVehiculo(cv);
+            miGEV.setVisible(true);
+            jdpPanelPrincipal.add(miGEV);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
 
 

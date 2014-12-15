@@ -18,6 +18,7 @@ import Modelo.Empleado;
 import Modelo.Equipamiento;
 import Modelo.Especialidad;
 import Modelo.Estado;
+import Modelo.EstadoVehiculo;
 import Modelo.InformePiezaPedido;
 import Modelo.JefeDeposito;
 import Modelo.JefeTaller;
@@ -87,6 +88,7 @@ public class ControladoraPersistencia {
 
     private AgendaMensualJpaController agendaMensualJpa = new AgendaMensualJpaController();
     private ModuloJpaController moduloJpa = new ModuloJpaController();
+    private EstadoVehiculoJpaController estadoVJpa = new EstadoVehiculoJpaController();
 
 
     
@@ -896,6 +898,24 @@ public class ControladoraPersistencia {
     } 
     public int ultimoTurno() throws PreexistingEntityException, Exception{
         return turnoJpa.ultimaTuno();
+    }
+    
+     ///////////////// METODOS DE ACCESORIO //////////////////////
+    public void nuevoEstadoVehiculo(EstadoVehiculo unEstadoV) throws PreexistingEntityException, Exception{
+        estadoVJpa.create(unEstadoV);
+    }
+    public void editarEstadoVehiculo(EstadoVehiculo unEstadoV) throws PreexistingEntityException, Exception{
+        estadoVJpa.edit(unEstadoV);
+    }
+    public void eliminarEstadoVehiculo(int codigo) throws NonexistentEntityException, Exception{
+            estadoVJpa.destroy(codigo);
+    }
+    public List<EstadoVehiculo> traerEstDelVehiculo(Vehiculo unVehiculo) throws PreexistingEntityException, Exception{
+        return estadoVJpa.traerEstDelVehiculo(unVehiculo);
+    }   
+    public EstadoVehiculo traerUltimoEstVehiculo(Vehiculo unVehiculo){
+        int codigoUltimo = estadoVJpa.traerUltimoEstVehiculo(unVehiculo);
+        return estadoVJpa.traerEstDelVehiculo(codigoUltimo);
     }
     
     //////////////////////////////METODOS DE SERVICIO//////////////////////////

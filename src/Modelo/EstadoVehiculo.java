@@ -2,6 +2,7 @@ package Modelo;
 
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -33,10 +34,10 @@ public class EstadoVehiculo implements Serializable {
     private int codigo;
     @Column(name = "fecha")
     @Temporal(javax.persistence.TemporalType.DATE)
-    private Date fecha;
+    private java.util.Date fecha;
     @Column(name = "hora")
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date hora;
+    @Temporal(javax.persistence.TemporalType.TIME)
+    private java.util.Date hora;
     @Column(name = "detalle")
     private String detalle;
     @Column(name = "kilometraje")
@@ -67,8 +68,7 @@ public class EstadoVehiculo implements Serializable {
     public EstadoVehiculo() {
     }
 
-    public EstadoVehiculo(int codigo, Date fecha, Date hora, String detalle, long kilometraje, boolean carroceria, boolean motor, boolean electricidad, boolean luminaria, boolean electronica, boolean neumatico, boolean amortiguacion, boolean activo, Vehiculo unVehiculo, EstadoVehiculo miEstadoIngreso) {
-        this.codigo = codigo;
+    public EstadoVehiculo( java.util.Date fecha, java.util.Date hora, String detalle, long kilometraje, boolean carroceria, boolean motor, boolean electricidad, boolean luminaria, boolean electronica, boolean neumatico, boolean amortiguacion, Vehiculo unVehiculo, EstadoVehiculo miEstadoIngreso, boolean activo) {
         this.fecha = fecha;
         this.hora = hora;
         this.detalle = detalle;
@@ -93,19 +93,19 @@ public class EstadoVehiculo implements Serializable {
         this.codigo = codigo;
     }
 
-    public Date getFecha() {
+    public java.util.Date getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(java.util.Date fecha) {
         this.fecha = fecha;
     }
 
-    public Date getHora() {
+    public java.util.Date getHora() {
         return hora;
     }
 
-    public void setHora(Date hora) {
+    public void setHora(java.util.Date hora) {
         this.hora = hora;
     }
 
@@ -203,6 +203,13 @@ public class EstadoVehiculo implements Serializable {
 
     public void setMiEstadoIngreso(EstadoVehiculo miEstadoIngreso) {
         this.miEstadoIngreso = miEstadoIngreso;
+    }
+
+    @Override
+    public String toString() {
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
+        String fechaDate = formatoFecha.format(this.fecha);
+        return fechaDate;
     }
    
     
