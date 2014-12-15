@@ -746,7 +746,7 @@ public class GestionPedido extends javax.swing.JInternalFrame {
             java.util.Date fecha = null;
             java.util.Date hora = null;
             String cantidad = txtCantidad.getText();
-                int cant = Integer.valueOf(cantidad);
+            int cant = Integer.valueOf(cantidad);
             boolean recambio = chkParaRecambio.isSelected();
             boolean autorizado = chkAutorizado.isSelected();
             String fechaS = txtFecha.getText();

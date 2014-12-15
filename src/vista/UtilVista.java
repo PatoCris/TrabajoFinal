@@ -35,6 +35,12 @@ public class UtilVista {
         }
         return miCombo;
     }
+    
+    public DefaultComboBoxModel cargarComboUnElemento(Object miClase){
+        DefaultComboBoxModel miCombo = new DefaultComboBoxModel();
+        miCombo.addElement(miClase);
+        return miCombo;
+    }
 
     public DefaultListModel cargarLista(List<?> miLista) {
         DefaultListModel miList = new DefaultListModel();
